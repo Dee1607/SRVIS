@@ -43,7 +43,9 @@ test:
 
   script: ./gradlew check
 
+  tags:
 
+    - grad
   
 after_script:
   - echo "End CI"
