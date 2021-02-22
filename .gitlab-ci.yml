@@ -14,6 +14,9 @@ variables:
 
 before_script:
   - export GRADLE_USER_HOME=`pwd`/.gradle
+  - apt-get update -qy
+  - apt-get install -y ruby-dev
+  - gem install dpl
 
 build:
   stage: build
@@ -26,11 +29,18 @@ test:
   stage: test
   script: ./gradlew check
 
-  artifacts:
-    when: always
-    reports:
-      junit:
-        - A1/build/test-results/test/TEST-*.xml
+stages:
+    - staging
+    - production
+
+staging:
+    type: deploy
+    stage: staging
+    image: ruby:latest
+    script:
+        - dpl --provider=heroku --app=$HEROKU_APP_STAGING --api-key=$HEROKU_API_KEY
+    only:
+        - staging
 
   tags:
     - grad
