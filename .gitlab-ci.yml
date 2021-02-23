@@ -45,3 +45,5 @@ deploy:
   - dpl --provider=heroku --app=<appName> --api-key=$HEROKU_API_KEY
   only:
   - master
+  tags:
+    - grad
