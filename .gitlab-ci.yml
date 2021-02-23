@@ -8,6 +8,8 @@
 # runtime for each build is more reliable since the runtime is completely
 # isolated from any previous builds.
 
+image: openjdk:8-jdk
+
 variables:
   GRADLE_OPTS: "-Dorg.gradle.daemon=false"
   GIT_STRATEGY: clone
@@ -24,17 +26,16 @@ build:
   stage: build
   script: ./gradlew assemble
   tags:
-    - grad
+    - dalfcs_gitlab_docker_ci
 
 test:
   stage: test
   script: ./gradlew check
   tags:
-    - grad
+    - dalfcs_gitlab_docker_ci
 
 deploy:
   stage: deploy
-  image: openjdk:8-jdk
   script:
    - apt-get update -qy
    - apt-get install -y ruby-dev
@@ -44,4 +45,4 @@ deploy:
    - master
    - develop 
   tags:
-   - grad
+   - dalfcs_gitlab_docker_ci
