@@ -8,8 +8,6 @@
 # runtime for each build is more reliable since the runtime is completely
 # isolated from any previous builds.
 
-image: ruby:latest
-
 variables:
   GRADLE_OPTS: "-Dorg.gradle.daemon=false"
   GIT_STRATEGY: clone
@@ -36,6 +34,7 @@ test:
 
 deploy:
   stage: deploy
+  image: ruby:latest
   script:
    - apt-get update -qy
    - apt-get install -y ruby-dev
