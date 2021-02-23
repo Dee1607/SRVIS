@@ -32,9 +32,9 @@ test:
   tags:
     - grad
 
-
 deploy:
   stage: deploy
+  image: openjdk:8-jdk
   script:
    - apt-get update -qy
    - apt-get install -y ruby-dev
