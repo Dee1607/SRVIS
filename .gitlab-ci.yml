@@ -8,7 +8,7 @@
 # runtime for each build is more reliable since the runtime is completely
 # isolated from any previous builds.
 
-image: openjdk:8-jdk
+image: ruby:latest
 
 variables:
   GRADLE_OPTS: "-Dorg.gradle.daemon=false"
