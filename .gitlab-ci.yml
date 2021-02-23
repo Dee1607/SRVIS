@@ -7,15 +7,19 @@
 # is usually a priority over speed in CI environments. Using a fresh
 # runtime for each build is more reliable since the runtime is completely
 # isolated from any previous builds.
+
 variables:
   GRADLE_OPTS: "-Dorg.gradle.daemon=false"
   GIT_STRATEGY: clone
 
 before_script:
   - export GRADLE_USER_HOME=`pwd`/.gradle
-  - apt-get update -qy
-  - apt-get install -y ruby-dev
-  - gem install dpl
+
+stages:
+  - build
+  - test
+  - deploy
+
 
 build:
   stage: build
@@ -27,19 +31,17 @@ build:
 test:
   stage: test
   script: ./gradlew check
-
-stages:
-    - staging
-    - production
-
-staging:
-    type: deploy
-    stage: staging
-    image: ruby:latest
-    script:
-        - dpl --provider=heroku --app=$HEROKU_APP_STAGING --api-key=$HEROKU_API_KEY
-    only:
-        - staging
-
   tags:
     - grad
+
+
+deploy:
+  stage: deploy
+  image: ruby:latest
+  script:
+  - apt-get update -qy
+  - apt-get install -y ruby-dev
+  - gem install dpl
+  - dpl --provider=heroku --app=<appName> --api-key=$HEROKU_API_KEY
+  only:
+  - master
