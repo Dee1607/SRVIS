@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="ArithmeticOperationTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2021-02-19T22:08:44" hostname="Tanujs-MBP.hitronhub.home" time="0.018">
-  <properties/>
-  <testcase name="addTest()" classname="ArithmeticOperationTest" time="0.018"/>
-  <system-out><![CDATA[]]></system-out>
-  <system-err><![CDATA[]]></system-err>
-</testsuite>
