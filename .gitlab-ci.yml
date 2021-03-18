@@ -32,7 +32,7 @@ test:
 deploy:
   stage: deploy
   script:
-    - chmod og-rwx ${DEPLOY_SSH_KEY}
+    - chmod 700 ${DEPLOY_SSH_KEY}
     - scp -r -o StrictHostKeyChecking=no -i "${DEPLOY_SSH_KEY}" ${EXECUTABLE_TO_DEPLOY} "${DEPLOY_USER}@${DEPLOY_HOST}:${DEPLOY_DIR}/"
   only:
    - master
