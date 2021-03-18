@@ -11,7 +11,7 @@ variables:
 
 before_script:
   - export GRADLE_USER_HOME=`pwd`/.gradle
-  - cd srvis
+  - cd SRVIS
 
 stages:
   - build
