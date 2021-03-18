@@ -3,7 +3,6 @@
 # https://gradle.org/
 # https://github.com/gradle/gradle
 
-
 variables:
   GRADLE_OPTS: "-Dorg.gradle.daemon=false"
   GIT_STRATEGY: clone
