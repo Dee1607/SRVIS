@@ -1,4 +1,6 @@
-public class main {
+import sum.Hello;
+
+public class Main {
 
     public static void main(String[] args){
 

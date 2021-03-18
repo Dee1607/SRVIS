@@ -7,10 +7,11 @@
 variables:
   GRADLE_OPTS: "-Dorg.gradle.daemon=false"
   GIT_STRATEGY: clone
+  EXECUTABLE_TO_DEPLOY=
 
 before_script:
   - export GRADLE_USER_HOME=`pwd`/.gradle
-  - cd SRVIS
+  - cd srvis
 
 stages:
   - build
@@ -19,20 +20,27 @@ stages:
 
 build:
   stage: build
+  image: openjdk:11-jre-slim
   script: ./gradlew assemble
   tags:
-    - ugrad
+    - dalfcs_gitlab_docker_ci
 
 test:
-   stage: test
-   script: ./gradlew check
-   tags:
-    - ugrad
+stage: test
+image: openjdk:11-jre-slim
+script: ./gradlew check
+tags:
+   - dalfcs_gitlab_docker_ci
+
 
 deploy:
   stage: deploy
-  tags:
-   - ugrad
+  image: ruby:latest
   script:
-    - scp -r -o StrictHostKeyChecking=no -i "${DEPLOY_SSH_KEY}" ${EXECUTABLE_TO_DEPLOY} "${DEPLOY_USER}@${DEPLOY_HOST}:${DEPLOY_DIR}/"
+   - scp -r -o StrictHostKeyChecking=no -i "${DEPLOY_SSH_KEY}" ${EXECUTABLE_TO_DEPLOY} "${DEPLOY_USER}@${DEPLOY_HOST}:${DEPLOY_DIR}/"
+  only:
+   - master
+   - develop
+  tags:
+   - dalfcs_gitlab_docker_ci
 
