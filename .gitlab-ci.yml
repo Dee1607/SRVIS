@@ -7,7 +7,7 @@
 variables:
   GRADLE_OPTS: "-Dorg.gradle.daemon=false"
   GIT_STRATEGY: clone
-  EXECUTABLE_TO_DEPLOY=
+  EXECUTABLE_TO_DEPLOY="SRVIS/SRVIS.jar"
 
 before_script:
   - export GRADLE_USER_HOME=`pwd`/.gradle
@@ -35,7 +35,7 @@ tags:
 
 deploy:
   stage: deploy
-  image: ruby:latest
+  image: alpine:latest
   script:
    - scp -r -o StrictHostKeyChecking=no -i "${DEPLOY_SSH_KEY}" ${EXECUTABLE_TO_DEPLOY} "${DEPLOY_USER}@${DEPLOY_HOST}:${DEPLOY_DIR}/"
   only:
