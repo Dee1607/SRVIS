@@ -26,12 +26,11 @@ build:
     - dalfcs_gitlab_docker_ci
 
 test:
-stage: test
-image: openjdk:11-jre-slim
-script: ./gradlew check
-tags:
-   - dalfcs_gitlab_docker_ci
-
+  stage: test
+  image: openjdk:11-jre-slim
+  script: ./gradlew check
+  tags:
+    - dalfcs_gitlab_docker_ci
 
 deploy:
   stage: deploy
