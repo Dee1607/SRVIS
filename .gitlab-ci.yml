@@ -10,7 +10,6 @@ variables:
   EXECUTABLE_TO_DEPLOY: "SRVIS/SRVIS.jar"
 
 before_script:
-  - chmod +x ./gradlew
   - export GRADLE_USER_HOME=`pwd`/.gradle
   - cd SRVIS
 
