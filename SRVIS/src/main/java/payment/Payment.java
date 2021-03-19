@@ -2,15 +2,26 @@ package payment;
 
 public class Payment implements IPayment{
 
-    private PaymentInfo info;
+    private IPaymentInfo sender;
+    private IPaymentInfo receiver;
     private String amount;
+    private PaymentStatus status;
 
-    public Payment(String amount, PaymentInfo info) {
+    public Payment(IPaymentInfo sender, IPaymentInfo receiver, String amount) {
+        this.sender = sender;
+        this.receiver = receiver;
         this.amount = amount;
-        this.info = info;
     }
 
-    boolean validatePayment() {
+    public boolean validatePayment() {
         return false;
+    }
+
+    public boolean processPayment() {
+        return false;
+    }
+
+    public PaymentStatus getStatus() {
+        return status;
     }
 }

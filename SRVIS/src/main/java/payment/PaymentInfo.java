@@ -1,13 +1,13 @@
 package payment;
 
-public class PaymentInfo {
+public class PaymentInfo implements IPaymentInfo{
     private String type;
     private String cardNumber;
     private String fullName;
     private String securityCode;
 
     public void setType(String type) {
-        this.cardNumber = cardNumber;
+        this.type = type;
     }
 
     public void setCardNumber(String cardNumber) {
@@ -20,5 +20,21 @@ public class PaymentInfo {
 
     public void setSecurityCode(String securityCode) {
         this.securityCode = securityCode;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public String getCardNumber() {
+        return cardNumber;
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public String getSecurityCode() {
+        return securityCode;
     }
 }
