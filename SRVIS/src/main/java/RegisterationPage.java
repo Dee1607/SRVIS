@@ -37,7 +37,7 @@ public class RegisterationPage {
                                                     String password = sc.nextLine();
                                                     checkPassword = validations.isValidPassword(password);
                                                     if(checkPassword){
-                                                        System.out.println("Enter the professional category." + "\n" + "1. Service Provider"+ "\n" + "2. Customer" + "\n" + "Please enter the number");
+                                                        System.out.println("Enter` the professional category." + "\n" + "1. Service Provider"+ "\n" + "2. Customer" + "\n" + "Please enter the number");
                                                         int category = sc.nextInt();
                                                         switch (category){
                                                             case 1:
