@@ -5,6 +5,7 @@ public class PaymentInfo implements IPaymentInfo{
     private String cardNumber;
     private String fullName;
     private String securityCode;
+    private String expiryDate;
 
     public void setType(String type) {
         this.type = type;
@@ -22,6 +23,10 @@ public class PaymentInfo implements IPaymentInfo{
         this.securityCode = securityCode;
     }
 
+    public void getExpiryDate(String expiryDate) {
+        this.expiryDate = expiryDate;
+    }
+
     public String getType() {
         return type;
     }
@@ -36,5 +41,10 @@ public class PaymentInfo implements IPaymentInfo{
 
     public String getSecurityCode() {
         return securityCode;
+    }
+
+    @Override
+    public String getExpiryDate() {
+        return null;
     }
 }

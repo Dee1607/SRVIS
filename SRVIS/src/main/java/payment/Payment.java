@@ -14,7 +14,10 @@ public class Payment implements IPayment{
     }
 
     public boolean validatePayment() {
-        return false;
+        boolean senderIsValid;
+        boolean receiverIsValid;
+        boolean amountIsValid;
+        return senderIsValid && receiverIsValid && amountIsValid;
     }
 
     public boolean processPayment() {
