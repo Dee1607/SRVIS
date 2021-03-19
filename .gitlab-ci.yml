@@ -10,6 +10,7 @@ variables:
   EXECUTABLE_TO_DEPLOY: "SRVIS/SRVIS.jar"
 
 before_script:
+  - chmod +x ./gradlew
   - export GRADLE_USER_HOME=`pwd`/.gradle
   - cd SRVIS
 
@@ -32,6 +33,10 @@ test:
 
 deploy:
   stage: deploy
+  before_script:
+    - 'command -v ssh-agent >/dev/null || ( apt-get update -y && apt-get install openssh-client -y )'
+    - eval $(ssh-agent -s)
+    - echo "$DEPLOY_SSH_KEY" | tr -d '\r' | ssh-add -
   script:
     - scp -r -o StrictHostKeyChecking=no -i "${DEPLOY_SSH_KEY}" ${EXECUTABLE_TO_DEPLOY} "${DEPLOY_USER}@${DEPLOY_HOST}:${DEPLOY_DIR}/"
   only:
