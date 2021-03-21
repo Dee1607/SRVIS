@@ -2,19 +2,16 @@
 
 # Edit at https://www.toptal.com/developers/gitignore?templates=maven,gradle,java,windows,macos,linux 
 
- 
 
 # Log file 
 
 *.log 
 
- 
 
 # BlueJ files 
 
 *.ctxt 
 
- 
 
 # Mobile Tools for Java (J2ME) 
 
@@ -146,9 +143,6 @@ buildNumber.properties
 # Recycle Bin used on file shares 
 
 $RECYCLE.BIN/ 
-
- 
-
  
 
 ### Gradle ### 
@@ -157,7 +151,6 @@ $RECYCLE.BIN/
 
 build/ 
 
- 
 
 # Ignore Gradle GUI config 
 
@@ -209,7 +202,7 @@ gradle-app.setting
 
 .idea/**/shelf 
 
- 
+.idea 
 
 # Generated files 
 
