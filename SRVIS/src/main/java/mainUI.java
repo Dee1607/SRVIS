@@ -1,12 +1,10 @@
-import sum.Hello;
+import presantationlayer.ServiceCategoryUI;
 
-public class mainUI {
-
-    public static void main(String[] args){
-
-        Hello h=new Hello();
-        int sum=h.add(2,3);
-        System.out.println("The sum is now " + sum);
-
+public class mainUI
+{
+    public static void main(String[] args)
+    {
+        ServiceCategoryUI serviceCategoryUI = new ServiceCategoryUI();
+        serviceCategoryUI.searchService();
     }
 }
