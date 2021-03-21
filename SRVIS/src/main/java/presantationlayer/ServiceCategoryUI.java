@@ -41,10 +41,9 @@ public class ServiceCategoryUI
                     + enumObjectOfChoice.toString() + "';";
             ResultSet rs = stmt.executeQuery(sql1);
 
-            if(rs.next()){
-                DisplayServiceProviderUI objDisplay = new DisplayServiceProviderUI();
-                objDisplay.displaySearchedServiceProviders(rs);
-            }
+            DisplayServiceProviderUI objDisplay = new DisplayServiceProviderUI();
+            objDisplay.displaySearchedServiceProviders(rs);
+
 
         } catch (SQLException e) {
             e.printStackTrace();
