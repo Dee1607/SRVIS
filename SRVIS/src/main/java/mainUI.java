@@ -1,4 +1,5 @@
 import presantationlayer.LoginPage;
+import presantationlayer.ServiceCategoryUI;
 
 public class mainUI {
 
@@ -6,7 +7,11 @@ public class mainUI {
 
         LoginPage log=new LoginPage();
         try {
-            log.login();
+//            log.login();
+
+//            ServiceCategoryUI obj = new ServiceCategoryUI();
+//            obj.searchService();
+
         } catch (Exception e) {
             e.printStackTrace();
         }
