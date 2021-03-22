@@ -20,7 +20,11 @@ public class PaymentTest {
         IPaymentInfo sender = new PaymentInfo();
         IPaymentInfo receiver = new PaymentInfo();
         String amount = "100.00";
-        Payment payment = new Payment(sender, receiver, amount);
+        Transaction transaction = new Transaction();
+        transaction.setSender(sender);
+        transaction.setReceiver(receiver);
+        transaction.setAmount(amount);
+        Payment payment = new Payment(transaction);
 
         assertEquals(payment.getStatus(), PaymentStatus.PENDING);
     }

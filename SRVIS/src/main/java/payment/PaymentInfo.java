@@ -1,14 +1,14 @@
 package payment;
 
 public class PaymentInfo implements IPaymentInfo{
-    private String type;
+    private PaymentType paymentType;
     private String cardNumber;
     private String fullName;
     private String securityCode;
     private String expiryDate;
 
-    public void setType(String type) {
-        this.type = type;
+    public void setPaymentType(PaymentType paymentType) {
+        this.paymentType = paymentType;
     }
 
     public void setCardNumber(String cardNumber) {
@@ -27,8 +27,8 @@ public class PaymentInfo implements IPaymentInfo{
         this.expiryDate = expiryDate;
     }
 
-    public String getType() {
-        return type;
+    public PaymentType getType() {
+        return paymentType;
     }
 
     public String getCardNumber() {
@@ -43,8 +43,7 @@ public class PaymentInfo implements IPaymentInfo{
         return securityCode;
     }
 
-    @Override
     public String getExpiryDate() {
-        return null;
+        return expiryDate;
     }
 }
