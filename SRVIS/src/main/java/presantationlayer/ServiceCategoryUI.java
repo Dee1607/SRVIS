@@ -1,7 +1,7 @@
 package presantationlayer;
 
 import database.ConnectionToDB;
-import enums.EnumServiceCatagory;
+import enums.EnumServiceCategory;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -31,7 +31,7 @@ public class ServiceCategoryUI
         }
 
         int userServiceCategoryChoice = sc.nextInt();
-        EnumServiceCatagory enumObjectOfChoice = EnumServiceCatagory.values()[userServiceCategoryChoice - 1];
+        EnumServiceCategory enumObjectOfChoice = EnumServiceCategory.values()[userServiceCategoryChoice - 1];
 
         try {
             Connection conn = objConnect.getConnection();
