@@ -1,6 +1,6 @@
 package enums;
 
-public enum EnumServiceCatagory {
+public enum EnumServiceCategory {
     Electrician,
     Plumber,
     Carpenter,
