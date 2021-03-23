@@ -77,7 +77,7 @@ public class ServiceCategoryUI
 
             // Call the next method to show Service Providers details and book
             // For branch: feature-select_service_provider
-            
+
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
