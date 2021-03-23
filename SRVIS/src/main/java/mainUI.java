@@ -9,8 +9,8 @@ public class mainUI {
         try {
 //            log.login();
 
-//            ServiceCategoryUI obj = new ServiceCategoryUI();
-//            obj.searchService();
+            ServiceCategoryUI obj = new ServiceCategoryUI();
+            obj.searchService();
 
         } catch (Exception e) {
             e.printStackTrace();
