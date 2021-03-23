@@ -1,5 +1,6 @@
 package presantationlayer;
 
+import DAOclasses.ServiceProviderInfo;
 import database.ConnectionToDB;
 import enums.EnumServiceCategory;
 
@@ -7,9 +8,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 
 public class ServiceCategoryUI
 {
@@ -45,9 +44,40 @@ public class ServiceCategoryUI
             ResultSet rs = stmt.executeQuery(sql1);
 
             DisplayServiceProviderUI objDisplay = new DisplayServiceProviderUI();
-            objDisplay.displaySearchedServiceProviders(rs);
+
+            Map<String, List<ServiceProviderInfo>> mapServiceProvider = new HashMap<>();
+            ServiceProviderInfo objServiceProvider = null;
+            List<ServiceProviderInfo> listServiceProviderDetails = null;
+
+            while(rs.next()){
+
+                objServiceProvider = new ServiceProviderInfo();
+                listServiceProviderDetails = new ArrayList<ServiceProviderInfo>();
+
+                objServiceProvider.setId(rs.getInt("service_provider_id"));
+                objServiceProvider.setName(rs.getString("spName"));
+                objServiceProvider.setAddress(rs.getString("spAddress"));
+                objServiceProvider.setContact(rs.getString("spContact"));
+                objServiceProvider.setJobType(rs.getString("spJobType"));
+                objServiceProvider.setServiceCategory(rs.getString("spServiceCategoryID"));
+                objServiceProvider.setHourlyRate(rs.getString("spHourlyRate"));
+                objServiceProvider.setExperience(rs.getString("spExperience"));
+                objServiceProvider.setCategoryID(rs.getString("spCertification"));
+                objServiceProvider.setRating(rs.getString("spRatings"));
+
+                listServiceProviderDetails.add(objServiceProvider);
+                mapServiceProvider.put(rs.getString("service_provider_id").toString(),listServiceProviderDetails);
+            }
+
+            objDisplay.displaySearchedServiceProviders(mapServiceProvider);
 
 
+            System.out.println("Enter the Id of the service provider you want to select: ");
+            int selectedServiceProviderId = sc.nextInt();
+
+            // Call the next method to show Service Providers details and book
+            // For branch: feature-select_service_provider
+            
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {

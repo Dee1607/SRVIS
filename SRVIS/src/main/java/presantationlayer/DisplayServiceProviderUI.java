@@ -1,23 +1,25 @@
 package presantationlayer;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import DAOclasses.ServiceProviderInfo;
+import java.util.List;
+import java.util.Map;
 
-public class DisplayServiceProviderUI {
-
-    public void displaySearchedServiceProviders(ResultSet rs){
-
+public class DisplayServiceProviderUI
+{
+    public void displaySearchedServiceProviders(Map<String, List<ServiceProviderInfo>> mapServiceProviderDetails)
+    {
         try{
-            while (rs.next()) {
-                String name = rs.getString("spName");
-                String contact = rs.getString("spContact");
-                String rate = rs.getString("spHourelyRate");
-
-                System.out.println("--------------------------------------------------------------");
-                System.out.println("Name: " + name + "\nContact Number:  " + contact + "\nHourly Rate: " + rate);
-                System.out.println("--------------------------------------------------------------");
+            for(String spID : mapServiceProviderDetails.keySet()) {
+                for (ServiceProviderInfo listSPDetails : mapServiceProviderDetails.get(spID)) {
+                    System.out.println("--------------------------------------------------------------");
+                    System.out.println("ID: " +spID);
+                    System.out.println("Name: "+listSPDetails.getName());
+                    System.out.println("Contact Number: " +listSPDetails.getContact());
+                    System.out.println("Hourly Rate: " +listSPDetails.getHourlyRate());
+                    System.out.println("--------------------------------------------------------------");
+                }
             }
-        }catch(SQLException e){
+        }catch(Exception e){
             e.printStackTrace();
         }
     }
