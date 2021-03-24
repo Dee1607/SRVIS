@@ -1,31 +1,46 @@
 package presantationlayer;
 
-import database.ConnectionToDB;
-import enums.EnumServiceCategory;
-
+import DAOclasses.ServiceProviderInfo;
 import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.Statement;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
+import java.util.Scanner;
 
-public class SelectServiceProvider {
-    public void selectFromProvidedOptions(){
+public class SelectServiceProvider
+{
+    public void selectFromProvidedOptions(List<ServiceProviderInfo> selectedServiceProvider)
+    {
+        Scanner sc = new Scanner(System.in);
         Connection conn = null;
-        try{
-            conn = new ConnectionToDB().getConnection();
-            Statement stmt = conn.createStatement();
-            String sql1 = "SELECT * FROM CSCI5308_3_DEVINT.service_providers where spJobType = '"
-                    + EnumServiceCategory.Electrician.toString() + "';";
-            ResultSet rs = stmt.executeQuery(sql1);
+        try
+        {
+            for(ServiceProviderInfo info : selectedServiceProvider)
+            {
+                System.out.println("\n--------------------------------------------------------------");
+                System.out.println("Contact Details of Service Provider");
+                System.out.println("ID: " +info.getId());
+                System.out.println("Name: " +info.getName());
+                System.out.println("Contact: " +info.getContact());
+                System.out.println("Address:" +info.getAddress());
 
-            Map<Integer,String> mapServiceProviders = new HashMap<Integer,String>();
-            int countOfServiceProvider = 0;
-            while(rs.next()){
-                mapServiceProviders.put(countOfServiceProvider++, rs);
+                System.out.println("\n--------------------------------------------------------------");
+                System.out.println("More Information Related to Service Provider");
+                System.out.println("Service Category: " +info.getServiceCategory());
+                System.out.println("Job Type: " +info.getJobType());
+                System.out.println("Certification Details: " +info.getCertification());
+                System.out.println("Experience: " +info.getExperience());
+                System.out.println("Ratings: " +info.getRating());
+                System.out.println("\n--------------------------------------------------------------");
             }
-        }catch (Exception e){
-
+            System.out.println("Do you want to select this service provider [Y/N]: ");
+            String choiceToSelect = sc.next();
+            if(choiceToSelect.equalsIgnoreCase("Y"))
+            {
+//                BookServiceProvider objBookProvider = new BookServiceProvider();
+            }
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
         }
     }
 }
