@@ -77,6 +77,14 @@ public class ServiceCategoryUI
 
             // Call the next method to show Service Providers details and book
             // For branch: feature-select_service_provider
+
+            SelectServiceProvider objServiceProviderInfo = new SelectServiceProvider();
+
+
+            List<ServiceProviderInfo> objSelectedProviderInfo = mapServiceProvider.get(String.valueOf(selectedServiceProviderId));
+
+            objServiceProviderInfo.selectFromProvidedOptions(objSelectedProviderInfo);
+
             
         } catch (SQLException e) {
             e.printStackTrace();
