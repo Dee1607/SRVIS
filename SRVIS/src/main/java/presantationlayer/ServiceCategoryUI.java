@@ -39,7 +39,7 @@ public class ServiceCategoryUI
 //            ResultSet searchedServiceProviders = statement.getResultSet();
 
             Statement stmt = conn.createStatement();
-            String sql1 = "SELECT * FROM CSCI5308_3_DEVINT.service_providers where spJobType = '"
+            String sql1 = "SELECT * FROM CSCI5308_3_DEVINT.service_provider_original where spJobType = '"
                     + enumObjectOfChoice.toString() + "';";
             ResultSet rs = stmt.executeQuery(sql1);
 
@@ -55,7 +55,7 @@ public class ServiceCategoryUI
                 listServiceProviderDetails = new ArrayList<ServiceProviderInfo>();
 
                 objServiceProvider.setId(rs.getInt("service_provider_id"));
-                objServiceProvider.setName(rs.getString("spName"));
+                objServiceProvider.setName(rs.getString("firstName"));
                 objServiceProvider.setAddress(rs.getString("spAddress"));
                 objServiceProvider.setContact(rs.getString("spContact"));
                 objServiceProvider.setJobType(rs.getString("spJobType"));
@@ -71,7 +71,6 @@ public class ServiceCategoryUI
 
             objDisplay.displaySearchedServiceProviders(mapServiceProvider);
 
-
             System.out.println("Enter the Id of the service provider you want to select: ");
             int selectedServiceProviderId = sc.nextInt();
 
@@ -79,7 +78,6 @@ public class ServiceCategoryUI
             // For branch: feature-select_service_provider
 
             SelectServiceProvider objServiceProviderInfo = new SelectServiceProvider();
-
 
             List<ServiceProviderInfo> objSelectedProviderInfo = mapServiceProvider.get(String.valueOf(selectedServiceProviderId));
 
