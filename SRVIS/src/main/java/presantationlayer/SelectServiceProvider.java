@@ -1,7 +1,6 @@
 package presantationlayer;
 
 import DAOclasses.ServiceProviderInfo;
-import java.sql.Connection;
 import java.util.List;
 import java.util.Scanner;
 
@@ -10,7 +9,6 @@ public class SelectServiceProvider
     public void selectFromProvidedOptions(List<ServiceProviderInfo> selectedServiceProvider)
     {
         Scanner sc = new Scanner(System.in);
-        Connection conn = null;
         try
         {
             for(ServiceProviderInfo info : selectedServiceProvider)
