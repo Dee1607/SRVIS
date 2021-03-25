@@ -5,5 +5,5 @@ public enum EnumServiceCategory {
     Plumber,
     Carpenter,
     Painter,
-    Cleaner;
+    Cleaner
 }
