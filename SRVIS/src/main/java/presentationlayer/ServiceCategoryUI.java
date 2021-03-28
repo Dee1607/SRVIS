@@ -1,4 +1,4 @@
-package presantationlayer;
+package presentationlayer;
 
 import DAOclasses.ServiceProviderInfo;
 import database.ConnectionToDB;
@@ -12,6 +12,10 @@ import java.util.*;
 
 public class ServiceCategoryUI
 {
+    Map<String , Map<String,String>> result;
+    public ServiceCategoryUI(Map<String, Map<String, String>> result) {
+    }
+
     public void searchService() {
         Scanner sc = new Scanner(System.in);
         ConnectionToDB objConnect = new ConnectionToDB();
@@ -39,7 +43,7 @@ public class ServiceCategoryUI
 //            ResultSet searchedServiceProviders = statement.getResultSet();
 
             Statement stmt = conn.createStatement();
-            String sql1 = "SELECT * FROM CSCI5308_3_DEVINT.service_providers where spJobType = '"
+            String sql1 = "SELECT * FROM CSCI5308_3_DEVINT.service_provider where spJobType = '"
                     + enumObjectOfChoice.toString() + "';";
             ResultSet rs = stmt.executeQuery(sql1);
 

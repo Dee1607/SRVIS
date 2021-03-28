@@ -1,28 +1,12 @@
-import presantationlayer.LoginPage;
-import presantationlayer.ServiceCategoryUI;
-import registration.RegistrationPage;
+import presentationlayer.LoginUI;
 
 public class mainUI {
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
 
-        LoginPage log=new LoginPage();
+        LoginUI log = new LoginUI();
         try {
-//            log.login();
-
-            RegistrationPage register = new RegistrationPage();
-            register.getFirstName();
-            register.getLastName();
-            register.getAddress();
-            register.getContact();
-            register.getEmail();
-            register.getPassword();
-            register.getProfessionalCategoryDetails();
-            register.checkErrors();
-
-            ServiceCategoryUI obj = new ServiceCategoryUI();
-            obj.searchService();
-
+            log.showLoginScreen();
         } catch (Exception e) {
             e.printStackTrace();
         }
