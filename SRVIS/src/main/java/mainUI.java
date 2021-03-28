@@ -1,10 +1,14 @@
-public class mainUI {
+import presentationlayer.LoginUI;
 
-    public static void main(String[] args){
-        RegisterationPage register = new RegisterationPage();
-        register.registerUser();
-
-        ServiceCategoryUI serviceCategoryUI = new ServiceCategoryUI();
-        serviceCategoryUI.searchService();
+public class mainUI
+{
+    public static void main(String[] args)
+    {
+        LoginUI login=new LoginUI();
+        try {
+            login.showLoginScreen();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

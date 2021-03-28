@@ -18,6 +18,7 @@ public class Payment implements IPayment{
         boolean senderIsValid = true;
         boolean receiverIsValid = false;
         boolean amountIsValid = false;
+
         return senderIsValid && receiverIsValid && amountIsValid;
     }
 

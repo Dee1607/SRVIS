@@ -10,10 +10,10 @@ repositories {
 }
 
 dependencies {
-    implementation 'junit:junit:4.12'
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.0'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
-    compile 'mysql:mysql-connector-java:5.1.+'
+    implementation 'mysql:mysql-connector-java:8.0.16'
+
 }
 
 test {
