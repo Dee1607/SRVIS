@@ -1,11 +1,12 @@
-package registration;
+package presentationlayer;
 
 import RegistrationDAO.ConnectDatabase;
+import registration.Validations;
 
 import java.sql.SQLException;
 import java.util.*;
 
-public class RegistrationPage {
+public class RegistrationPageUI {
     Validations validations = new Validations();
     List<Integer> errorCodes = new ArrayList<>();
     HashMap<String, String> userDetails = new HashMap<>();
