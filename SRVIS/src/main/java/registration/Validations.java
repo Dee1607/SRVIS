@@ -45,6 +45,34 @@ public class Validations {
         }
     }
 
+    public boolean isValidJobType(String jobType){
+        if(jobType.isEmpty()){
+            return false;
+        }
+        else{
+            if(Pattern.matches("^[1-5]$", jobType)){
+                return  true;
+            }
+            else {
+                return false;
+            }
+        }
+    }
+
+    public boolean isValidHourlyRate(String hourlyRate){
+        if(hourlyRate.isEmpty()){
+            return false;
+        }
+        else{
+            if(Pattern.matches("^[\\d]+$", hourlyRate)){
+                return  true;
+            }
+            else {
+                return false;
+            }
+        }
+    }
+
     public boolean isValidEmail(String emailId){
         if(emailId.isEmpty()){
             return false;
