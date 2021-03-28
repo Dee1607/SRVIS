@@ -1,11 +1,10 @@
 package login;
 
 
+import SearchServiceCategory.SelectServiceCategory;
 import presentationlayer.RegistrationPageUI;
-import presentationlayer.ServiceCategoryUI;
 import presentationlayer.ServiceProviderCustomerUI;
 
-import java.util.List;
 import java.util.Map;
 
 public class LoginService {
@@ -39,7 +38,7 @@ public class LoginService {
          }
          if (Email.equals(user) && Password.equals(password) && type.equals("customer"))
          {
-            ServiceCategoryUI obj = new ServiceCategoryUI(result);
+            SelectServiceCategory obj = new SelectServiceCategory(result);
             obj.searchService();
          } else {
             ServiceProviderCustomerUI serviceProvider =new ServiceProviderCustomerUI(result);
