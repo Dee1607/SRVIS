@@ -9,7 +9,8 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
-public class BookServiceProvider {
+public class BookServiceProvider
+{
     DisplayToGetUserChoice objToDisplayData = null;
     ConnectionToDB objDatabaseConnection = null;
     DisplayUpdates objDisplayMessage = null;
@@ -27,7 +28,8 @@ public class BookServiceProvider {
 
         String customerUniqueID = null;
         Map<String,String> insertData = new HashMap<>();
-        for(String sessionCustomerID : customerSessionDetails.keySet()){
+        for(String sessionCustomerID : customerSessionDetails.keySet())
+        {
             customerUniqueID = sessionCustomerID;
         }
         insertData.put("customer_id",customerUniqueID);
@@ -51,7 +53,5 @@ public class BookServiceProvider {
         {
             e.printStackTrace();
         }
-
-
     }
 }
