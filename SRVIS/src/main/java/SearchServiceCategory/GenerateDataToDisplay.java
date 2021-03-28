@@ -22,4 +22,6 @@ public class GenerateDataToDisplay {
 
         return mapSearchCategories;
     }
+
+
 }
