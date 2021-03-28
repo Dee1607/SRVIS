@@ -25,7 +25,7 @@ public class ConnectDatabase {
             statement = conn.createStatement();
             if(userInput.containsKey("experience") && userInput.containsKey("jobType")){
                 selectQuery = "SELECT * FROM service_provider where Email='" + userInput.get("email") + "'";
-                insertQuery="INSERT INTO service_provider(spFirstName, spLastName, spAddress, spContact, Email, Password, spExperience, spJobType, spHourlyRate) values('" + userInput.get("firstName") + "', '" + userInput.get("lastName") + "', '" + userInput.get("address") + "', '" + userInput.get("contact") + "', '" + userInput.get("email") + "', '" + userInput.get("password") + "', '" + userInput.get("experience") + "', '" + userInput.get("jobType") + "', '" + userInput.get("hourlyRate") + "');";
+                insertQuery="INSERT INTO service_provider(firstName, lastName, spAddress, spContact, Email, Password, spExperience, spJobType, spHourlyRate) values('" + userInput.get("firstName") + "', '" + userInput.get("lastName") + "', '" + userInput.get("address") + "', '" + userInput.get("contact") + "', '" + userInput.get("email") + "', '" + userInput.get("password") + "', '" + userInput.get("experience") + "', '" + userInput.get("jobType") + "', '" + userInput.get("hourlyRate") + "');";
             }
             else{
                 selectQuery = "SELECT * FROM customer where Email='" + userInput.get("email") + "'";
