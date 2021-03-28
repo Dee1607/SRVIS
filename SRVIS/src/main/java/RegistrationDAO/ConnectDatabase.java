@@ -1,6 +1,7 @@
-package registration;
+package RegistrationDAO;
 
 import database.IConnectionToDB;
+import presantationlayer.LoginPage;
 
 import java.sql.*;
 import java.util.HashMap;
@@ -22,11 +23,12 @@ public class ConnectDatabase implements IConnectionToDB {
             Class.forName("com.mysql.cj.jdbc.Driver");
             conn = DriverManager.getConnection(dbURL, dbUsername, dbPassword);
             statement = conn.createStatement();
-            if(userInput.containsKey("experience") && userInput.containsKey("description")){
-
+            if(userInput.containsKey("experience") && userInput.containsKey("jobType")){
+                selectQuery = "SELECT * FROM service_providers where Email='" + userInput.get("email") + "'";
+                insertQuery="INSERT INTO service_providers(spFirstName, spLastName, spAddress, spContact, Email, Password, spExperience, spJobType, spHourlyRate) values('" + userInput.get("firstName") + "', '" + userInput.get("lastName") + "', '" + userInput.get("address") + "', '" + userInput.get("contact") + "', '" + userInput.get("email") + "', '" + userInput.get("password") + "', '" + userInput.get("experience") + "', '" + userInput.get("jobType") + "', '" + userInput.get("hourlyRate") + "');";
             }
             else{
-                selectQuery = "SELECT * FROM customer where cEmail='" + userInput.get("email") + "'";
+                selectQuery = "SELECT * FROM customer where Email='" + userInput.get("email") + "'";
                 insertQuery="INSERT INTO customer values('" + userInput.get("firstName") + "', '" + userInput.get("lastName") + "', '" + userInput.get("contact") + "' , '" + userInput.get("address") + "', '" + userInput.get("email") + "', '" + userInput.get("password") + "');";
             }
 
@@ -35,6 +37,8 @@ public class ConnectDatabase implements IConnectionToDB {
             if(rs.next()){
                 String name = rs.getString("firstName") + " " + rs.getString("lastName");
                 System.out.println("You are already registered with us under name " + name + ".");
+                LoginPage log = new LoginPage();
+                log.login();
             }
             else {
                 statement.executeUpdate(insertQuery);
