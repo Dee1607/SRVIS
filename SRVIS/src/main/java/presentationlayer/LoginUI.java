@@ -19,6 +19,8 @@ public class LoginUI {
            password = sc.nextLine();
            System.out.println("Login as Customer/Service provider");
            type = sc.nextLine();
+
+
            login.loginUser(username, password,type);
     }
 }
