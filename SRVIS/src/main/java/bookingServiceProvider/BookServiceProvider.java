@@ -1,8 +1,7 @@
 package bookingServiceProvider;
 
-import database.ConnectionToDB;
-import database.DatabaseQuery;
-import presantationlayer.DisplayToGetUserChoice;
+import database.Database;
+import presentationlayer.DisplayToGetUserChoice;
 import presentationlayer.DisplayUpdates;
 
 import java.util.Calendar;
@@ -11,8 +10,9 @@ import java.util.Map;
 
 public class BookServiceProvider {
     DisplayToGetUserChoice objToDisplayData = null;
-    ConnectionToDB objDatabaseConnection = null;
+    Database objDatabaseConnection = null;
     DisplayUpdates objDisplayMessage = null;
+    Database db= Database.databaseInstance();
 
     public void bookServiceProvider(Map<String,Map<String,String>> customerSessionDetails, String selectedServiceProviderID ,Map<String,String> selectedServiceProvider){
         objToDisplayData = new DisplayToGetUserChoice();
@@ -37,10 +37,8 @@ public class BookServiceProvider {
         insertData.put("service_request_description",descriptionOfWork);
 
         try{
-            objDatabaseConnection = new ConnectionToDB();
-            DatabaseQuery objQuery = new DatabaseQuery(objDatabaseConnection.getConnection());
             objDisplayMessage = new DisplayUpdates();
-            boolean insertStatus = objQuery.insertQuery(query1,insertData);
+            boolean insertStatus = db.insertQuery(query1,insertData);
 
             if(insertStatus)
             {
