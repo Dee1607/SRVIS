@@ -37,7 +37,7 @@ public class SelectServiceProvider
             {
                 String selectedServiceProverID = serviceProviderID;
                 objBookProvider = new BookServiceProvider();
-                objBookProvider.bookServiceProvider(customerSession,selectedServiceProverID);
+                objBookProvider.bookServiceProvider(customerSession,serviceProviderID,selectedServiceProvider);
             }
         }
         catch (Exception e)
