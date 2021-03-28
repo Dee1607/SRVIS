@@ -2,6 +2,7 @@ package login;
 
 
 import SearchServiceCategory.SelectServiceCategory;
+import presentationlayer.LoginUI;
 import presentationlayer.RegistrationPageUI;
 import presentationlayer.ServiceProviderCustomerUI;
 
@@ -17,19 +18,9 @@ public class LoginService {
    public void loginUser(String user, String password, String type) throws Exception {
       LoginDAO loginDAO=new LoginDAO();
       Map<String , Map<String,String>> result=loginDAO.AppLogin(user,password,type);
-
       if(result.isEmpty())
       {
-         System.out.println("Please register  your account !!");
-         RegistrationPageUI register = new RegistrationPageUI();
-         register.getFirstName();
-         register.getLastName();
-         register.getAddress();
-         register.getContact();
-         register.getEmail();
-         register.getPassword();
-         register.getProfessionalCategoryDetails();
-         register.checkErrors();
+         System.out.println("Username/Password is incorrect . Please try again .");
       } else{
          for(String str : result.keySet()){
             Map<String,String> tempValues = result.get(str);

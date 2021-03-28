@@ -1,11 +1,11 @@
 package SearchServiceCategory;
 
 import SearchServiceProvider.SelectServiceProvider;
-import database.ConnectionToDB;
-import database.DatabaseQuery;
+import database.Database;
 import enums.EnumServiceCategory;
 import presentationlayer.DisplayServiceCategoriesUI;
 import presentationlayer.DisplayServiceProviderInfoUI;
+import presentationlayer.DisplayToGetUserChoice;
 
 import java.sql.SQLException;
 import java.util.*;
@@ -15,8 +15,7 @@ public class SelectServiceCategory
     Map<String,Map<String,String>> CUSTOMER_SESSION ;
     DisplayServiceCategoriesUI objDisplayServiceCategory = null;
     GenerateDataToDisplay objGenerateServiceCategoryData = null;
-    ConnectionToDB objConnect = null;
-    DatabaseQuery objQuery = null;
+    Database db= Database.databaseInstance();
 
     public SelectServiceCategory(Map<String,Map<String,String>> customerSession)
     {
@@ -24,7 +23,6 @@ public class SelectServiceCategory
     }
 
     public void searchService() {
-        objConnect = new ConnectionToDB();
 
         objGenerateServiceCategoryData = new GenerateDataToDisplay();
         Map<Integer,String> mapSearchCategories = objGenerateServiceCategoryData.generateServiceCategoryData();
@@ -32,14 +30,14 @@ public class SelectServiceCategory
         objDisplayServiceCategory = new DisplayServiceCategoriesUI();
         objDisplayServiceCategory.displayServiceCategory(mapSearchCategories);
 
-        presantationlayer.DisplayToGetUserChoice objGetUserChoice = new presantationlayer.DisplayToGetUserChoice();
+        DisplayToGetUserChoice objGetUserChoice = new DisplayToGetUserChoice();
         int userSelectedServiceCategory = objGetUserChoice.displayMessageGetNumberChoiceFromUser("Enter the number of Service You need: ");
         EnumServiceCategory enumObjectOfChoice = EnumServiceCategory.values()[userSelectedServiceCategory - 1];
 
         try
         {
-            objQuery = new DatabaseQuery(objConnect.getConnection());
-            Map<String, Map<String, String>> mapOfDataFromDatabase = objQuery.selectQuery("SELECT * FROM CSCI5308_3_DEVINT.service_provider where spJobType = '"
+            db.makeConnection();
+            Map<String, Map<String, String>> mapOfDataFromDatabase = db.selectQuery("SELECT * FROM CSCI5308_3_DEVINT.service_provider where spJobType = '"
                     + enumObjectOfChoice.toString() + "'");
 
             DisplayServiceProviderInfoUI objDisplayServiceProvider = new DisplayServiceProviderInfoUI();
@@ -56,7 +54,7 @@ public class SelectServiceCategory
         {
             try
             {
-                objConnect.closeConnection();
+                db.closeConnection();
             }
             catch(SQLException e)
             {

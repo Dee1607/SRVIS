@@ -1,10 +1,9 @@
 package SearchServiceProvider;
 
 import bookingServiceProvider.BookServiceProvider;
-import presantationlayer.DisplayToGetUserChoice;
+import presentationlayer.DisplayToGetUserChoice;
 import presentationlayer.DisplayServiceProviderInfoUI;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
