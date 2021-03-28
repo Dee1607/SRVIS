@@ -1,4 +1,4 @@
-package presantationlayer;
+package presentationlayer;
 
 import java.util.Scanner;
 

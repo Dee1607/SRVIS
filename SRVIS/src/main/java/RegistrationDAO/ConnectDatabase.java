@@ -1,13 +1,12 @@
 package RegistrationDAO;
 
-import database.IConnectionToDB;
 import presentationlayer.LoginUI;
 
 
 import java.sql.*;
 import java.util.HashMap;
 
-public class ConnectDatabase implements IConnectionToDB {
+public class ConnectDatabase {
     private Connection conn = null;
     private String dbURL;
     private String dbUsername;
