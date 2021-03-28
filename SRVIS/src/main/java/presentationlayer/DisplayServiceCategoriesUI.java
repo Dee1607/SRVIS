@@ -1,10 +1,9 @@
-package presantationlayer;
+package presentationlayer;
 
 import java.util.Map;
-import java.util.Scanner;
 
-public class DisplayServiceCategoriesUI {
-
+public class DisplayServiceCategoriesUI
+{
     public void displayServiceCategory(Map<Integer,String> mapOfServiceCategory)
     {
         System.out.println("=========================================================================");

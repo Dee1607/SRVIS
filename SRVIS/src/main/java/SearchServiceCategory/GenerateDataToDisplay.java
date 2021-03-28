@@ -13,9 +13,6 @@ public class GenerateDataToDisplay {
         Map<Integer,String> mapSearchCategories = new HashMap<Integer,String>();
 
         String questionMessage = "What service are you looking for:";
-//        for(int i = 0; i < EnumServiceCategory.values().length + 1; i++){
-//
-//        }
         mapSearchCategories.put(0,questionMessage);
         mapSearchCategories.put(1,"1."+ EnumServiceCategory.Electrician);
         mapSearchCategories.put(2,"2."+ EnumServiceCategory.Plumber);
