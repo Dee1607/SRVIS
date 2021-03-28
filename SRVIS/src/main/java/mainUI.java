@@ -1,5 +1,5 @@
+import SearchServiceCategory.SelectServiceCategory;
 import presantationlayer.LoginPage;
-import presantationlayer.ServiceCategoryUI;
 
 public class mainUI {
 
@@ -9,7 +9,7 @@ public class mainUI {
         try {
 //            log.login();
 
-            ServiceCategoryUI obj = new ServiceCategoryUI();
+            SelectServiceCategory obj = new SelectServiceCategory();
             obj.searchService();
 
         } catch (Exception e) {
