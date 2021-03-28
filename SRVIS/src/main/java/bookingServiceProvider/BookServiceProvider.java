@@ -10,7 +10,6 @@ import java.util.Map;
 
 public class BookServiceProvider {
     DisplayToGetUserChoice objToDisplayData = null;
-    Database objDatabaseConnection = null;
     DisplayUpdates objDisplayMessage = null;
     Database db= Database.databaseInstance();
 
@@ -37,7 +36,9 @@ public class BookServiceProvider {
         insertData.put("service_request_description",descriptionOfWork);
 
         try{
+
             objDisplayMessage = new DisplayUpdates();
+            db.makeConnection();
             boolean insertStatus = db.insertQuery(query1,insertData);
 
             if(insertStatus)
@@ -48,6 +49,13 @@ public class BookServiceProvider {
         catch(Exception e)
         {
             e.printStackTrace();
+        }
+        finally {
+            try{
+                db.closeConnection();
+            }catch(Exception e){
+                e.printStackTrace();
+            }
         }
 
 
