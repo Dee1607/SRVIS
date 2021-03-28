@@ -1,10 +1,8 @@
 package database;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.sql.Date;
+import java.util.*;
 
 public class DatabaseQuery {
 
@@ -14,7 +12,8 @@ public class DatabaseQuery {
     Map<String,String> tableValues=null;
     private String tempKey;
 
-    public DatabaseQuery(Connection con){
+    public DatabaseQuery(Connection con)
+    {
         this.connect=con;
     }
 
@@ -45,5 +44,26 @@ public class DatabaseQuery {
     public void updateQuery(String query) throws Exception {
         stmt = connect.createStatement();
         int rsUpdate = stmt.executeUpdate(query);
+    }
+
+    public boolean insertQuery(String query, Map<String,String> insertData) throws Exception
+    {
+        PreparedStatement preparedStmt = connect.prepareStatement(query);
+
+        preparedStmt.setInt (1, Integer.parseInt(insertData.get("customer_id")));
+        preparedStmt.setInt (2, Integer.parseInt(insertData.get("service_provider_id")));
+        preparedStmt.setDate(3, java.sql.Date.valueOf(insertData.get("service_request_date")));
+        preparedStmt.setInt (4, Integer.parseInt(insertData.get("service_request_category_id")));
+        preparedStmt.setString(5,insertData.get("service_request_description"));
+        int insertStatus = preparedStmt.executeUpdate();
+
+        if(insertStatus > 0)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 }
