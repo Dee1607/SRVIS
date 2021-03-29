@@ -6,7 +6,7 @@ public interface IPaymentInfo {
     void setCardNumber(String cardNumber);
     void setFullName(String fullName);
     void setSecurityCode(String securityCode);
-    void getExpiryDate(String expiryDate);
+    void setExpiryDate(String expiryDate);
     String getUserID();
     PaymentType getType();
     String getCardNumber();

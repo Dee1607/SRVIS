@@ -4,22 +4,14 @@ import database.Database;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Map;
 
 public class PaymentDAO {
-    Database paymentDB = Database.databaseInstance();
 
-    public Map<String, Map<String,String>> AppLogin(String user, String password, String type) throws Exception {
-        Connection conn = paymentDB.makeConnection();
+    private Database paymentDB = Database.databaseInstance();
 
-        String sql1 = "SELECT * FROM CSCI5308_3_DEVINT."+type+" where Email='" + user + "' and Password='" + password + "'";
-        Map<String,Map<String,String>> queryResult= paymentDB.selectQuery(sql1);
-        paymentDB.closeConnection();
-        return queryResult;
-    }
-
-    public boolean write(Payment payment) {
+    public void write(Payment payment) {
         try {
             Connection con = paymentDB.makeConnection();
 
@@ -73,28 +65,52 @@ public class PaymentDAO {
 
             if (result == 7) {
                 con.commit();
-                con.close();
-                paymentDB.closeConnection();
-                paymentDB = null;
-                return true;
             }
             else {
                 System.err.print("Error. Transaction is being rolled back");
                 con.rollback();
-                con.close();
-                paymentDB.closeConnection();
-                paymentDB = null;
-                return false;
             }
+            con.close();
+            paymentDB.closeConnection();
+            paymentDB = null;
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return false;
     }
 
-    public Payment read() {
+    public IPayment read(String paymentID) {
+        IPayment payment = null;
 
-        return null;
+        try {
+            Connection con = paymentDB.makeConnection();
+
+            String selectQuery = "SELECT * FROM CSCI5308_3_DEVINT.payment WHERE payment_id = ? LIMIT 1;";
+
+            con.setAutoCommit(false);
+            PreparedStatement insertPayment = con.prepareStatement(selectQuery);
+            insertPayment.setString(1, paymentID);
+            ResultSet rs = insertPayment.executeQuery();
+            String serviceRequestID = rs.getString("service_request_id");
+            String senderID = rs.getString("sender_id");
+            String receiverID = rs.getString("receiver_id");
+            String amount = rs.getString("amount");
+            String date = rs.getString("date");
+            String status = rs.getString("status");
+
+            IPaymentInfo sender = PaymentInfoDAO.read(senderID);
+            IPaymentInfo receiver = PaymentInfoDAO.read(receiverID);
+            payment = new Payment(paymentID);
+            payment.setSender(sender);
+            payment.setReceiver(receiver);
+            payment.setServiceRequestID(serviceRequestID);
+            payment.setAmount(amount);
+            payment.setDate(date);
+            payment.setStatus(PaymentStatus.valueOf(status));
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return payment;
     }
 
 }

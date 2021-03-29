@@ -8,7 +8,6 @@ public class PaymentInfo implements IPaymentInfo{
     private String securityCode;
     private String expiryDate;
 
-    @Override
     public void setUserID(String userID) {
         this.userID = userID;
     }
@@ -29,11 +28,10 @@ public class PaymentInfo implements IPaymentInfo{
         this.securityCode = securityCode;
     }
 
-    public void getExpiryDate(String expiryDate) {
+    public void setExpiryDate(String expiryDate) {
         this.expiryDate = expiryDate;
     }
 
-    @Override
     public String getUserID() {
         return userID;
     }

@@ -15,9 +15,9 @@ public class Payment implements IPayment{
     }
 
     public boolean isValid() {
-        boolean senderIsValid = true;
-        boolean receiverIsValid = false;
-        boolean amountIsValid = false;
+        boolean senderIsValid = (sender != null);
+        boolean receiverIsValid = (receiver != null);
+        boolean amountIsValid = (amount != null);
 
         return senderIsValid && receiverIsValid && amountIsValid;
     }
@@ -76,7 +76,7 @@ public class Payment implements IPayment{
     }
 
     public String getStatusString() {
-        return status.toString();
+        return status.name();
     }
 
     public void setPaymentID(String paymentID) {
