@@ -1,17 +1,12 @@
-import presantationlayer.LoginPage;
-import presantationlayer.ServiceCategoryUI;
+import presentationlayer.LoginUI;
 
-public class mainUI {
-
-    public static void main(String[] args){
-
-        LoginPage log=new LoginPage();
+public class mainUI
+{
+    public static void main(String[] args)
+    {
+        LoginUI login=new LoginUI();
         try {
-//            log.login();
-
-//            ServiceCategoryUI obj = new ServiceCategoryUI();
-//            obj.searchService();
-
+            login.showLoginScreen();
         } catch (Exception e) {
             e.printStackTrace();
         }
