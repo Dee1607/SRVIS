@@ -1,7 +1,7 @@
 package payment;
 
 public interface IPayment {
-    boolean validatePayment();
-    boolean processPayment();
+    boolean isValid();
+    void processPayment();
     PaymentStatus getStatus();
 }

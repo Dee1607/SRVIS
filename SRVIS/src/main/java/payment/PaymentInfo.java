@@ -1,11 +1,17 @@
 package payment;
 
 public class PaymentInfo implements IPaymentInfo{
+    private String userID;
     private PaymentType paymentType;
     private String cardNumber;
     private String fullName;
     private String securityCode;
     private String expiryDate;
+
+    @Override
+    public void setUserID(String userID) {
+        this.userID = userID;
+    }
 
     public void setPaymentType(PaymentType paymentType) {
         this.paymentType = paymentType;
@@ -25,6 +31,11 @@ public class PaymentInfo implements IPaymentInfo{
 
     public void getExpiryDate(String expiryDate) {
         this.expiryDate = expiryDate;
+    }
+
+    @Override
+    public String getUserID() {
+        return userID;
     }
 
     public PaymentType getType() {

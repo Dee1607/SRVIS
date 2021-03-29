@@ -20,7 +20,7 @@ public class Database {
     private Database() {  }
 
     public static Database databaseInstance() {
-        dbSingleton=new  Database();
+        dbSingleton=new Database();
         return dbSingleton;
     }
 
