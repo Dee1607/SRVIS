@@ -3,15 +3,13 @@ package presentationlayer;
 import login.LoginService;
 import java.util.Scanner;
 
-public class LoginUI {
-
-       private String username;
-       private String password;
-       private String type;
+public class LoginUI
+{
        LoginService login ;
        DisplayToGetUserChoice objGetData ;
 
-    public void showLoginScreen() throws Exception {
+    public void showLoginScreen() throws Exception
+    {
            Scanner sc = new Scanner(System.in);
            System.out.println("########## Welcome to SRVIS ##########");
            System.out.println("Select from below options :");
@@ -21,15 +19,19 @@ public class LoginUI {
            if (userInput.equals("1"))
            {
                   userLogin();
-           }else if(userInput.equals("2")){
-                     userRegistration();
-           }else {
+           }
+           else if(userInput.equals("2"))
+           {
+                  userRegistration();
+           }
+           else
+           {
                   System.out.println("Please enter valid input .");
            }
     }
 
-    public void userLogin() throws Exception {
-           Scanner sc = new Scanner(System.in);
+    public void userLogin() throws Exception
+    {
            login = new LoginService();
            objGetData = new DisplayToGetUserChoice();
            String username = objGetData.displayMessageGetStringChoiceFromUser("Enter your Username: ");
@@ -38,7 +40,8 @@ public class LoginUI {
            login.loginUser(username, password,type);
     }
 
-    public void userRegistration() throws Exception {
+    public void userRegistration()
+    {
            System.out.println("Please register  your account !!");
            RegistrationPageUI register = new RegistrationPageUI();
            register.getFirstName();
