@@ -13,7 +13,7 @@ public class LoginService {
 
    private String Email;
    private String Password;
-
+   private LoginDAO loginDAO;
 
    public void loginUser(String user, String password, String type) throws Exception {
       LoginDAO loginDAO=new LoginDAO();
@@ -36,5 +36,11 @@ public class LoginService {
             serviceProvider.showCustomerRequestUI();
       }
       }
+   }
+
+
+   public void getPendingRequests(String username)
+   {
+         loginDAO.
    }
 }

@@ -8,10 +8,11 @@ public class LoginUI {
        private String username;
        private String password;
        private String type;
-       LoginService login ;
-       DisplayToGetUserChoice objGetData ;
+       private LoginService login ;
+       private DisplayToGetUserChoice objGetData ;
 
-    public void showLoginScreen() throws Exception {
+    public void showLoginScreen() throws Exception
+    {
            Scanner sc = new Scanner(System.in);
            System.out.println("########## Welcome to SRVIS ##########");
            System.out.println("Select from below options :");
@@ -28,7 +29,8 @@ public class LoginUI {
            }
     }
 
-    public void userLogin() throws Exception {
+    public void userLogin() throws Exception
+    {
            Scanner sc = new Scanner(System.in);
            login = new LoginService();
            objGetData = new DisplayToGetUserChoice();
@@ -38,7 +40,8 @@ public class LoginUI {
            login.loginUser(username, password,type);
     }
 
-    public void userRegistration() throws Exception {
+    public void userRegistration() throws Exception
+    {
            System.out.println("Please register  your account !!");
            RegistrationPageUI register = new RegistrationPageUI();
            register.getFirstName();
@@ -49,5 +52,10 @@ public class LoginUI {
            register.getPassword();
            register.getProfessionalCategoryDetails();
            register.checkErrors();
+    }
+
+    public void showPendingRequest(String username)
+    {
+        login.
     }
 }
