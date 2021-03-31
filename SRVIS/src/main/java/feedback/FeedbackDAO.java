@@ -50,7 +50,8 @@ public class FeedbackDAO {
         return feedback;
     }
 
-    public static void write(IFeedback feedback) {
+    public static boolean write(IFeedback feedback) {
+        boolean writeSuccessful = false;
         try {
             Database db = Database.databaseInstance();
             Connection con = db.makeConnection();
@@ -89,6 +90,7 @@ public class FeedbackDAO {
 
             if (insertFeedback.executeUpdate() == 1) {
                 con.commit();
+                writeSuccessful = true;
             }
             else {
                 System.err.println("Error. Transaction is being rolled back");
@@ -99,5 +101,6 @@ public class FeedbackDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return writeSuccessful;
     }
 }
