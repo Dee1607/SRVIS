@@ -1,18 +1,18 @@
 package SearchServiceProvider;
 
 import bookingserviceprovider.BookServiceProvider;
-import database.Database;
+import database.DatabaseConnection;
 import enums.EnumServiceCategory;
 import presentationlayer.DisplayToGetUserChoice;
 import presentationlayer.DisplayServiceProviderInfoUI;
-import java.sql.SQLException;
+
 import java.util.Map;
 
-public class SelectServiceProvider
+public class SelectServiceProvider implements ISelectServiceProvider
 {
     private DisplayToGetUserChoice objGetUserChoice = null;
     private DisplayServiceProviderInfoUI objDisplayServiceProvider = null;
-    private final Database db = Database.databaseInstance();
+    private final DatabaseConnection db = DatabaseConnection.databaseInstance();
     private Map<String,String> CUSTOMER_SESSION;
     private BookServiceProvider objBookServiceProvider= null;
 

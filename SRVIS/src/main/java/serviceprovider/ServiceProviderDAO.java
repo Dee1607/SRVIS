@@ -1,13 +1,13 @@
 package serviceprovider;
 
-import database.Database;
+import database.DatabaseConnection;
 import java.util.Map;
 
-public class ServiceProviderDAO
+public class ServiceProviderDAO implements IServiceProviderDAO
 {
-    Database db= Database.databaseInstance();
+    DatabaseConnection db= DatabaseConnection.databaseInstance();
 
-    public void updateServiceStatus(String email) throws Exception
+    public void updateServiceStatus(String email)
     {
         db.makeConnection();
         String sql1 = " UPDATE service_provider SET spAvailability ='Y' WHERE service_provider_id=1";
@@ -15,7 +15,7 @@ public class ServiceProviderDAO
         db.closeConnection();
     }
 
-    public Map<String,Map<String,String>> showAllBooking() throws Exception
+    public Map<String,Map<String,String>> showAllBooking()
     {
         db.makeConnection();
         String sql1 = "SELECT * FROM CSCI5308_3_DEVINT.service_request";

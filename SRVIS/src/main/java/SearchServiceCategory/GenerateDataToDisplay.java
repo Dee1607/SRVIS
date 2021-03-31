@@ -4,7 +4,7 @@ import enums.EnumServiceCategory;
 import java.util.HashMap;
 import java.util.Map;
 
-public class GenerateDataToDisplay
+public class GenerateDataToDisplay implements IGenerateDataToDisplay
 {
     public Map<Integer,String> generateServiceCategoryData()
     {

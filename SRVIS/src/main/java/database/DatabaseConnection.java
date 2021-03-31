@@ -4,7 +4,7 @@ import java.sql.*;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Database
+public class DatabaseConnection implements IDatabaseConnection
 {
     private Connection conn = null;
     private String dbURL;
@@ -13,13 +13,13 @@ public class Database
     private Statement stmt ;
     private String tempKey;
 
-    private static Database dbSingleton;
+    private static DatabaseConnection dbSingleton;
 
-    private Database() {  }
+    private DatabaseConnection() {  }
 
-    public static Database databaseInstance()
+    public static DatabaseConnection databaseInstance()
     {
-        dbSingleton=new  Database();
+        dbSingleton=new DatabaseConnection();
         return dbSingleton;
     }
 

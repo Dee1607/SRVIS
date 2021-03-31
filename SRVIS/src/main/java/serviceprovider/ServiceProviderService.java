@@ -2,11 +2,11 @@ package serviceprovider;
 
 import java.util.Map;
 
-public class ServiceProviderService
+public class ServiceProviderService implements IServiceProviderService
 {
 
     ServiceProviderDAO d = new ServiceProviderDAO();
-    public void updateAvailability(String Email) throws Exception
+    public void updateAvailability(String Email)
     {
         d.updateServiceStatus(Email);
     }
@@ -24,7 +24,7 @@ public class ServiceProviderService
     }
 
 
-    public Map<String , Map<String,String>>  showBooking() throws Exception
+    public Map<String , Map<String,String>>  showBooking()
     {
         Map<String , Map<String,String>> bookingResult = d.showAllBooking();
         return bookingResult;

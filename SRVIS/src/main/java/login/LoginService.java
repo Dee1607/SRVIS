@@ -10,7 +10,7 @@ public class LoginService
    private String Password = null;
    private Map<String,String> tempValues = null;
 
-   public void loginUser(String user, String password, String type) throws Exception
+   public void loginUser(String user, String password, String type)
    {
       LoginDAO loginDAO = null;
       Map<String , Map<String,String>> result = null;
@@ -19,28 +19,36 @@ public class LoginService
 
       loginDAO = new LoginDAO();
       result = loginDAO.AppLogin(user,password,type);
-      if(result.isEmpty())
+
+      try
       {
-         System.out.println("Username/Password is incorrect . Please try again .");
-      }
-      else
-      {
-         for(String str : result.keySet())
+         if(result.isEmpty())
          {
-            tempValues = result.get(str);
-            Email = tempValues.get("Email");
-            Password = tempValues.get("Password");
-         }
-         if (Email.equals(user) && Password.equals(password) && type.equals("customer"))
-         {
-            objServiceCategory = new SelectServiceCategory(tempValues);
-            objServiceCategory.getUserSelectedService();
+            System.out.println("Username/Password is incorrect . Please try again .");
          }
          else
          {
-            serviceProvider = new ServiceProviderCustomerUI(result);
-            serviceProvider.showCustomerRequestUI();
+            for(String str : result.keySet())
+            {
+               tempValues = result.get(str);
+               Email = tempValues.get("Email");
+               Password = tempValues.get("Password");
+            }
+            if (Email.equals(user) && Password.equals(password) && type.equals("customer"))
+            {
+               objServiceCategory = new SelectServiceCategory(tempValues);
+               objServiceCategory.getUserSelectedService();
+            }
+            else
+            {
+               serviceProvider = new ServiceProviderCustomerUI(result);
+               serviceProvider.showCustomerRequestUI();
+            }
          }
+      }
+      catch(Exception e)
+      {
+         e.printStackTrace();
       }
    }
 }

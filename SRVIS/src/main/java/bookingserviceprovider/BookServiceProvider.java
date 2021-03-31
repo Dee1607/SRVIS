@@ -1,6 +1,6 @@
 package bookingserviceprovider;
 
-import database.Database;
+import database.DatabaseConnection;
 import presentationlayer.DisplayServiceProviderInfoUI;
 import presentationlayer.DisplayToGetUserChoice;
 import presentationlayer.DisplayUpdates;
@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
-public class BookServiceProvider
+public class BookServiceProvider implements IBookServiceProvider
 {
     private Map<String,String> CUSTOMER_SESSION;
 
@@ -50,7 +50,8 @@ public class BookServiceProvider
         }
     }
 
-    public void getAdditionalDetailsToBookServiceProvider(Map<String,String> selectedServiceProvider){
+    public void getAdditionalDetailsToBookServiceProvider(Map<String,String> selectedServiceProvider)
+    {
 
         DisplayToGetUserChoice objToDisplayData;
 
@@ -62,7 +63,7 @@ public class BookServiceProvider
 
         Map<String,String> insertData = new HashMap<>();
 
-        insertData.put("customer_id",CUSTOMER_SESSION.get("customerID"));
+        insertData.put("customer_id",CUSTOMER_SESSION.get("customer_id"));
         insertData.put("service_provider_id",selectedServiceProvider.get("service_provider_id"));
         insertData.put("service_request_date",bookingDate.toString());
         insertData.put("service_request_category_id",selectedServiceProvider.get("spServiceCategoryID"));
@@ -71,10 +72,10 @@ public class BookServiceProvider
         generateBookingRequest(insertData);
     }
 
-    public boolean generateBookingRequest(Map<String,String> dataToInsert){
-
+    public boolean generateBookingRequest(Map<String,String> dataToInsert)
+    {
         DisplayUpdates objDisplayMessage;
-        Database db= Database.databaseInstance();
+        DatabaseConnection db= DatabaseConnection.databaseInstance();
 
         try
         {

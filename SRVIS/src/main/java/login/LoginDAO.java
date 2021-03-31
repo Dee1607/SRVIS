@@ -1,13 +1,13 @@
 package login;
 
-import database.Database;
+import database.DatabaseConnection;
 import java.util.Map;
 
-public class LoginDAO {
+public class LoginDAO implements ILoginDAO{
 
-    Database db= Database.databaseInstance();
+    DatabaseConnection db = DatabaseConnection.databaseInstance();
 
-    public Map<String, Map<String,String>> AppLogin(String user, String password, String type) throws Exception
+    public Map<String, Map<String,String>> AppLogin(String user, String password, String type)
     {
         db.makeConnection();
         String sql1 = "SELECT * FROM CSCI5308_3_DEVINT."+type+" where Email='" + user + "' and Password='" + password + "'";
