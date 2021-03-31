@@ -1,8 +1,13 @@
 package feedback;
 
 public class Feedback implements IFeedback{
+    private String id;
     private IReview review;
     private String rating;
+
+    public Feedback(String id) {
+        this.id = id;
+    }
 
     public void setRating(String rating) {
         this.rating = rating;
@@ -23,7 +28,11 @@ public class Feedback implements IFeedback{
     }
 
     public void publishFeedback() {
-        // Store feedback to database
+        FeedbackDAO.write(this);
+    }
+
+    public String getID() {
+        return id;
     }
 
     public IReview getReview() {

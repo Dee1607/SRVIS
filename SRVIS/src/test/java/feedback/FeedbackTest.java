@@ -13,7 +13,7 @@ public class FeedbackTest {
 
     @Test
     public void setRating() {
-        IFeedback feedback = new Feedback();
+        IFeedback feedback = new Feedback("feedbackID");
         String rating = "5";
         feedback.setRating(rating);
         assertEquals(rating, feedback.getRating());
@@ -21,7 +21,7 @@ public class FeedbackTest {
 
     @Test
     public void setReview() {
-        IFeedback feedback = new Feedback();
+        IFeedback feedback = new Feedback("feedbackID");
         String reviewString = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
         IReview review = new Review();
         review.setReviewString(reviewString);
@@ -32,7 +32,7 @@ public class FeedbackTest {
 
     @Test
     public void validateReview() {
-        IFeedback feedback = new Feedback();
+        IFeedback feedback = new Feedback("feedbackID");
         String reviewString = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
         IReview review = new Review();
         review.setReviewString(reviewString);
@@ -43,6 +43,7 @@ public class FeedbackTest {
 
     @Test
     public void publishFeedback() {
+
     }
 
     @Test

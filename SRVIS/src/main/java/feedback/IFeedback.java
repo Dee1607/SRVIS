@@ -5,6 +5,7 @@ public interface IFeedback {
     void setReview(IReview review);
     boolean validateReview();
     void publishFeedback();
+    String getID();
     IReview getReview();
     String getRating();
 }
