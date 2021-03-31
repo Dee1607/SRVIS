@@ -1,5 +1,7 @@
 package payment;
 
+import java.util.Objects;
+
 public class Payment implements IPayment{
 
     private String paymentID;
@@ -23,8 +25,7 @@ public class Payment implements IPayment{
     }
 
     public void processPayment() {
-        PaymentDAO paymentDAO = new PaymentDAO();
-        paymentDAO.write(this);
+        PaymentDAO.write(this);
     }
 
     public void setSender(IPaymentInfo sender) {
@@ -93,5 +94,18 @@ public class Payment implements IPayment{
 
     public void setServiceRequestID(String serviceRequestID) {
         this.serviceRequestID = serviceRequestID;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Payment payment = (Payment) o;
+        return Objects.equals(paymentID, payment.paymentID) && Objects.equals(serviceRequestID, payment.serviceRequestID) && Objects.equals(sender, payment.sender) && Objects.equals(receiver, payment.receiver) && Objects.equals(amount, payment.amount) && Objects.equals(date, payment.date) && status == payment.status;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(paymentID, serviceRequestID, sender, receiver, amount, date, status);
     }
 }

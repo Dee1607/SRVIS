@@ -1,5 +1,7 @@
 package payment;
 
+import java.util.Objects;
+
 public class PaymentInfo implements IPaymentInfo{
     private String userID;
     private PaymentType paymentType;
@@ -36,8 +38,8 @@ public class PaymentInfo implements IPaymentInfo{
         return userID;
     }
 
-    public PaymentType getType() {
-        return paymentType;
+    public String getPaymentType() {
+        return paymentType.name();
     }
 
     public String getCardNumber() {
@@ -54,5 +56,18 @@ public class PaymentInfo implements IPaymentInfo{
 
     public String getExpiryDate() {
         return expiryDate;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        PaymentInfo that = (PaymentInfo) o;
+        return Objects.equals(userID, that.userID) && paymentType == that.paymentType && Objects.equals(cardNumber, that.cardNumber) && Objects.equals(fullName, that.fullName) && Objects.equals(securityCode, that.securityCode) && Objects.equals(expiryDate, that.expiryDate);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(userID, paymentType, cardNumber, fullName, securityCode, expiryDate);
     }
 }

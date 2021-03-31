@@ -18,5 +18,6 @@ public class PaymentTest {
     public void getStatus() {
         IPaymentInfo sender = new PaymentInfo();
         IPaymentInfo receiver = new PaymentInfo();
+
     }
 }

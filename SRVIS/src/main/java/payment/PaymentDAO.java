@@ -9,9 +9,9 @@ import java.sql.SQLException;
 
 public class PaymentDAO {
 
-    private Database paymentDB = Database.databaseInstance();
+    private static Database paymentDB = Database.databaseInstance();
 
-    public void write(Payment payment) {
+    public static void write(IPayment payment) {
         try {
             Connection con = paymentDB.makeConnection();
 
@@ -63,11 +63,11 @@ public class PaymentDAO {
 
             int result = insertPayment.executeUpdate();
 
-            if (result == 7) {
+            if (result == 1) {
                 con.commit();
             }
             else {
-                System.err.print("Error. Transaction is being rolled back");
+                System.err.println("Error. Transaction is being rolled back");
                 con.rollback();
             }
             con.close();
@@ -78,10 +78,11 @@ public class PaymentDAO {
         }
     }
 
-    public IPayment read(String paymentID) {
+    public static IPayment read(String paymentID) {
         IPayment payment = null;
 
         try {
+            paymentDB = Database.databaseInstance();
             Connection con = paymentDB.makeConnection();
 
             String selectQuery = "SELECT * FROM CSCI5308_3_DEVINT.payment WHERE payment_id = ? LIMIT 1;";
@@ -90,6 +91,7 @@ public class PaymentDAO {
             PreparedStatement insertPayment = con.prepareStatement(selectQuery);
             insertPayment.setString(1, paymentID);
             ResultSet rs = insertPayment.executeQuery();
+            rs.next();
             String serviceRequestID = rs.getString("service_request_id");
             String senderID = rs.getString("sender_id");
             String receiverID = rs.getString("receiver_id");
