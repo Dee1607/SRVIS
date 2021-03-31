@@ -96,6 +96,7 @@ public class FeedbackDAO {
                 System.err.println("Error. Transaction is being rolled back");
                 con.rollback();
             }
+            insertFeedback.close();
             con.close();
             db.closeConnection();
         } catch (SQLException e) {

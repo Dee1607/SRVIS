@@ -48,9 +48,17 @@ public class FeedbackTest {
 
     @Test
     public void getReview() {
+        IReview testReviewObject = new Review();
+        IFeedback testFeedbackObject = new Feedback("testID");
+        testFeedbackObject.setReview(testReviewObject);
+        assertEquals(testReviewObject, testFeedbackObject.getReview());
     }
 
     @Test
     public void getRating() {
+        String rating = "5";
+        IFeedback testFeedbackObject = new Feedback("testID");
+        testFeedbackObject.setRating(rating);
+        assertEquals(rating, testFeedbackObject.getRating());
     }
 }

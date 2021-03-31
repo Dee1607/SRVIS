@@ -37,6 +37,8 @@ class FeedbackDAOTest {
                 "WHERE `feedback`.`feedback_id` = \"testID\";";
         Statement stmt = con.createStatement();
         stmt.execute(deleteQuery);
+        stmt.close();
+        con.close();
     }
 
     @Test
