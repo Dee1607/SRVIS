@@ -37,7 +37,7 @@ public class SelectServiceCategory
         try
         {
             db.makeConnection();
-            Map<String, Map<String, String>> mapOfDataFromDatabase = db.selectQuery("SELECT * FROM CSCI5308_3_DEVINT.service_provider where spJobType = '"
+            Map<String, Map<String, String>> mapOfDataFromDatabase = db.selectQuery("SELECT * FROM CSCI5308_3_DEVINT.service_provider where JobType = '"
                     + enumObjectOfChoice.toString() + "'");
 
             DisplayServiceProviderInfoUI objDisplayServiceProvider = new DisplayServiceProviderInfoUI();

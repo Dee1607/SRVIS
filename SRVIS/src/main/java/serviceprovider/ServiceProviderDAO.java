@@ -10,7 +10,7 @@ public class ServiceProviderDAO {
 
     public void updateServiceStatus(String email) throws Exception {
         db.makeConnection();
-        String sql1 = " UPDATE service_provider SET spAvailability ='Y' WHERE service_provider_id=1";
+        String sql1 = " UPDATE service_provider SET Availability ='Y' WHERE service_provider_id=1";
         db.updateQuery(sql1);
         db.closeConnection();
     }

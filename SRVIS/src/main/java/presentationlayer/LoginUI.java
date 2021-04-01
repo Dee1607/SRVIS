@@ -1,6 +1,8 @@
 package presentationlayer;
 
 import login.LoginService;
+
+import java.util.Map;
 import java.util.Scanner;
 
 public class LoginUI {
@@ -10,6 +12,7 @@ public class LoginUI {
        private String type;
        private LoginService login ;
        private DisplayToGetUserChoice objGetData ;
+       private Map<String,String> pendingBookingValues =null;
 
     public void showLoginScreen() throws Exception
     {
@@ -37,7 +40,8 @@ public class LoginUI {
            String username = objGetData.displayMessageGetStringChoiceFromUser("Enter your Username: ");
            String password = objGetData.displayMessageGetStringChoiceFromUser("Enter your password: ");
            String type = objGetData.displayMessageGetStringChoiceFromUser("Login as Customer/Service provider: ");
-           login.loginUser(username, password,type);
+           login.loggingUser(username, password,type);
+           showPendingRequest(username);
     }
 
     public void userRegistration() throws Exception
@@ -54,8 +58,16 @@ public class LoginUI {
            register.checkErrors();
     }
 
-    public void showPendingRequest(String username)
+    public void showPendingRequest(String username) throws Exception
     {
-        login.
+        Map<String, Map<String, String>> pendingRequests = login.getPendingRequests(username);
+        for (String keys : pendingRequests.keySet()) {
+            pendingBookingValues = pendingRequests.get(keys);
+            System.out.format("%1s%-20s%1s%-55s%1s", "|", "====================", "|", "========================================================", "|\n");
+            System.out.format("%1s%-20s%1s%-55s%1s", "|", " Request ID ", "| ", pendingBookingValues.get("service_request_id"), "|\n");
+            System.out.format("%1s%-20s%1s%-55s%1s", "|", " Service Provider ID ", "| ", pendingBookingValues.get("service_provider_id"), "|\n");
+            System.out.format("%1s%-20s%1s%-55s%1s", "|", " Request Description ", "| ", pendingBookingValues.get("service_request_description"), "|\n");
+            System.out.format("%1s%-20s%1s%-55s%1s", "|", "--------------------", "|", "--------------------------------------------------------", "|\n");
+        }
     }
 }
