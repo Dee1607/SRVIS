@@ -123,7 +123,7 @@ public class DatabaseConnection implements IDatabaseConnection
 
             preparedStmt.setInt (1, Integer.parseInt(insertData.get("customer_id")));
             preparedStmt.setInt (2, Integer.parseInt(insertData.get("service_provider_id")));
-            preparedStmt.setDate(3, Date.valueOf(insertData.get("service_request_date")));
+            preparedStmt.setDate(3, java.sql.Date.valueOf(insertData.get("service_request_date")));
             preparedStmt.setInt (4, Integer.parseInt(insertData.get("service_request_category_id")));
             preparedStmt.setString(5,insertData.get("service_request_description"));
             int insertStatus = preparedStmt.executeUpdate();

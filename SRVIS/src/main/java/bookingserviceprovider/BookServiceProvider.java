@@ -1,5 +1,6 @@
 package bookingserviceprovider;
 
+import database.DatabaseConnection;
 import presentationlayer.DisplayServiceProviderInfoUI;
 import presentationlayer.DisplayToGetUserChoice;
 import presentationlayer.DisplayUpdates;

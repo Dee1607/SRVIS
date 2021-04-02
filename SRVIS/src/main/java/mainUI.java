@@ -3,9 +3,12 @@ public class mainUI
     public static void main(String[] args)
     {
         LoginUI login=new LoginUI();
-        try {
+        try
+        {
             login.showLoginScreen();
-        } catch (Exception e) {
+        }
+        catch (Exception e)
+        {
             e.printStackTrace();
         }
     }
