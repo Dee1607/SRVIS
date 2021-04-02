@@ -26,7 +26,7 @@ public class ServiceProviderCustomerUI {
         }
     }
 
-    public void showCustomerRequestUI() throws Exception {
+    public void showCustomerRequestUI() {
             System.out.println("Hi "+ firstName +  lastName);
             showAvailability();
             getJobRequests();
@@ -48,7 +48,8 @@ public class ServiceProviderCustomerUI {
             }
         }
 
-    public void showAvailability() throws Exception {
+    public void showAvailability()
+    {
         Scanner sc = new Scanner(System.in);
         System.out.println("Are you available for work (yes/no)?");
         String availabilityStatus = sc.nextLine();
@@ -61,7 +62,8 @@ public class ServiceProviderCustomerUI {
         }
     }
 
-    public Map<String , String> getJobRequests() throws Exception {
+    public Map<String , String> getJobRequests()
+    {
         Map<String , Map<String,String>> viewBooking=s.showBooking();
             for(String spID : viewBooking.keySet()) {
                 bookingValues = viewBooking.get(spID);

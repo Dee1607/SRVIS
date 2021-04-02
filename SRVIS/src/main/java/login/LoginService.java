@@ -10,14 +10,18 @@ public class LoginService implements ILoginService
 {
    private String Email;
    private String Password;
-   private LoginDAO loginDAO;
-   private Map<String , Map<String,String>> result;
+   private LoginDAO loginDAO =null;
+   private Map<String , Map<String,String>> result = null;
+   private Map<String,String> tempValues = null;
+   private SelectServiceCategory objServiceCategory = null;
+   private ServiceProviderCustomerUI serviceProvider = null;
 
 
-   public boolean loggingUser(String email, String password,String type) throws Exception
+
+   public boolean loginUser(String email, String password,String type)
    {
       loginDAO=new LoginDAO();
-      Map<String , Map<String,String>> result=loginDAO.AppLogin(email,password,type);
+      result=loginDAO.applicationLogin(email,password,type);
       if(result.isEmpty())
       {
          System.out.println("Username/Password is incorrect . Please try again.");
@@ -25,16 +29,17 @@ public class LoginService implements ILoginService
       } else {
          for(String str : result.keySet())
          {
-            Map<String,String> tempValues = result.get(str);
+            tempValues = result.get(str);
             Email = tempValues.get("Email");
             Password = tempValues.get("Password");
          }
          if (Email.equals(email) && Password.equals(password) && type.equals("customer"))
          {
-            SelectServiceCategory obj = new SelectServiceCategory(result);
-            obj.searchService();
+            objServiceCategory = new SelectServiceCategory(tempValues);
+            objServiceCategory.getUserSelectedService();
+
          } else {
-            ServiceProviderCustomerUI serviceProvider =new ServiceProviderCustomerUI(result);
+            serviceProvider = new ServiceProviderCustomerUI(result);
             serviceProvider.showCustomerRequestUI();
          }
          return true;

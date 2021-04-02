@@ -1,51 +1,67 @@
 package SearchServiceProvider;
 
-import bookingServiceProvider.BookServiceProvider;
+import bookingserviceprovider.BookServiceProvider;
+import database.DatabaseConnection;
+import enums.EnumServiceCategory;
 import presentationlayer.DisplayToGetUserChoice;
 import presentationlayer.DisplayServiceProviderInfoUI;
 
 import java.util.Map;
-import java.util.Scanner;
 
-public class SelectServiceProvider
+public class SelectServiceProvider implements ISelectServiceProvider
 {
     private DisplayToGetUserChoice objGetUserChoice = null;
     private DisplayServiceProviderInfoUI objDisplayServiceProvider = null;
-    private BookServiceProvider objBookProvider = null;
+    private final DatabaseConnection db = DatabaseConnection.databaseInstance();
+    private Map<String,String> CUSTOMER_SESSION;
+    private BookServiceProvider objBookServiceProvider= null;
 
-    public void getSelectedServiceProvider(Map<String, Map<String, String>> mapOfDataFromDatabase,Map<String, Map<String, String>> customerSession)
+    public SelectServiceProvider(Map<String,String> customerSession)
+    {
+        this.CUSTOMER_SESSION = customerSession;
+    }
+
+    public Map<String,Map<String,String>> getServiceProvidersOfSelectedCategory(EnumServiceCategory userChoice)
+    {
+        try
+        {
+            db.makeConnection();
+            Map<String, Map<String, String>> mapOfDataFromDatabase = db.selectQuery("SELECT * FROM CSCI5308_3_DEVINT.service_provider where spJobType = '"
+                    + userChoice.toString() + "'");
+
+            objDisplayServiceProvider = new DisplayServiceProviderInfoUI();
+            objDisplayServiceProvider.displayServiceProviderBriefInfo(mapOfDataFromDatabase);
+
+            selectFromAvailableServiceProvider(mapOfDataFromDatabase);
+            return mapOfDataFromDatabase;
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+            return null;
+        }
+        finally
+        {
+            try
+            {
+                db.closeConnection();
+            }
+            catch(Exception e)
+            {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public int selectFromAvailableServiceProvider(Map<String, Map<String, String>> mapOfDataFromDatabase)
     {
         objGetUserChoice = new DisplayToGetUserChoice();
         int userSelectedForServiceProvider = objGetUserChoice.displayMessageGetNumberChoiceFromUser("Enter the Id of the service provider you want to select: ");
 
+        objBookServiceProvider = new BookServiceProvider(CUSTOMER_SESSION);
         Map<String, String> objSelectedProviderInfo = mapOfDataFromDatabase.get(String.valueOf(userSelectedForServiceProvider));
-        selectFromProvidedOptions(String.valueOf(userSelectedForServiceProvider), objSelectedProviderInfo,customerSession);
-    }
+        objBookServiceProvider.finalizeServiceProvider(String.valueOf(userSelectedForServiceProvider), objSelectedProviderInfo);
 
-    public void selectFromProvidedOptions(String serviceProviderID, Map<String,String> selectedServiceProvider,Map<String, Map<String, String>> customerSession)
-    {
-        Scanner sc = new Scanner(System.in);
-        try
-        {
-            objDisplayServiceProvider = new DisplayServiceProviderInfoUI();
-            objDisplayServiceProvider.displayServiceProviderAllInfo(serviceProviderID, selectedServiceProvider);
-
-            String choiceToSelect = objGetUserChoice.displayMessageGetStringChoiceFromUser("Do you want to select this service provider [Y/N]: ");
-
-            if(choiceToSelect.equalsIgnoreCase("Y"))
-            {
-                String selectedServiceProverID = serviceProviderID;
-                objBookProvider = new BookServiceProvider();
-                objBookProvider.bookServiceProvider(customerSession,serviceProviderID,selectedServiceProvider);
-            }
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-        }
-        finally
-        {
-            sc.close();
-        }
+        return userSelectedForServiceProvider;
     }
 }

@@ -23,7 +23,7 @@ class LoginServiceTest {
     void validityCheck() {
         LoginService login=new LoginService();
         try {
-            boolean check=login.loggingUser("bp@gmail.com","12345678","customer");
+            boolean check=login.loginUser("bp@gmail.com","12345678","customer");
             Assertions.assertEquals("true", check);
         } catch (Exception e) {
             e.printStackTrace();

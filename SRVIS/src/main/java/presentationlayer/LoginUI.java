@@ -40,7 +40,7 @@ public class LoginUI {
            String username = objGetData.displayMessageGetStringChoiceFromUser("Enter your Username: ");
            String password = objGetData.displayMessageGetStringChoiceFromUser("Enter your password: ");
            String type = objGetData.displayMessageGetStringChoiceFromUser("Login as Customer/Service provider: ");
-           login.loggingUser(username, password,type);
+           login.loginUser(username, password,type);
            showPendingRequest(username);
     }
 

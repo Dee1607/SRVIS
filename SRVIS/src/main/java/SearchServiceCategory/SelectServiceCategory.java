@@ -1,65 +1,41 @@
 package SearchServiceCategory;
 
 import SearchServiceProvider.SelectServiceProvider;
-import database.Database;
 import enums.EnumServiceCategory;
 import presentationlayer.DisplayServiceCategoriesUI;
-import presentationlayer.DisplayServiceProviderInfoUI;
 import presentationlayer.DisplayToGetUserChoice;
-
-import java.sql.SQLException;
 import java.util.*;
 
 public class SelectServiceCategory
 {
-    Map<String,Map<String,String>> CUSTOMER_SESSION ;
-    DisplayServiceCategoriesUI objDisplayServiceCategory = null;
-    GenerateDataToDisplay objGenerateServiceCategoryData = null;
-    Database db= Database.databaseInstance();
+    private Map<String,String> CUSTOMER_SESSION ;
 
-    public SelectServiceCategory(Map<String,Map<String,String>> customerSession)
+    public SelectServiceCategory(Map<String,String> customerSession)
     {
         this.CUSTOMER_SESSION = customerSession;
     }
 
-    public void searchService() {
+    public void getUserSelectedService()
+    {
+        DisplayServiceCategoriesUI objDisplayServiceCategory = null;
+        GenerateDataToDisplay objGenerateServiceCategoryData = null;
+        DisplayToGetUserChoice objGetUserChoice = null;
+        int userSelectedServiceCategory = -1;
+        EnumServiceCategory enumObjectOfChoice = null;
+        SelectServiceProvider objSelectedServiceProvider = null;
+        Map<Integer,String> mapSearchCategories = null;
 
         objGenerateServiceCategoryData = new GenerateDataToDisplay();
-        Map<Integer,String> mapSearchCategories = objGenerateServiceCategoryData.generateServiceCategoryData();
+        mapSearchCategories = objGenerateServiceCategoryData.generateServiceCategoryData();
 
         objDisplayServiceCategory = new DisplayServiceCategoriesUI();
         objDisplayServiceCategory.displayServiceCategory(mapSearchCategories);
 
-        DisplayToGetUserChoice objGetUserChoice = new DisplayToGetUserChoice();
-        int userSelectedServiceCategory = objGetUserChoice.displayMessageGetNumberChoiceFromUser("Enter the number of Service You need: ");
-        EnumServiceCategory enumObjectOfChoice = EnumServiceCategory.values()[userSelectedServiceCategory - 1];
+        objGetUserChoice = new DisplayToGetUserChoice();
+        userSelectedServiceCategory = objGetUserChoice.displayMessageGetNumberChoiceFromUser("Enter the number of Service You need: ");
+        enumObjectOfChoice = EnumServiceCategory.values()[userSelectedServiceCategory - 1];
 
-        try
-        {
-            db.makeConnection();
-            Map<String, Map<String, String>> mapOfDataFromDatabase = db.selectQuery("SELECT * FROM CSCI5308_3_DEVINT.service_provider where JobType = '"
-                    + enumObjectOfChoice.toString() + "'");
-
-            DisplayServiceProviderInfoUI objDisplayServiceProvider = new DisplayServiceProviderInfoUI();
-            objDisplayServiceProvider.displayServiceProviderBriefInfo(mapOfDataFromDatabase);
-
-            SelectServiceProvider objServiceProviderInfo = new SelectServiceProvider();
-            objServiceProviderInfo.getSelectedServiceProvider(mapOfDataFromDatabase,CUSTOMER_SESSION);
-        }
-        catch(Exception e)
-        {
-            e.printStackTrace();
-        }
-        finally
-        {
-            try
-            {
-                db.closeConnection();
-            }
-            catch(SQLException e)
-            {
-                e.printStackTrace();
-            }
-        }
+        objSelectedServiceProvider = new SelectServiceProvider(CUSTOMER_SESSION);
+        objSelectedServiceProvider.getServiceProvidersOfSelectedCategory(enumObjectOfChoice);
     }
 }

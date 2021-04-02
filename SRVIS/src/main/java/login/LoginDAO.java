@@ -1,15 +1,14 @@
 package login;
 
-import database.Database;
+import database.DatabaseConnection;
 
-import java.sql.SQLException;
 import java.util.Map;
 
-public class LoginDAO {
+public class LoginDAO implements ILoginDAO{
 
-    Database db= Database.databaseInstance();
+    DatabaseConnection db= DatabaseConnection.databaseInstance();
 
-    public Map<String, Map<String,String>> AppLogin(String email, String password,String type) throws Exception
+    public Map<String, Map<String,String>> applicationLogin(String email, String password,String type)
     {
         db.makeConnection();
         String sql1 = "SELECT * FROM " +type+" WHERE Email='"+email+"' AND password="+password+"";
@@ -19,7 +18,8 @@ public class LoginDAO {
     }
 
 
-    public Map<String, Map<String,String>> getAllCustomerRequests(String user) throws Exception {
+    public Map<String, Map<String,String>> getAllCustomerRequests(String user)
+    {
 
         db.makeConnection();
         String query="select * from customer left join  service_request on customer.customer_id=service_request.customer_id where Email='"+user+"';";
