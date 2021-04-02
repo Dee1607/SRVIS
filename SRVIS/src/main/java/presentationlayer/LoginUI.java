@@ -1,18 +1,12 @@
 package presentationlayer;
 
 import login.LoginService;
-
-import java.util.Map;
 import java.util.Scanner;
 
-public class LoginUI {
-
-       private String username;
-       private String password;
-       private String type;
-       private LoginService login ;
-       private DisplayToGetUserChoice objGetData ;
-       private Map<String,String> pendingBookingValues =null;
+public class LoginUI
+{
+       LoginService login ;
+       DisplayToGetUserChoice objGetData ;
 
     public void showLoginScreen() throws Exception
     {
@@ -25,26 +19,28 @@ public class LoginUI {
            if (userInput.equals("1"))
            {
                   userLogin();
-           }else if(userInput.equals("2")){
-                     userRegistration();
-           }else {
+           }
+           else if(userInput.equals("2"))
+           {
+                  userRegistration();
+           }
+           else
+           {
                   System.out.println("Please enter valid input .");
            }
     }
 
     public void userLogin() throws Exception
     {
-           Scanner sc = new Scanner(System.in);
            login = new LoginService();
            objGetData = new DisplayToGetUserChoice();
            String username = objGetData.displayMessageGetStringChoiceFromUser("Enter your Username: ");
            String password = objGetData.displayMessageGetStringChoiceFromUser("Enter your password: ");
            String type = objGetData.displayMessageGetStringChoiceFromUser("Login as Customer/Service provider: ");
            login.loginUser(username, password,type);
-           showPendingRequest(username);
     }
 
-    public void userRegistration() throws Exception
+    public void userRegistration()
     {
            System.out.println("Please register  your account !!");
            RegistrationPageUI register = new RegistrationPageUI();
@@ -54,20 +50,7 @@ public class LoginUI {
            register.getContact();
            register.getEmail();
            register.getPassword();
-           register.getProfessionalCategoryDetails();
+//           register.getProfessionalCategoryDetails();
            register.checkErrors();
-    }
-
-    public void showPendingRequest(String username) throws Exception
-    {
-        Map<String, Map<String, String>> pendingRequests = login.getPendingRequests(username);
-        for (String keys : pendingRequests.keySet()) {
-            pendingBookingValues = pendingRequests.get(keys);
-            System.out.format("%1s%-20s%1s%-55s%1s", "|", "====================", "|", "========================================================", "|\n");
-            System.out.format("%1s%-20s%1s%-55s%1s", "|", " Request ID ", "| ", pendingBookingValues.get("service_request_id"), "|\n");
-            System.out.format("%1s%-20s%1s%-55s%1s", "|", " Service Provider ID ", "| ", pendingBookingValues.get("service_provider_id"), "|\n");
-            System.out.format("%1s%-20s%1s%-55s%1s", "|", " Request Description ", "| ", pendingBookingValues.get("service_request_description"), "|\n");
-            System.out.format("%1s%-20s%1s%-55s%1s", "|", "--------------------", "|", "--------------------------------------------------------", "|\n");
-        }
     }
 }
