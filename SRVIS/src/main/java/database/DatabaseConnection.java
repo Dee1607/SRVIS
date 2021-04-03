@@ -94,7 +94,7 @@ public class DatabaseConnection implements IDatabaseConnection
     {
         try{
             stmt = conn.createStatement();
-            int rsUpdate = stmt.executeUpdate(query);
+            stmt.executeUpdate(query);
         }
         catch(Exception e)
         {
@@ -114,46 +114,44 @@ public class DatabaseConnection implements IDatabaseConnection
         }
     }
 
-    public boolean insertQuery(String query, Map<String,String> insertData)
-    {
-        PreparedStatement preparedStmt = null;
-        try
+        public boolean insertQuery(String query, Map<String,String> insertData)
         {
-            preparedStmt = conn.prepareStatement(query);
-
-            preparedStmt.setInt (1, Integer.parseInt(insertData.get("customer_id")));
-            preparedStmt.setInt (2, Integer.parseInt(insertData.get("service_provider_id")));
-            preparedStmt.setDate(3, java.sql.Date.valueOf(insertData.get("service_request_date")));
-            preparedStmt.setInt (4, Integer.parseInt(insertData.get("service_request_category_id")));
-            preparedStmt.setString(5,insertData.get("service_request_description"));
-            int insertStatus = preparedStmt.executeUpdate();
-
-            if(insertStatus > 0)
+            PreparedStatement preparedStmt = null;
+            try
             {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-        catch(Exception e)
-        {
-            e.printStackTrace();
-            return false;
-        }
-        finally
-        {
-            try{
-                preparedStmt.close();
-                closeConnection();
+                preparedStmt = conn.prepareStatement(query);
+                preparedStmt.setInt (1, Integer.parseInt(insertData.get("customer_id")));
+                preparedStmt.setInt (2, Integer.parseInt(insertData.get("service_provider_id")));
+                preparedStmt.setDate(3, java.sql.Date.valueOf(insertData.get("service_request_date")));
+                preparedStmt.setInt (4, Integer.parseInt(insertData.get("service_request_category_id")));
+                preparedStmt.setString(5,insertData.get("service_request_description"));
+                int insertStatus = preparedStmt.executeUpdate();
+                if(insertStatus > 0)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
             }
             catch(Exception e)
             {
                 e.printStackTrace();
+                return false;
+            }
+            finally
+            {
+                try{
+                    preparedStmt.close();
+                    closeConnection();
+                }
+                catch(Exception e)
+                {
+                    e.printStackTrace();
+                }
             }
         }
-    }
 
     public void closeConnection()
     {

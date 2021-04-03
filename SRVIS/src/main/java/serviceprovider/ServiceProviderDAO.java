@@ -7,10 +7,10 @@ public class ServiceProviderDAO implements IServiceProviderDAO
 {
     DatabaseConnection db= DatabaseConnection.databaseInstance();
 
-    public void updateServiceStatus(String email)
+    public void updateServiceStatus(String Email)
     {
         db.makeConnection();
-        String sql1 = " UPDATE service_provider SET spAvailability ='Y' WHERE service_provider_id=1";
+        String sql1 = " UPDATE service_provider SET availability ='Y' WHERE email='"+Email+"'";
         db.updateQuery(sql1);
         db.closeConnection();
     }

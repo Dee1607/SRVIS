@@ -5,10 +5,10 @@ import java.util.Map;
 public class ServiceProviderService implements IServiceProviderService
 {
 
-    ServiceProviderDAO d = new ServiceProviderDAO();
+    ServiceProviderDAO serviceProviderDAO = new ServiceProviderDAO();
     public void updateAvailability(String Email)
     {
-        d.updateServiceStatus(Email);
+        serviceProviderDAO.updateServiceStatus(Email);
     }
 
     public void acceptBooking()
@@ -26,7 +26,7 @@ public class ServiceProviderService implements IServiceProviderService
 
     public Map<String , Map<String,String>>  showBooking()
     {
-        Map<String , Map<String,String>> bookingResult = d.showAllBooking();
+        Map<String , Map<String,String>> bookingResult = serviceProviderDAO.showAllBooking();
         return bookingResult;
     }
 }
