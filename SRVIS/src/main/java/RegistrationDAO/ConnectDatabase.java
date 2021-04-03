@@ -1,7 +1,7 @@
 package RegistrationDAO;
 
-import presentationlayer.LoginUI;
 
+import presentationlayer.LoginUI;
 
 import java.sql.*;
 import java.util.HashMap;

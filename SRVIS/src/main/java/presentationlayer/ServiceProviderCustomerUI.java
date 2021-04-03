@@ -10,7 +10,7 @@ public class ServiceProviderCustomerUI
     private String Email;
 
     Map<String, Map<String,String>> activeLoginServiceProvider;
-    ServiceProviderService s=new ServiceProviderService();
+    ServiceProviderService serviceProvider=new ServiceProviderService();
     Map<String,String> bookingValues =null;
 
     public ServiceProviderCustomerUI(Map<String, Map<String,String>> loginUser)
@@ -22,14 +22,14 @@ public class ServiceProviderCustomerUI
             Map<String,String> tempValues = activeLoginServiceProvider.get(str);
             firstName= tempValues.get("firstName");
             lastName= tempValues.get("lastName");
-            Email= tempValues.get("Email");
+            Email= tempValues.get("email");
         }
     }
 
-    public void showCustomerRequestUI() throws Exception
+    public void showCustomerRequestUI()
     {
             System.out.println("Hi "+ firstName +  lastName);
-            showAvailability();
+            showAvailability(Email);
             getJobRequests();
             bookingOperation();
     }
@@ -51,14 +51,14 @@ public class ServiceProviderCustomerUI
             }
         }
 
-    public void showAvailability() throws Exception
+    public void showAvailability(String Email)
     {
         Scanner sc = new Scanner(System.in);
         System.out.println("Are you available for work (yes/no)?");
         String availabilityStatus = sc.nextLine();
         if(availabilityStatus.equals("yes"))
         {
-            s.updateAvailability(Email);
+            serviceProvider.updateAvailability(Email);
             System.out.println("Status : ACTIVE");
         }
         else
@@ -67,9 +67,9 @@ public class ServiceProviderCustomerUI
         }
     }
 
-    public Map<String , String> getJobRequests() throws Exception
+    public Map<String , String> getJobRequests()
     {
-        Map<String , Map<String,String>> viewBooking=s.showBooking();
+        Map<String , Map<String,String>> viewBooking=serviceProvider.showBooking();
         for(String spID : viewBooking.keySet())
         {
             bookingValues = viewBooking.get(spID);
