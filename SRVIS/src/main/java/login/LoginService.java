@@ -4,22 +4,20 @@ import SearchServiceCategory.SelectServiceCategory;
 import presentationlayer.ServiceProviderCustomerUI;
 import java.util.Map;
 
-public class LoginService
+public class LoginService implements ILoginService
 {
    private String Email = null;
    private String Password = null;
    private Map<String,String> tempValues = null;
+   private ILoginDAO loginDAO = null;
+   private Map<String , Map<String,String>> result = null;
+   private SelectServiceCategory objServiceCategory = null;
+   private ServiceProviderCustomerUI serviceProvider = null;
 
-   public void loginUser(String user, String password, String type)
+   public void loginUser(String email, String password, String type)
    {
-      LoginDAO loginDAO = null;
-      Map<String , Map<String,String>> result = null;
-      SelectServiceCategory objServiceCategory = null;
-      ServiceProviderCustomerUI serviceProvider = null;
-
-      loginDAO = new LoginDAO();
-      result = loginDAO.AppLogin(user,password,type);
-
+      ILoginDAO loginDAO = new LoginDAO();
+      result = loginDAO.applicationLogin(email,password,type);
       try
       {
          if(result.isEmpty())
@@ -34,7 +32,7 @@ public class LoginService
                Email = tempValues.get("email");
                Password = tempValues.get("password");
             }
-            if (Email.equals(user) && Password.equals(password) && type.equals("customer"))
+            if (Email.equals(email) && Password.equals(password) && type.equals("customer"))
             {
                objServiceCategory = new SelectServiceCategory(tempValues);
                objServiceCategory.getUserSelectedService();
@@ -50,5 +48,17 @@ public class LoginService
       {
          e.printStackTrace();
       }
+   }
+
+   public Map<String, Map<String,String>>  getPendingRequests(String username)
+   {
+      loginDAO =new LoginDAO();
+      Map<String, Map<String,String>> customerRequests= null;
+      try {
+         customerRequests = loginDAO.getAllCustomerRequests(username);
+      } catch (Exception e) {
+         e.printStackTrace();
+      }
+      return customerRequests;
    }
 }

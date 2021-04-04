@@ -1,36 +1,45 @@
 package presentationlayer;
 
 import login.LoginService;
+import registration.RegistrationMethods;
+import registration.Validations;
+
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 public class LoginUI
 {
-       LoginService login ;
-       DisplayToGetUserChoice objGetData ;
+    private String username;
+    private String password;
+    private String type;
+    private LoginService login ;
+    private DisplayToGetUserChoice objGetData ;
+    private Map<String,String> pendingBookingValues =null;
 
-    public void showLoginScreen() throws Exception
+    public void showLoginScreen()
     {
-           Scanner sc = new Scanner(System.in);
-           System.out.println("########## Welcome to SRVIS ##########");
-           System.out.println("Select from below options :");
-           System.out.println("1. Login");
-           System.out.println("2. Register");
-           String userInput = sc.nextLine();
-           if (userInput.equals("1"))
-           {
+          try {
+              Scanner sc = new Scanner(System.in);
+              System.out.println("########## Welcome to SRVIS ##########");
+              System.out.println("Select from below options :");
+              System.out.println("1. Login");
+              System.out.println("2. Register");
+              String userInput = sc.nextLine();
+              if (userInput.equals("1")) {
                   userLogin();
-           }
-           else if(userInput.equals("2"))
-           {
+              } else if (userInput.equals("2")) {
                   userRegistration();
-           }
-           else
-           {
+              } else {
                   System.out.println("Please enter valid input .");
-           }
+              }
+          }catch (Exception e)
+          {
+              e.printStackTrace();
+          }
     }
 
-    public void userLogin() throws Exception
+    public void userLogin()
     {
            login = new LoginService();
            objGetData = new DisplayToGetUserChoice();
@@ -42,15 +51,46 @@ public class LoginUI
 
     public void userRegistration()
     {
-           System.out.println("Please register  your account !!");
-           RegistrationPageUI register = new RegistrationPageUI();
-           register.getFirstName();
-           register.getLastName();
-           register.getAddress();
-           register.getContact();
-           register.getEmail();
-           register.getPassword();
-           register.getProfessionalCategoryDetails();
-           register.checkErrors();
+        try{
+            System.out.println("Register as");
+            HashMap<Integer, String> registerAs = new HashMap<>();
+            registerAs.put(1,"Customer");
+            registerAs.put(2,"Service Provider");
+
+            for(int i : registerAs.keySet())
+            {
+                System.out.println(i + " " + registerAs.get(i));
+            }
+
+            Scanner sc = new Scanner(System.in);
+            String  value = sc.nextLine();
+            Validations validateInput = new Validations();
+            if(validateInput.isValidString("^[1-2]$",value)){
+                Integer getValue = Integer.valueOf(value);
+                System.out.println("======== " + registerAs.get(getValue) +" Registration" + " ========");
+                RegistrationMethods registrationMethods = new RegistrationMethods();
+                registrationMethods.addMethods(registerAs.get(getValue));
+                registrationMethods.callMethods();
+            }
+            else {
+                System.out.println("Invalid Input");
+            }
+        }
+        catch (Exception ex){
+            System.out.println("Problem in parsing registration page." + "\n" + "Error Code- 100");
+        }
+    }
+
+    public void showPendingRequest(String username) throws Exception
+    {
+        Map<String, Map<String, String>> pendingRequests = login.getPendingRequests(username);
+        for (String keys : pendingRequests.keySet()) {
+            pendingBookingValues = pendingRequests.get(keys);
+            System.out.format("%1s%-20s%1s%-55s%1s", "|", "====================", "|", "========================================================", "|\n");
+            System.out.format("%1s%-20s%1s%-55s%1s", "|", " Request ID ", "| ", pendingBookingValues.get("service_request_id"), "|\n");
+            System.out.format("%1s%-20s%1s%-55s%1s", "|", " Service Provider ID ", "| ", pendingBookingValues.get("service_provider_id"), "|\n");
+            System.out.format("%1s%-20s%1s%-55s%1s", "|", " Request Description ", "| ", pendingBookingValues.get("service_request_description"), "|\n");
+            System.out.format("%1s%-20s%1s%-55s%1s", "|", "--------------------", "|", "--------------------------------------------------------", "|\n");
+        }
     }
 }
