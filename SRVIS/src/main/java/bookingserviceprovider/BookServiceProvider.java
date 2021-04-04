@@ -66,7 +66,7 @@ public class BookServiceProvider implements IBookServiceProvider
         insertData.put("customer_id",CUSTOMER_SESSION.get("customer_id"));
         insertData.put("service_provider_id",selectedServiceProvider.get("service_provider_id"));
         insertData.put("service_request_date",bookingDate.toString());
-        insertData.put("service_request_category_id",selectedServiceProvider.get("spServiceCategoryID"));
+        insertData.put("service_request_category_id",selectedServiceProvider.get("`service_request_category_id`"));
         insertData.put("service_request_description",descriptionOfWork);
 
         generateBookingRequest(insertData);

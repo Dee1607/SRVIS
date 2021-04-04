@@ -31,8 +31,8 @@ public class LoginService
             for(String str : result.keySet())
             {
                tempValues = result.get(str);
-               Email = tempValues.get("Email");
-               Password = tempValues.get("Password");
+               Email = tempValues.get("email");
+               Password = tempValues.get("password");
             }
             if (Email.equals(user) && Password.equals(password) && type.equals("customer"))
             {

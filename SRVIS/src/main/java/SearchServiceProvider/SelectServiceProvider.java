@@ -26,7 +26,7 @@ public class SelectServiceProvider implements ISelectServiceProvider
         try
         {
             db.makeConnection();
-            Map<String, Map<String, String>> mapOfDataFromDatabase = db.selectQuery("SELECT * FROM CSCI5308_3_DEVINT.service_provider where spJobType = '"
+            Map<String, Map<String, String>> mapOfDataFromDatabase = db.selectQuery("SELECT * FROM CSCI5308_3_DEVINT.service_provider where JobType = '"
                     + userChoice.toString() + "'");
 
             objDisplayServiceProvider = new DisplayServiceProviderInfoUI();

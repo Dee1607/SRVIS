@@ -19,7 +19,6 @@ public class RegistrationPageUI
             String value = sc.nextLine();
             boolean validationResult = validations.isValidName(value);
 
-
         }
         catch(Exception e)
         {

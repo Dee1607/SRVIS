@@ -17,10 +17,11 @@ public class SelectServiceCategory
 
     public void getUserSelectedService()
     {
+        int userSelectedServiceCategory = -1;
+
         DisplayServiceCategoriesUI objDisplayServiceCategory = null;
         GenerateDataToDisplay objGenerateServiceCategoryData = null;
         DisplayToGetUserChoice objGetUserChoice = null;
-        int userSelectedServiceCategory = -1;
         EnumServiceCategory enumObjectOfChoice = null;
         SelectServiceProvider objSelectedServiceProvider = null;
         Map<Integer,String> mapSearchCategories = null;
