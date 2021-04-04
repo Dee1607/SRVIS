@@ -1,5 +1,7 @@
 package feedback;
 
+import java.util.Objects;
+
 public class Review implements IReview{
     private String reviewString;
     private String author;
@@ -36,5 +38,18 @@ public class Review implements IReview{
 
     public String getReviewee() {
         return reviewee;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Review review = (Review) o;
+        return Objects.equals(reviewString, review.reviewString) && Objects.equals(author, review.author) && Objects.equals(reviewee, review.reviewee) && Objects.equals(date, review.date);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(reviewString, author, reviewee, date);
     }
 }
