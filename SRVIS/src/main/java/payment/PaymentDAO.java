@@ -1,6 +1,6 @@
 package payment;
 
-import database.Database;
+import database.DatabaseConnection;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -9,7 +9,7 @@ import java.sql.SQLException;
 
 public class PaymentDAO {
 
-    private static Database paymentDB = Database.databaseInstance();
+    private static DatabaseConnection paymentDB = DatabaseConnection.databaseInstance();
 
     public static void write(IPayment payment) {
         try {
@@ -82,7 +82,7 @@ public class PaymentDAO {
         IPayment payment = null;
 
         try {
-            paymentDB = Database.databaseInstance();
+            paymentDB = DatabaseConnection.databaseInstance();
             Connection con = paymentDB.makeConnection();
 
             String selectQuery = "SELECT * FROM CSCI5308_3_DEVINT.payment WHERE payment_id = ? LIMIT 1;";

@@ -1,40 +1,74 @@
 package login;
 
-
+import SearchServiceCategory.ISelectServiceCategory;
 import SearchServiceCategory.SelectServiceCategory;
-import presentationlayer.LoginUI;
-import presentationlayer.RegistrationPageUI;
+import SearchServiceProvider.ISelectServiceProvider;
 import presentationlayer.ServiceProviderCustomerUI;
-
 import java.util.Map;
 
-public class LoginService {
+public class LoginService implements ILoginService
+{
 
+   private Map<String,String> tempValues = null;
+   private ILoginDAO IloginDAO = null;
+   private Map<String , Map<String,String>> result = null;
+   private ISelectServiceCategory objServiceCategory = null;
+   private ServiceProviderCustomerUI serviceProvider = null;
 
-   private String Email;
-   private String Password;
+   public LoginService()
+   {
+      IloginDAO=new LoginDAO();
+   }
 
+   public void loginUser(String email, String password,String type)
+   {
+      result = IloginDAO.applicationLogin(email,password,type);
+      String Email=null;
+      String Password=null;
 
-   public void loginUser(String user, String password, String type) throws Exception {
-      LoginDAO loginDAO=new LoginDAO();
-      Map<String , Map<String,String>> result=loginDAO.AppLogin(user,password,type);
-      if(result.isEmpty())
+      try
       {
-         System.out.println("Username/Password is incorrect . Please try again .");
-      } else{
-         for(String str : result.keySet()){
-            Map<String,String> tempValues = result.get(str);
-            Email = tempValues.get("Email");
-            Password = tempValues.get("Password");
-         }
-         if (Email.equals(user) && Password.equals(password) && type.equals("customer"))
+         if(result.isEmpty())
          {
-            SelectServiceCategory obj = new SelectServiceCategory(result);
-            obj.searchService();
-         } else {
-            ServiceProviderCustomerUI serviceProvider =new ServiceProviderCustomerUI(result);
-            serviceProvider.showCustomerRequestUI();
+            System.out.println("Username/Password is incorrect . Please try again .");
+         }
+         else
+         {
+            for(String str : result.keySet())
+            {
+               tempValues = result.get(str);
+               Email = tempValues.get("email");
+               Password = tempValues.get("password");
+            }
+            if (Email.equals(email) && Password.equals(password) && type.equalsIgnoreCase("c"))
+            {
+               objServiceCategory = new SelectServiceCategory(tempValues);
+               objServiceCategory.getUserSelectedService();
+            }
+            else
+            {
+               serviceProvider = new ServiceProviderCustomerUI(result);
+               serviceProvider.showCustomerRequestUI(tempValues);
+
+            }
+         }
       }
+      catch(Exception e)
+      {
+         e.printStackTrace();
       }
+   }
+
+   public Map<String, Map<String,String>>  getPendingRequests(String email,String type)
+   {
+      Map<String, Map<String,String>> customerRequests= null;
+      try
+      {
+         customerRequests = IloginDAO.getAllCustomerRequests(email,type);
+      } catch (Exception e)
+      {
+         e.printStackTrace();
+      }
+      return customerRequests;
    }
 }

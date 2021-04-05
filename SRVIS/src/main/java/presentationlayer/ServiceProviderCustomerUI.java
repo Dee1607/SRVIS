@@ -1,76 +1,90 @@
 package presentationlayer;
 import serviceprovider.ServiceProviderService;
+
+import java.sql.SQLOutput;
 import java.util.Map;
 import java.util.Scanner;
 
-public class ServiceProviderCustomerUI {
-
-
-    private String firstName;
-    private String lastName;
-    private String Email;
-
+public class ServiceProviderCustomerUI
+{
     Map<String, Map<String,String>> activeLoginServiceProvider;
-    ServiceProviderService s=new ServiceProviderService();
-    Map<String,String> bookingValues =null;
+    ServiceProviderService serviceProvider;
+    Map<String,String> serviceProviderDetails =null;
 
-    public ServiceProviderCustomerUI(Map<String, Map<String,String>> loginUser){
-
+    public ServiceProviderCustomerUI(Map<String, Map<String,String>> loginUser)
+    {
             this.activeLoginServiceProvider=loginUser;
-
-        for(String str : activeLoginServiceProvider.keySet()){
-            Map<String,String> tempValues = activeLoginServiceProvider.get(str);
-            firstName= tempValues.get("firstName");
-            lastName= tempValues.get("lastName");
-            Email= tempValues.get("Email");
-        }
+            serviceProvider=new ServiceProviderService();
+            for(String str : activeLoginServiceProvider.keySet())
+            {
+                serviceProviderDetails = activeLoginServiceProvider.get(str);
+            }
     }
 
-    public void showCustomerRequestUI() throws Exception {
+    public void showCustomerRequestUI(Map<String,String> serviceProviderDetails)
+    {
+            String firstName= serviceProviderDetails.get("firstName");
+            String lastName= serviceProviderDetails.get("lastName");
+            String Email=serviceProviderDetails.get("email");
             System.out.println("Hi "+ firstName +  lastName);
-            showAvailability();
+            showAvailability(Email);
             getJobRequests();
-             bookingOperation();;
-        }
+            bookingOperation(serviceProviderDetails);
 
-        public void bookingOperation()
-        {
+    }
+
+    public void bookingOperation(Map<String,String> serviceProviderDetails)
+    {
+            String serviceProviderID=serviceProviderDetails.get("service_provider_id");
+            String customerID = null;
+            Scanner sc = new Scanner(System.in);
+            System.out.println("Please enter the customer id for selecting request:");
+            customerID=sc.nextLine();
             System.out.println("Please follow below options :");
             System.out.println("1 : Accept");
             System.out.println("2: Reject");
-            Scanner sc = new Scanner(System.in);
-            if(sc.nextLine().equals(1))
+            String input=sc.nextLine();
+            if(input.equals("1"))
             {
-                System.out.println("Please enter the customer id :");
-
-            }else{
-                System.out.println("Booking for ");
+                serviceProvider.acceptBooking(customerID,serviceProviderID);
+                System.out.println("Booking for " + customerID + " has been assigned");
+            }
+            else if(input.equals("2"))
+            {
+                serviceProvider.rejectBooking(customerID,serviceProviderID);
+                System.out.println("Please enter valid customer ID");
             }
         }
 
-    public void showAvailability() throws Exception {
+    public void showAvailability(String Email)
+    {
         Scanner sc = new Scanner(System.in);
         System.out.println("Are you available for work (yes/no)?");
         String availabilityStatus = sc.nextLine();
         if(availabilityStatus.equals("yes"))
         {
-            s.updateAvailability(Email);
+            serviceProvider.updateAvailability(Email);
             System.out.println("Status : ACTIVE");
-        }else{
-            System.out.println("Your availability has been marked as no");
+        }
+        else
+        {
+            System.out.println("Your availability has been marked as NO ");
         }
     }
 
-    public Map<String , String> getJobRequests() throws Exception {
-        Map<String , Map<String,String>> viewBooking=s.showBooking();
-            for(String spID : viewBooking.keySet()) {
-                bookingValues = viewBooking.get(spID);
-                        System.out.println("--------------------------------------------------------------");
-                        System.out.println("customer_id: " +bookingValues.get("customer_id"));
-                        System.out.println("service_request_date: "+bookingValues.get("service_request_date"));
-                        System.out.println("service_request_description : " +bookingValues.get("service_request_description"));
-                        System.out.println("--------------------------------------------------------------");
-                    }
-            return bookingValues;
-            }
+    public Map<String , String> getJobRequests()
+    {
+        Map<String , Map<String,String>> viewBooking=serviceProvider.showBooking();
+        Map<String,String> bookingValues = null;
+        for(String spID : viewBooking.keySet())
+        {
+            bookingValues = viewBooking.get(spID);
+            System.out.println("--------------------------------------------------------------");
+            System.out.println("customer_id: " +bookingValues.get("customer_id"));
+            System.out.println("service_request_date: "+bookingValues.get("service_request_date"));
+            System.out.println("service_request_description : " +bookingValues.get("service_request_description"));
+            System.out.println("--------------------------------------------------------------");
+        }
+        return bookingValues;
     }
+}

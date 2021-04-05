@@ -1,6 +1,7 @@
 package enums;
 
-public enum EnumServiceCategory {
+public enum EnumServiceCategory
+{
     Electrician(1),
     Plumber(2),
     Carpenter(3),
@@ -9,7 +10,8 @@ public enum EnumServiceCategory {
 
     int categoryNumber = 0;
 
-    EnumServiceCategory(int serviceNumber) {
+    EnumServiceCategory(int serviceNumber)
+    {
         this.categoryNumber = serviceNumber;
     }
 }

@@ -1,13 +1,11 @@
 package SearchServiceCategory;
 
 import enums.EnumServiceCategory;
-
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Scanner;
 
-public class GenerateDataToDisplay {
-
+public class GenerateDataToDisplay implements IGenerateDataToDisplay
+{
     public Map<Integer,String> generateServiceCategoryData()
     {
         Map<Integer,String> mapSearchCategories = new HashMap<Integer,String>();
@@ -22,6 +20,4 @@ public class GenerateDataToDisplay {
 
         return mapSearchCategories;
     }
-
-
 }
