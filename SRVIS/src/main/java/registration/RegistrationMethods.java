@@ -1,19 +1,26 @@
 package registration;
 
-import presentationlayer.DisplayUpdates;
-import presentationlayer.LoginUI;
+
 import presentationlayer.RegistrationPageUI;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class RegistrationMethods {
-    RegistrationPageUI registerUser = new RegistrationPageUI();
-    public static int count =1;
+public class RegistrationMethods implements IRegistrationMethods{
 
-    Map<Integer,Runnable> registerUserMethods = new ConcurrentHashMap<Integer,Runnable>();
-    Register genericList = new Register();
+    public static int count =1;
     public String result;
+    Map<Integer,Runnable> registerUserMethods = new ConcurrentHashMap<Integer,Runnable>();
+
+    RegistrationList genericList;
+    RegistrationPageUI registerUser;
+    IRegistrationDAO hitDB;
+    public RegistrationMethods(){
+        hitDB = new RegistrationDAO();
+        registerUser = new RegistrationPageUI();
+        genericList = new RegistrationList();
+    }
+
     public void addMethodToHashMap(String methodDetail, String pattern){
         if(methodDetail=="job type"){
             registerUserMethods.put(count,() -> result = registerUser.getJobType(pattern));
@@ -41,11 +48,10 @@ public class RegistrationMethods {
         genericList.setRegisterUserMethods(registerUserMethods);
     }
 
-    public void callMethods(){
+    public boolean callMethod(){
         registerUserMethods = genericList.getRegisterUserMethods();
-
         Iterator<Integer> iterator = registerUserMethods.keySet().iterator();
-
+        boolean dbStatus=false;
         while(iterator.hasNext()){
             for (int key : registerUserMethods.keySet()) {
                 registerUserMethods.get(key).run();
@@ -56,19 +62,13 @@ public class RegistrationMethods {
                 }
             }
             if(registerUserMethods.size() == 0){
-                RegistrationDAO hitDB = new RegistrationDAO();
-                boolean result = hitDB.getConnection(genericList.getUserDetails());
-                if(result==true){
-                    DisplayUpdates objDisplayMessage = new DisplayUpdates();
-                    objDisplayMessage.displayMessage("Thank you for registering with us." + "\n" + "Please login.");
-                    LoginUI login = new LoginUI();
-                    login.showLoginScreen();
-                }
-                return;
+                dbStatus = hitDB.getConnection(genericList.getUserDetails());
+                return dbStatus;
             }
             else {
-                System.out.println("Please enter valid values");
+                System.out.println("Please enter invalid values");
             }
         }
+        return dbStatus;
     }
 }
