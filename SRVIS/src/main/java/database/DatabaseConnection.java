@@ -5,10 +5,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class DatabaseConnection implements IDatabaseConnection {
+
     private Connection conn = null;
-    private String dbURL;
-    private String dbUsername;
-    private String dbPassword;
+    private String dbURL=null;
+    private String dbUsername=null;
+    private String dbPassword=null;
     private Statement stmt;
     private String tempKey;
 
@@ -57,6 +58,8 @@ public class DatabaseConnection implements IDatabaseConnection {
                     tableValues.put(columnNameValue, rs.getString(columnNameValue));
                 }
                 resultMap.put(tempKey, tableValues);
+            }else {
+                System.out.println("No result set generated from database !!!!");
             }
             return resultMap;
         } catch (Exception e) {

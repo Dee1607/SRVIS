@@ -6,7 +6,7 @@ import presentationlayer.DisplayServiceCategoriesUI;
 import presentationlayer.DisplayToGetUserChoice;
 import java.util.*;
 
-public class SelectServiceCategory
+public class SelectServiceCategory implements ISelectServiceCategory
 {
     private Map<String,String> CUSTOMER_SESSION ;
 

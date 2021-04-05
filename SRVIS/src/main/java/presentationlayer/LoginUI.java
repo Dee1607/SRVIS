@@ -2,7 +2,7 @@ package presentationlayer;
 
 import login.LoginService;
 import registration.RegistrationMethods;
-import registration.Validations;
+import registration.Validation;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -10,12 +10,19 @@ import java.util.Scanner;
 
 public class LoginUI
 {
-    private String username;
-    private String password;
-    private String type;
-    private LoginService login ;
-    private DisplayToGetUserChoice objGetData ;
+    private LoginService login=null;
+    private DisplayToGetUserChoice objGetData=null;
     private Map<String,String> pendingBookingValues =null;
+    private Validation validate=null;
+
+    public LoginUI()
+    {
+        login=new LoginService();
+        objGetData=new DisplayToGetUserChoice();
+        validate=new Validation();
+
+    }
+
 
     public void showLoginScreen()
     {
@@ -28,6 +35,7 @@ public class LoginUI
               String userInput = sc.nextLine();
               if (userInput.equals("1")) {
                   userLogin();
+
               } else if (userInput.equals("2")) {
                   userRegistration();
               } else {
@@ -41,12 +49,16 @@ public class LoginUI
 
     public void userLogin()
     {
-           login = new LoginService();
-           objGetData = new DisplayToGetUserChoice();
-           String username = objGetData.displayMessageGetStringChoiceFromUser("Enter your Username: ");
+           String email = objGetData.displayMessageGetStringChoiceFromUser("Enter your emailID: ");
            String password = objGetData.displayMessageGetStringChoiceFromUser("Enter your password: ");
-           String type = objGetData.displayMessageGetStringChoiceFromUser("Login as Customer/Service provider: ");
-           login.loginUser(username, password,type);
+           String type = objGetData.displayMessageGetStringChoiceFromUser("Login as Customer(C)/Service Provider(SP) ( Type C or SP ): ");
+           if(validate.isValidString("^\\w{1,}@[\\w+]+.\\w+",email)) {
+               login.loginUser(email, password, type);
+               System.out.println("All the pending requests in your queue.!!!!");
+               showPendingRequest(email, type);
+           }else{
+               System.out.println("Please enter valid email-id or Password !!!!");
+           }
     }
 
     public void userRegistration()
@@ -64,7 +76,7 @@ public class LoginUI
 
             Scanner sc = new Scanner(System.in);
             String  value = sc.nextLine();
-            Validations validateInput = new Validations();
+            Validation validateInput = new Validation();
             if(validateInput.isValidString("^[1-2]$",value)){
                 Integer getValue = Integer.valueOf(value);
                 System.out.println("======== " + registerAs.get(getValue) +" Registration" + " ========");
@@ -81,9 +93,9 @@ public class LoginUI
         }
     }
 
-    public void showPendingRequest(String username) throws Exception
+    public void showPendingRequest(String email,String type)
     {
-        Map<String, Map<String, String>> pendingRequests = login.getPendingRequests(username);
+        Map<String, Map<String, String>> pendingRequests = login.getPendingRequests(email,type);
         for (String keys : pendingRequests.keySet()) {
             pendingBookingValues = pendingRequests.get(keys);
             System.out.format("%1s%-20s%1s%-55s%1s", "|", "====================", "|", "========================================================", "|\n");
