@@ -30,7 +30,7 @@ public class RegistrationMethods {
         addMethodToHashMap("contact number", "^[0-9]{10}$");
         addMethodToHashMap("address", "^[a-zA-Z0-9-/,]+$");
         addMethodToHashMap("email ID", "^[a-zA-Z0-9][-\\w\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$");
-        addMethodToHashMap("new password", "[a-zA-Z]+");
+        addMethodToHashMap("new password(only characters and numbers are allowed)", "^[a-zA-Z0-9]+$");
         if(getUser == "Service Provider"){
             addMethodToHashMap("job type","^[1-5]$");
             addMethodToHashMap("years of experience in the field", "^[0-9]+$");
@@ -67,7 +67,7 @@ public class RegistrationMethods {
                 return;
             }
             else {
-                System.out.println("Please enter invalid values");
+                System.out.println("Please enter valid values");
             }
         }
     }
