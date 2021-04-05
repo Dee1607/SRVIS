@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class Register {
+public class RegistrationList {
     public static Map<Integer, Runnable> getRegisterUserMethods()
     {
         return registerUserMethods;
@@ -12,7 +12,7 @@ public class Register {
 
     public static void setRegisterUserMethods(Map<Integer, Runnable> registerUserMethods)
     {
-        Register.registerUserMethods = registerUserMethods;
+        RegistrationList.registerUserMethods = registerUserMethods;
     }
 
     public static void removeRegisterUserMethods(int key)

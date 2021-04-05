@@ -1,10 +1,10 @@
 package presentationlayer;
 
 import login.LoginService;
-import registration.RegistrationMethods;
+import registration.IRegistrationMain;
+import registration.IValidation;
+import registration.RegistrationMain;
 import registration.Validation;
-
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -13,14 +13,15 @@ public class LoginUI
     private LoginService login=null;
     private DisplayToGetUserChoice objGetData=null;
     private Map<String,String> pendingBookingValues =null;
-    private Validation validate=null;
+    IValidation validate=null;
+    IRegistrationMain registerObj;
 
     public LoginUI()
     {
         login=new LoginService();
         objGetData=new DisplayToGetUserChoice();
         validate=new Validation();
-
+        registerObj = new RegistrationMain();
     }
 
 
@@ -63,34 +64,7 @@ public class LoginUI
 
     public void userRegistration()
     {
-        try{
-            System.out.println("Register as");
-            HashMap<Integer, String> registerAs = new HashMap<>();
-            registerAs.put(1,"Customer");
-            registerAs.put(2,"Service Provider");
-
-            for(int i : registerAs.keySet())
-            {
-                System.out.println(i + " " + registerAs.get(i));
-            }
-
-            Scanner sc = new Scanner(System.in);
-            String  value = sc.nextLine();
-            Validation validateInput = new Validation();
-            if(validateInput.isValidString("^[1-2]$",value)){
-                Integer getValue = Integer.valueOf(value);
-                System.out.println("======== " + registerAs.get(getValue) +" Registration" + " ========");
-                RegistrationMethods registrationMethods = new RegistrationMethods();
-                registrationMethods.addMethods(registerAs.get(getValue));
-                registrationMethods.callMethods();
-            }
-            else {
-                System.out.println("Invalid Input");
-            }
-        }
-        catch (Exception ex){
-            System.out.println("Problem in parsing registration page." + "\n" + "Error Code- 100");
-        }
+        registerObj.register();
     }
 
     public void showPendingRequest(String email,String type)

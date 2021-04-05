@@ -1,16 +1,21 @@
 package registration;
 
 import database.DatabaseConnection;
+import database.IDatabaseConnection;
 
 import java.util.HashMap;
 
-public class RegistrationDAO
+public class RegistrationDAO implements IRegistrationDAO
 {
     private String insertQuery;
     public boolean insertStatus;
+    IDatabaseConnection db;
+
+    public RegistrationDAO(){
+        db = DatabaseConnection.databaseInstance();
+    }
     public boolean getConnection(HashMap<String,String> userInput)
     {
-        DatabaseConnection db= DatabaseConnection.databaseInstance();
         try
         {
             if(userInput.keySet().size()>7 )

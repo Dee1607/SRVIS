@@ -1,19 +1,27 @@
 package presentationlayer;
 
+import registration.IValidation;
 import registration.Validation;
+
 import java.util.*;
 
 public class RegistrationPageUI
 {
-    Validation validations = new Validation();
+    IValidation validate=null;
+    DisplayServiceCategoriesUI displayData;
+
+    public RegistrationPageUI()
+    {
+        validate=new Validation();
+        displayData=new DisplayServiceCategoriesUI();
+    }
 
     public String getUserDetails(String methodName, String pattern) {
         try {
             System.out.println("Enter " + methodName);
             Scanner sc = new Scanner(System.in);
             String value = sc.nextLine();
-
-            boolean validation = validations.isValidString(pattern, value);
+            boolean validation = validate.isValidString(pattern, value);
             if (validation == true){
                 return "Success-" + value;
             }
@@ -36,13 +44,11 @@ public class RegistrationPageUI
             getType.put(4,"Painter");
             getType.put(5,"Cleaner");
 
-            for(int i : getType.keySet())
-            {
-                System.out.println(i + " " + getType.get(i));
-            }
+            displayData.displayServiceCategory(getType);
+
             Scanner sc = new Scanner(System.in);
             String jobType = sc.nextLine();
-            boolean validation = validations.isValidString(pattern, jobType);
+            boolean validation = validate.isValidString(pattern, jobType);
             Integer intJobType = Integer.valueOf(jobType);
             if (validation == true){
                 return "Success-" + getType.get(intJobType);
