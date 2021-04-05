@@ -1,17 +1,18 @@
 package presentationlayer;
 
-import registration.Validations;
+import registration.Validation;
 import java.util.*;
 
 public class RegistrationPageUI
 {
-    Validations validations = new Validations();
+    Validation validations = new Validation();
 
     public String getUserDetails(String methodName, String pattern) {
         try {
             System.out.println("Enter " + methodName);
             Scanner sc = new Scanner(System.in);
             String value = sc.nextLine();
+
             boolean validation = validations.isValidString(pattern, value);
             if (validation == true){
                 return "Success-" + value;
@@ -22,6 +23,7 @@ public class RegistrationPageUI
         }
         return "fail";
     }
+
     public String getJobType(String pattern)
     {
         try

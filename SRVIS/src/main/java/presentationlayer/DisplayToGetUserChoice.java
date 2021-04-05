@@ -5,6 +5,7 @@ import java.util.Scanner;
 public class DisplayToGetUserChoice
 {
     private Scanner objToGetValue = new Scanner(System.in);
+
     public int displayMessageGetNumberChoiceFromUser(String stringToBeDisplayed)
     {
         System.out.println("=================================================================");

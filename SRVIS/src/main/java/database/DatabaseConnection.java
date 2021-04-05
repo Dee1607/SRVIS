@@ -5,10 +5,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class DatabaseConnection implements IDatabaseConnection {
+
     private Connection conn = null;
-    private String dbURL;
-    private String dbUsername;
-    private String dbPassword;
+    private String dbURL=null;
+    private String dbUsername=null;
+    private String dbPassword=null;
     private Statement stmt;
     private String tempKey;
 
@@ -57,6 +58,8 @@ public class DatabaseConnection implements IDatabaseConnection {
                     tableValues.put(columnNameValue, rs.getString(columnNameValue));
                 }
                 resultMap.put(tempKey, tableValues);
+            }else {
+                System.out.println("No result set generated from database !!!!");
             }
             return resultMap;
         } catch (Exception e) {
@@ -136,11 +139,12 @@ public class DatabaseConnection implements IDatabaseConnection {
         PreparedStatement preparedStmt = null;
         try {
             preparedStmt = conn.prepareStatement(query);
-            preparedStmt.setInt(1, Integer.parseInt(insertData.get("customer_id")));
-            preparedStmt.setInt(2, Integer.parseInt(insertData.get("service_provider_id")));
+            preparedStmt.setInt (1, Integer.parseInt(insertData.get("customer_id")));
+            preparedStmt.setInt (2, Integer.parseInt(insertData.get("service_provider_id")));
             preparedStmt.setDate(3, java.sql.Date.valueOf(insertData.get("service_request_date")));
-            preparedStmt.setInt(4, Integer.parseInt(insertData.get("service_request_category_id")));
-            preparedStmt.setString(5, insertData.get("service_request_description"));
+            preparedStmt.setInt (4, Integer.parseInt(insertData.get("service_request_category_id")));
+            preparedStmt.setString(5,insertData.get("service_request_description"));
+
             int insertStatus = preparedStmt.executeUpdate();
             if (insertStatus > 0) {
                 return true;

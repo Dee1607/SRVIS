@@ -1,6 +1,5 @@
 package registration;
 
-import RegistrationDAO.ConnectDatabase;
 import presentationlayer.DisplayUpdates;
 import presentationlayer.LoginUI;
 import presentationlayer.RegistrationPageUI;
@@ -11,8 +10,9 @@ import java.util.concurrent.ConcurrentHashMap;
 public class RegistrationMethods {
     RegistrationPageUI registerUser = new RegistrationPageUI();
     public static int count =1;
+
     Map<Integer,Runnable> registerUserMethods = new ConcurrentHashMap<Integer,Runnable>();
-    GenericList genericList = new GenericList();
+    Register genericList = new Register();
     public String result;
     public void addMethodToHashMap(String methodDetail, String pattern){
         if(methodDetail=="job type"){
@@ -56,7 +56,7 @@ public class RegistrationMethods {
                 }
             }
             if(registerUserMethods.size() == 0){
-                ConnectDatabase hitDB = new ConnectDatabase();
+                RegistrationDAO hitDB = new RegistrationDAO();
                 boolean result = hitDB.getConnection(genericList.getUserDetails());
                 if(result==true){
                     DisplayUpdates objDisplayMessage = new DisplayUpdates();
