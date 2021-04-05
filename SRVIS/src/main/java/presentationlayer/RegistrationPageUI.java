@@ -1,11 +1,11 @@
 package presentationlayer;
 
-import registration.Validations;
+import registration.Validation;
 import java.util.*;
 
 public class RegistrationPageUI
 {
-    Validations validations = new Validations();
+    Validation validations = new Validation();
 
     public String getUserDetails(String methodName, String pattern) {
         try {
@@ -23,6 +23,7 @@ public class RegistrationPageUI
         }
         return "fail";
     }
+
     public String getJobType(String pattern)
     {
         try

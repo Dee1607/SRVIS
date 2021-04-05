@@ -1,23 +1,31 @@
 package login;
 
+import SearchServiceCategory.ISelectServiceCategory;
 import SearchServiceCategory.SelectServiceCategory;
+import SearchServiceProvider.ISelectServiceProvider;
 import presentationlayer.ServiceProviderCustomerUI;
 import java.util.Map;
 
 public class LoginService implements ILoginService
 {
-   private String Email = null;
-   private String Password = null;
+
    private Map<String,String> tempValues = null;
-   private ILoginDAO loginDAO = null;
+   private ILoginDAO IloginDAO = null;
    private Map<String , Map<String,String>> result = null;
-   private SelectServiceCategory objServiceCategory = null;
+   private ISelectServiceCategory objServiceCategory = null;
    private ServiceProviderCustomerUI serviceProvider = null;
 
-   public void loginUser(String email, String password, String type)
+   public LoginService()
    {
-      ILoginDAO loginDAO = new LoginDAO();
-      result = loginDAO.applicationLogin(email,password,type);
+      IloginDAO=new LoginDAO();
+   }
+
+   public void loginUser(String email, String password,String type)
+   {
+      result = IloginDAO.applicationLogin(email,password,type);
+      String Email=null;
+      String Password=null;
+
       try
       {
          if(result.isEmpty())
@@ -32,7 +40,7 @@ public class LoginService implements ILoginService
                Email = tempValues.get("email");
                Password = tempValues.get("password");
             }
-            if (Email.equals(email) && Password.equals(password) && type.equals("customer"))
+            if (Email.equals(email) && Password.equals(password) && type.equals("C"))
             {
                objServiceCategory = new SelectServiceCategory(tempValues);
                objServiceCategory.getUserSelectedService();
@@ -40,7 +48,8 @@ public class LoginService implements ILoginService
             else
             {
                serviceProvider = new ServiceProviderCustomerUI(result);
-               serviceProvider.showCustomerRequestUI();
+               serviceProvider.showCustomerRequestUI(tempValues);
+
             }
          }
       }
@@ -50,13 +59,14 @@ public class LoginService implements ILoginService
       }
    }
 
-   public Map<String, Map<String,String>>  getPendingRequests(String username)
+   public Map<String, Map<String,String>>  getPendingRequests(String email,String type)
    {
-      loginDAO =new LoginDAO();
       Map<String, Map<String,String>> customerRequests= null;
-      try {
-         customerRequests = loginDAO.getAllCustomerRequests(username);
-      } catch (Exception e) {
+      try
+      {
+         customerRequests = IloginDAO.getAllCustomerRequests(email,type);
+      } catch (Exception e)
+      {
          e.printStackTrace();
       }
       return customerRequests;

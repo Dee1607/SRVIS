@@ -7,7 +7,7 @@ public class ServiceProviderDAO implements IServiceProviderDAO
 {
     DatabaseConnection db= DatabaseConnection.databaseInstance();
 
-    public void updateServiceStatus(String Email)
+    public void updateAvailabilityStatus(String Email)
     {
         db.makeConnection();
         String sql1 = " UPDATE service_provider SET availability ='Y' WHERE email='"+Email+"'";
@@ -22,5 +22,13 @@ public class ServiceProviderDAO implements IServiceProviderDAO
         Map<String,Map<String,String>> queryResult= db.selectQuery(sql1);
         db.closeConnection();
         return queryResult;
+    }
+
+    public void updateBookingStatus(String customerID, String serviceProviderID)
+    {
+        db.makeConnection();
+        String bookingStatusUpdate = " UPDATE service_request SET request_acceptance_status ='Y' WHERE customer_id='"+customerID+"' AND service_provider_id='"+serviceProviderID+"'";
+        db.updateQuery(bookingStatusUpdate);
+        db.closeConnection();
     }
 }

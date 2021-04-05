@@ -6,20 +6,15 @@ public class ServiceProviderService implements IServiceProviderService
 {
 
     ServiceProviderDAO serviceProviderDAO = new ServiceProviderDAO();
+
     public void updateAvailability(String Email)
     {
-        serviceProviderDAO.updateServiceStatus(Email);
+        serviceProviderDAO.updateAvailabilityStatus(Email);
     }
 
-    public void acceptBooking()
+
+    public void rejectBooking(String customerID,String serviceProviderID)
     {
-
-
-    }
-
-    public void rejectBooking()
-    {
-
 
     }
 
@@ -28,5 +23,11 @@ public class ServiceProviderService implements IServiceProviderService
     {
         Map<String , Map<String,String>> bookingResult = serviceProviderDAO.showAllBooking();
         return bookingResult;
+    }
+
+    @Override
+    public void acceptBooking(String customerID, String serviceProviderID)
+    {
+        serviceProviderDAO.updateBookingStatus(customerID,serviceProviderID);
     }
 }
