@@ -16,6 +16,6 @@ class LoginServiceTest {
     void getPendingRequestsTest() throws Exception {
         LoginService log=new LoginService();
         Map<String, Map<String,String>> result=log.getPendingRequests("bp@gmail.com","service_provider");
-        assertTrue(result.isEmpty());
+        assertFalse(result.isEmpty());
     }
 }
