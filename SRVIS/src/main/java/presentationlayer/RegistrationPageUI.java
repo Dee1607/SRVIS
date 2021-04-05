@@ -49,7 +49,7 @@ public class RegistrationPageUI
         }
         catch (Exception ex)
         {
-            System.out.println(ex.getMessage() + "Error code- 108");
+            ex.printStackTrace();
         }
         return "fail";
     }
