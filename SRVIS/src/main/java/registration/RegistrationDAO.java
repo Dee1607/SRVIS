@@ -1,10 +1,10 @@
-package RegistrationDAO;
+package registration;
 
 import database.DatabaseConnection;
-import presentationlayer.DisplayUpdates;
+
 import java.util.HashMap;
 
-public class ConnectDatabase
+public class RegistrationDAO
 {
     private String insertQuery;
     public boolean insertStatus;

@@ -2,7 +2,7 @@ package registration;
 
 import java.util.regex.*;
 
-public class Validations {
+public class Validation {
     public boolean isValidString(String pattern, String userDetail){
         String removeWhitespace = userDetail.replaceAll("\\s","");
         if(removeWhitespace.isEmpty())
