@@ -10,4 +10,5 @@ public interface IDatabaseConnection
     public void updateQuery(String query);
     public boolean insertQuery(String query, Map<String,String> insertData);
     public void closeConnection();
+    public boolean insertQuery1(String query, Map<String,String> insertData);
 }
