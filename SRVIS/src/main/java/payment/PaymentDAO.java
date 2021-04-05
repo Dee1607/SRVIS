@@ -11,9 +11,10 @@ public class PaymentDAO {
 
     private static DatabaseConnection paymentDB = DatabaseConnection.databaseInstance();
 
-    public static void write(IPayment payment) {
+    public static boolean write(IPayment payment) {
+        Connection con = null;
         try {
-            Connection con = paymentDB.makeConnection();
+            con = paymentDB.makeConnection();
 
             String paymentID = payment.getPaymentID();
             String serviceRequestID = payment.getServiceRequestID();
@@ -65,17 +66,26 @@ public class PaymentDAO {
 
             if (result == 1) {
                 con.commit();
+                return true;
             }
             else {
                 System.err.println("Error. Transaction is being rolled back");
                 con.rollback();
+                return false;
             }
-            con.close();
-            paymentDB.closeConnection();
-            paymentDB = null;
+
         } catch (SQLException e) {
             e.printStackTrace();
+        }finally{
+            try{
+                con.close();
+                paymentDB.closeConnection();
+                paymentDB = null;
+            }catch(Exception e){
+                e.printStackTrace();
+            }
         }
+        return false;
     }
 
     public static IPayment read(String paymentID) {
