@@ -1,5 +1,6 @@
 package presentationlayer;
 
+import SearchServiceCategory.GenerateDataToDisplay;
 import login.LoginService;
 import registration.IRegistrationMain;
 import registration.IValidation;
@@ -29,11 +30,17 @@ public class LoginUI
     {
           try {
               Scanner sc = new Scanner(System.in);
+
               System.out.println("########## Welcome to SRVIS ##########");
-              System.out.println("Select from below options :");
-              System.out.println("1. Login");
-              System.out.println("2. Register");
+
+              GenerateDataToDisplay objgetDataToDisplay = new GenerateDataToDisplay();
+              Map<Integer,String> objDataToDisplay = objgetDataToDisplay.generateLoginData();
+
+              DisplayServiceCategoriesUI objDisplay = new DisplayServiceCategoriesUI();
+              objDisplay.displayServiceCategory(objDataToDisplay);
+
               String userInput = sc.nextLine();
+
               if (userInput.equals("1")) {
                   userLogin();
 
@@ -42,7 +49,9 @@ public class LoginUI
               } else {
                   System.out.println("Please enter valid input .");
               }
-          }catch (Exception e)
+
+          }
+          catch (Exception e)
           {
               e.printStackTrace();
           }
