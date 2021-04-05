@@ -14,7 +14,7 @@ public class LoginDAO implements ILoginDAO{
     {
         String sql1=null;
         db.makeConnection();
-        if(type.equals("C"))
+        if(type.equalsIgnoreCase("c"))
         {
             sql1 = "SELECT * FROM customer WHERE email='"+email+"'AND password="+password+"";
         }else{
@@ -29,7 +29,7 @@ public class LoginDAO implements ILoginDAO{
     {
         String query =null;
         db.makeConnection();
-        if(type.equals("C")) {
+        if(type.equalsIgnoreCase("c")) {
             query = "SELECT * FROM customer INNER JOIN service_request on customer.customer_id=service_request.customer_id WHERE email='" + email + "'";
         }else{
             query = "SELECT * FROM service_provider INNER JOIN service_request on service_provider.service_provider_id=service_request.service_provider_id WHERE email='" + email + "'";

@@ -40,7 +40,7 @@ public class LoginService implements ILoginService
                Email = tempValues.get("email");
                Password = tempValues.get("password");
             }
-            if (Email.equals(email) && Password.equals(password) && type.equals("C"))
+            if (Email.equals(email) && Password.equals(password) && type.equalsIgnoreCase("c"))
             {
                objServiceCategory = new SelectServiceCategory(tempValues);
                objServiceCategory.getUserSelectedService();
