@@ -1,6 +1,8 @@
 package bookingserviceprovider;
 
 import database.DatabaseConnection;
+import feedback.*;
+import payment.*;
 import presentationlayer.DisplayServiceProviderInfoUI;
 import presentationlayer.DisplayToGetUserChoice;
 import presentationlayer.DisplayUpdates;
@@ -86,9 +88,59 @@ public class BookServiceProvider implements IBookServiceProvider
             db.makeConnection();
             boolean insertStatus = db.insertQuery(query1,dataToInsert);
 
+
+            PaymentInfo objPayment = new PaymentInfo();
+            objPayment.setPaymentType(PaymentType.valueOf("VISA"));
+            objPayment.setCardNumber("1234567890");
+            objPayment.setUserID("111");
+            objPayment.setFullName("Johnny Appleseed");
+            objPayment.setExpiryDate("12/12/12");
+            objPayment.setSecurityCode("123");
+
+            PaymentInfo objPayment1 = new PaymentInfo();
+            objPayment1.setPaymentType(PaymentType.valueOf("VISA"));
+            objPayment1.setCardNumber("1234567890");
+            objPayment1.setUserID("222");
+            objPayment1.setFullName("Johnny Appleseed");
+            objPayment1.setExpiryDate("12/12/12");
+            objPayment1.setSecurityCode("123");
+
+            IPayment paymentTestObject = new Payment("ReadTestPaymentID");
+            paymentTestObject.setSender(objPayment);
+            paymentTestObject.setReceiver(objPayment1);
+            paymentTestObject.setAmount("100");
+            paymentTestObject.setStatus(PaymentStatus.PENDING);
+            paymentTestObject.setDate("2021/12/12");
+            paymentTestObject.setServiceRequestID("ServiceID");
+
+            boolean paymentStatus = false;
+
             if(insertStatus)
             {
                 objDisplayMessage.displayMessage("Ticket Has been Generated.");
+
+                PaymentInfoDAO.write(objPayment);
+                PaymentInfoDAO.write(objPayment1);
+                paymentStatus =  PaymentDAO.write(paymentTestObject);
+            }
+
+            boolean feedbackStatus = false;
+            if(paymentStatus){
+                IFeedback testFeedbackObject;
+                IReview review = new Review();
+                String reviewString = "This is a test review string.";
+                review.setReviewString(reviewString);
+                review.setDate("January 1, 2020");
+                review.setReviewee("Reviewee");
+                review.setAuthor("Author");
+                testFeedbackObject = new Feedback("testID");
+                testFeedbackObject.setRating("5");
+                testFeedbackObject.setReview(review);
+
+                feedbackStatus = FeedbackDAO.write(testFeedbackObject);
+                if(feedbackStatus){
+                    System.out.println("Thanks For feedback!");
+                }
             }
 
             return insertStatus;
