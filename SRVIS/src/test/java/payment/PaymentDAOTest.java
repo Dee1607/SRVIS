@@ -1,6 +1,6 @@
 package payment;
 
-import database.Database;
+import database.DatabaseConnection;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -17,10 +17,11 @@ class PaymentDAOTest {
 
     @Test
     void read() {
+        PaymentDAO testPaymentDAO = new PaymentDAO();
         PaymentInfo paymentInfoTestObject1 = new PaymentInfo();
         paymentInfoTestObject1.setPaymentType(PaymentType.valueOf("VISA"));
         paymentInfoTestObject1.setCardNumber("1234567890");
-        paymentInfoTestObject1.setUserID("User1");
+        paymentInfoTestObject1.setUserID("User009");
         paymentInfoTestObject1.setFullName("Johnny Appleseed");
         paymentInfoTestObject1.setExpiryDate("12/12/12");
         paymentInfoTestObject1.setSecurityCode("123");
@@ -28,12 +29,13 @@ class PaymentDAOTest {
         PaymentInfo paymentInfoTestObject2 = new PaymentInfo();
         paymentInfoTestObject2.setPaymentType(PaymentType.valueOf("VISA"));
         paymentInfoTestObject2.setCardNumber("1234567890");
-        paymentInfoTestObject2.setUserID("User2");
+        paymentInfoTestObject2.setUserID("User010");
         paymentInfoTestObject2.setFullName("John Doe");
         paymentInfoTestObject2.setExpiryDate("12/12/12");
         paymentInfoTestObject2.setSecurityCode("123");
 
-        IPayment paymentTestObject = new Payment("ReadTestPaymentID");
+        IPayment paymentTestObject = new Payment();
+        paymentTestObject.setPaymentID(13);
         paymentTestObject.setSender(paymentInfoTestObject1);
         paymentTestObject.setReceiver(paymentInfoTestObject2);
         paymentTestObject.setAmount("100");
@@ -41,18 +43,19 @@ class PaymentDAOTest {
         paymentTestObject.setDate("12/12/12");
         paymentTestObject.setServiceRequestID("ServiceID");
 
-        PaymentInfoDAO.write(paymentInfoTestObject1);
-        PaymentInfoDAO.write(paymentInfoTestObject2);
-        PaymentDAO.write(paymentTestObject);
-        IPayment readObject = PaymentDAO.read("ReadTestPaymentID");
+        PaymentInfoDAO testPaymentInfoDAO = new PaymentInfoDAO();
+        // testPaymentInfoDAO.write(paymentInfoTestObject1);
+        // testPaymentInfoDAO.write(paymentInfoTestObject2);
+        testPaymentDAO.write(paymentTestObject);
+        IPayment readObject = testPaymentDAO.read(13);
         assertEquals(readObject, paymentTestObject);
 
         try {
-            Database db = Database.databaseInstance();
+            DatabaseConnection db = DatabaseConnection.databaseInstance();
             Connection con = db.makeConnection();
             Statement stmt = con.createStatement();
-            stmt.executeUpdate("DELETE FROM CSCI5308_3_DEVINT.payment_info WHERE user_id = 'User1';");
-            stmt.executeUpdate("DELETE FROM CSCI5308_3_DEVINT.payment_info WHERE user_id = 'User2';");
+            stmt.executeUpdate("DELETE FROM CSCI5308_3_DEVINT.payment_info WHERE user_id = 'User009';");
+            stmt.executeUpdate("DELETE FROM CSCI5308_3_DEVINT.payment_info WHERE user_id = 'User010';");
             stmt.close();
             con.close();
         } catch (Exception e) {
@@ -62,10 +65,10 @@ class PaymentDAOTest {
 
     @Test
     void write() {
+        PaymentDAO testPaymentDAO = new PaymentDAO();
         PaymentInfo paymentInfoTestObject1 = new PaymentInfo();
         paymentInfoTestObject1.setPaymentType(PaymentType.valueOf("VISA"));
         paymentInfoTestObject1.setCardNumber("1234567890");
-        paymentInfoTestObject1.setUserID("User1");
         paymentInfoTestObject1.setFullName("Johnny Appleseed");
         paymentInfoTestObject1.setExpiryDate("12/12/12");
         paymentInfoTestObject1.setSecurityCode("123");
@@ -73,17 +76,16 @@ class PaymentDAOTest {
         PaymentInfo paymentInfoTestObject2 = new PaymentInfo();
         paymentInfoTestObject2.setPaymentType(PaymentType.valueOf("VISA"));
         paymentInfoTestObject2.setCardNumber("1234567890");
-        paymentInfoTestObject2.setUserID("User2");
         paymentInfoTestObject2.setFullName("John Doe");
         paymentInfoTestObject2.setExpiryDate("12/12/12");
         paymentInfoTestObject2.setSecurityCode("123");
 
-        IPayment paymentTestObject = new Payment("TestPaymentID");
+        IPayment paymentTestObject = new Payment();
         paymentTestObject.setSender(paymentInfoTestObject1);
         paymentTestObject.setReceiver(paymentInfoTestObject2);
         paymentTestObject.setAmount("100");
         paymentTestObject.setStatus(PaymentStatus.PENDING);
 
-        PaymentDAO.write(paymentTestObject);
+        assertTrue(testPaymentDAO.write(paymentTestObject));
     }
 }

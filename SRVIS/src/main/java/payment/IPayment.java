@@ -16,8 +16,8 @@ public interface IPayment {
     void setStatus(PaymentStatus status);
     PaymentStatus getStatus();
     String getStatusString();
-    void setPaymentID(String paymentID);
-    String getPaymentID();
+    void setPaymentID(int paymentID);
+    int getPaymentID();
     String getServiceRequestID();
     void setServiceRequestID(String serviceRequestID);
 }

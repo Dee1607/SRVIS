@@ -4,17 +4,13 @@ import java.util.Objects;
 
 public class Payment implements IPayment{
 
-    private String paymentID;
+    private int paymentID;
     private String serviceRequestID;
     private IPaymentInfo sender;
     private IPaymentInfo receiver;
     private String amount;
     private String date;
     private PaymentStatus status;
-
-    public Payment(String paymentID) {
-        this.paymentID = paymentID;
-    }
 
     public boolean isValid() {
         boolean senderIsValid = (sender != null);
@@ -25,7 +21,8 @@ public class Payment implements IPayment{
     }
 
     public void processPayment() {
-        PaymentDAO.write(this);
+        PaymentDAO paymentDAO = new PaymentDAO();
+        paymentDAO.write(this);
     }
 
     public void setSender(IPaymentInfo sender) {
@@ -80,11 +77,11 @@ public class Payment implements IPayment{
         return status.name();
     }
 
-    public void setPaymentID(String paymentID) {
+    public void setPaymentID(int paymentID) {
         this.paymentID = paymentID;
     }
 
-    public String getPaymentID() {
+    public int getPaymentID() {
         return paymentID;
     }
 
