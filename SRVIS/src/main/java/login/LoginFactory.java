@@ -9,11 +9,11 @@ public class LoginFactory implements ILoginFactory{
         return loginFactory;
     }
 
-    public ILoginDAO loginDAO(){
+    public ILoginDAO getLoginDAO(){
         return new LoginDAO();
     }
 
-    public ILoginService loginService(){
+    public ILoginService getLoginService(){
         return new LoginService();
     }
 }

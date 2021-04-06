@@ -12,11 +12,13 @@ public class Payment implements IPayment{
     private String date;
     private PaymentStatus status;
 
-    public Payment(String paymentID) {
+    public Payment(String paymentID)
+    {
         this.paymentID = paymentID;
     }
 
-    public boolean isValid() {
+    public boolean isValid()
+    {
         boolean senderIsValid = (sender != null);
         boolean receiverIsValid = (receiver != null);
         boolean amountIsValid = (amount != null);
@@ -24,15 +26,18 @@ public class Payment implements IPayment{
         return senderIsValid && receiverIsValid && amountIsValid;
     }
 
-    public void processPayment() {
+    public void processPayment()
+    {
         PaymentDAO.write(this);
     }
 
-    public void setSender(IPaymentInfo sender) {
+    public void setSender(IPaymentInfo sender)
+    {
         this.sender = sender;
     }
 
-    public IPaymentInfo getSender() {
+    public IPaymentInfo getSender()
+    {
         return sender;
     }
 
