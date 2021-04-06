@@ -1,9 +1,10 @@
-package bookingserviceprovider;
+package customer;
 
 import database.DatabaseConnection;
-import presentationlayer.DisplayServiceProviderInfoUI;
-import presentationlayer.DisplayToGetUserChoice;
-import presentationlayer.DisplayUpdates;
+import feedback.*;
+import payment.*;
+import presentationlayer.*;
+
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
@@ -12,9 +13,14 @@ import java.util.Scanner;
 public class BookServiceProvider implements IBookServiceProvider
 {
     private Map<String,String> CUSTOMER_SESSION;
+    private IPaymentInfo senderPaymentDetails = null;
+    private PaymentUI paymentUI=null;
+    private ServiceProviderCustomerUI serviceProvider=null;
 
     public BookServiceProvider(Map<String, String> customer_session) {
         this.CUSTOMER_SESSION = customer_session;
+        senderPaymentDetails = new PaymentInfo();
+        paymentUI=new PaymentUI();
     }
 
     public boolean finalizeServiceProvider(String serviceProviderID, Map<String,String> selectedServiceProvider)
@@ -34,7 +40,7 @@ public class BookServiceProvider implements IBookServiceProvider
 
             if(choiceToSelect.equalsIgnoreCase("Y"))
             {
-                getAdditionalDetailsToBookServiceProvider(selectedServiceProvider);
+//                getAdditionalDetailsToBookServiceProvider(selectedServiceProvider);
                 isSelected = true;
             }
             return isSelected;
@@ -42,15 +48,15 @@ public class BookServiceProvider implements IBookServiceProvider
         catch (Exception e)
         {
             e.printStackTrace();
-            return isSelected;
         }
         finally
         {
             sc.close();
+            return isSelected;
         }
     }
 
-    public void getAdditionalDetailsToBookServiceProvider(Map<String,String> selectedServiceProvider)
+    public Map<String,String> getAdditionalDetailsToBookServiceProvider(Map<String,String> selectedServiceProvider)
     {
 
         DisplayToGetUserChoice objToDisplayData;
@@ -69,7 +75,7 @@ public class BookServiceProvider implements IBookServiceProvider
         insertData.put("service_request_category_id",selectedServiceProvider.get("service_category_id"));
         insertData.put("service_request_description",descriptionOfWork);
 
-        generateBookingRequest(insertData);
+        return insertData;
     }
 
     public boolean generateBookingRequest(Map<String,String> dataToInsert)
@@ -86,9 +92,34 @@ public class BookServiceProvider implements IBookServiceProvider
             db.makeConnection();
             boolean insertStatus = db.insertQuery(query1,dataToInsert);
 
+            //return insertStatus;
+
+            System.out.println("Please enter payment details : ");
+            paymentUI.getPaymentSenderDetailsInput(senderPaymentDetails);
+            boolean paymentStatus=serviceProvider.acceptPayment(senderPaymentDetails);
             if(insertStatus)
             {
-                objDisplayMessage.displayMessage("Ticket Has been Generated.");
+                objDisplayMessage.displayMessage("Ticket has been generated.");
+                PaymentInfoDAO.write(senderPaymentDetails);
+            }
+
+            boolean feedbackStatus = false;
+            if(paymentStatus){
+                IFeedback testFeedbackObject;
+                IReview review = new Review();
+                String reviewString = "This is a test review string.";
+                review.setReviewString(reviewString);
+                review.setDate("January 1, 2020");
+                review.setReviewee("Reviewee");
+                review.setAuthor("Author");
+                testFeedbackObject = new Feedback("testID");
+                testFeedbackObject.setRating("5");
+                testFeedbackObject.setReview(review);
+
+                feedbackStatus = FeedbackDAO.write(testFeedbackObject);
+                if(feedbackStatus){
+                    System.out.println("Thanks For feedback!");
+                }
             }
 
             return insertStatus;

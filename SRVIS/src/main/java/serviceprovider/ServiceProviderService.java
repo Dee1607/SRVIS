@@ -30,4 +30,9 @@ public class ServiceProviderService implements IServiceProviderService
     {
         serviceProviderDAO.updateBookingStatus(customerID,serviceProviderID);
     }
+
+
+    public void recivePayment(){
+
+    }
 }

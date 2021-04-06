@@ -1,26 +1,23 @@
 package login;
 
-import SearchServiceCategory.ISelectServiceCategory;
-import SearchServiceCategory.SelectServiceCategory;
-import SearchServiceProvider.ISelectServiceProvider;
+import customer.ISelectServiceCategory;
+import customer.SelectServiceCategory;
 import presentationlayer.ServiceProviderCustomerUI;
 import java.util.Map;
 
 public class LoginService implements ILoginService
 {
-
    private Map<String,String> tempValues = null;
    private ILoginDAO IloginDAO = null;
    private Map<String , Map<String,String>> result = null;
-   private ISelectServiceCategory objServiceCategory = null;
-   private ServiceProviderCustomerUI serviceProvider = null;
+
 
    public LoginService()
    {
       IloginDAO=new LoginDAO();
    }
 
-   public void loginUser(String email, String password,String type)
+   public Map<String,String> loginUser(String email, String password,String type)
    {
       result = IloginDAO.applicationLogin(email,password,type);
       String Email=null;
@@ -40,16 +37,9 @@ public class LoginService implements ILoginService
                Email = tempValues.get("email");
                Password = tempValues.get("password");
             }
-            if (Email.equals(email) && Password.equals(password) && type.equalsIgnoreCase("c"))
+            if (Email.equals(email) && Password.equals(password))
             {
-               objServiceCategory = new SelectServiceCategory(tempValues);
-               objServiceCategory.getUserSelectedService();
-            }
-            else
-            {
-               serviceProvider = new ServiceProviderCustomerUI(result);
-               serviceProvider.showCustomerRequestUI(tempValues);
-
+               return tempValues;
             }
          }
       }
@@ -57,6 +47,7 @@ public class LoginService implements ILoginService
       {
          e.printStackTrace();
       }
+      return tempValues;
    }
 
    public Map<String, Map<String,String>>  getPendingRequests(String email,String type)
