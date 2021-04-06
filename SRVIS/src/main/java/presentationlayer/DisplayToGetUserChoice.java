@@ -8,19 +8,25 @@ public class DisplayToGetUserChoice
 
     public int displayMessageGetNumberChoiceFromUser(String stringToBeDisplayed)
     {
-        System.out.println("=================================================================");
+        System.out.println("================================================================================");
         System.out.print(stringToBeDisplayed);
         int userServiceCategoryChoice = objToGetValue.nextInt();
-        System.out.println("=================================================================");
+        System.out.println("================================================================================");
         return userServiceCategoryChoice;
     }
 
     public String displayMessageGetStringChoiceFromUser(String stringToBeDisplayed)
     {
-        System.out.println("=================================================================");
+        System.out.println("================================================================================");
         System.out.print(stringToBeDisplayed);
         String userStringChoice = objToGetValue.next();
-        System.out.println("=================================================================");
+        System.out.println("================================================================================");
         return userStringChoice;
+    }
+
+    public void displayMessage(String message){
+        System.out.println("=============================================================================");
+        System.out.println(message);
+        System.out.println("=============================================================================");
     }
 }

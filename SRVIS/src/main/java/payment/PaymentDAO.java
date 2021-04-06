@@ -11,9 +11,10 @@ public class PaymentDAO {
 
     private static DatabaseConnection paymentDB = DatabaseConnection.databaseInstance();
 
-    public static void write(IPayment payment) {
+    public static boolean write(IPayment payment) {
+        Connection con = null;
         try {
-            Connection con = paymentDB.makeConnection();
+            con = paymentDB.makeConnection();
 
             String paymentID = payment.getPaymentID();
             String serviceRequestID = payment.getServiceRequestID();
@@ -22,17 +23,6 @@ public class PaymentDAO {
             String amount = payment.getAmount();
             String date = payment.getDate();
             String status = payment.getStatusString();
-
-            String createTableQuery = "CREATE TABLE `payment` (\n" +
-                    "  `payment_id` varchar(45) NOT NULL,\n" +
-                    "  `service_request_id` varchar(45) DEFAULT NULL,\n" +
-                    "  `sender_id` varchar(45) DEFAULT NULL,\n" +
-                    "  `receiver_id` varchar(45) DEFAULT NULL,\n" +
-                    "  `amount` varchar(45) DEFAULT NULL,\n" +
-                    "  `date` varchar(45) DEFAULT NULL,\n" +
-                    "  `status` varchar(45) DEFAULT NULL,\n" +
-                    "  PRIMARY KEY (`payment_id`)\n" +
-                    ") ENGINE=InnoDB DEFAULT CHARSET=latin1;\n";
 
             String insertQuery = "INSERT INTO `CSCI5308_3_DEVINT`.`payment`\n" +
                     "(`payment_id`,\n" +
@@ -65,17 +55,26 @@ public class PaymentDAO {
 
             if (result == 1) {
                 con.commit();
+                return true;
             }
             else {
                 System.err.println("Error. Transaction is being rolled back");
                 con.rollback();
+                return false;
             }
-            con.close();
-            paymentDB.closeConnection();
-            paymentDB = null;
+
         } catch (SQLException e) {
             e.printStackTrace();
+        }finally{
+            try{
+                con.close();
+                paymentDB.closeConnection();
+                paymentDB = null;
+            }catch(Exception e){
+                e.printStackTrace();
+            }
         }
+        return false;
     }
 
     public static IPayment read(String paymentID) {

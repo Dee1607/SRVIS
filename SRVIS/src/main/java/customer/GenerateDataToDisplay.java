@@ -1,6 +1,9 @@
-package SearchServiceCategory;
+package customer;
 
+import customer.*;
 import enums.EnumServiceCategory;
+import login.EnumLoginOption;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -18,6 +21,17 @@ public class GenerateDataToDisplay implements IGenerateDataToDisplay
         mapSearchCategories.put(4,"4."+ EnumServiceCategory.Painter);
         mapSearchCategories.put(5,"5."+ EnumServiceCategory.Cleaner);
 
+        return mapSearchCategories;
+    }
+
+    public Map<Integer,String> generateLoginData()
+    {
+        Map<Integer,String> mapSearchCategories = new HashMap<Integer,String>();
+
+        String questionMessage = "Select any option: ";
+        mapSearchCategories.put(0,questionMessage);
+        mapSearchCategories.put(1,"1."+ EnumLoginOption.Login);
+        mapSearchCategories.put(2,"2."+ EnumLoginOption.Register);
         return mapSearchCategories;
     }
 }

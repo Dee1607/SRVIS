@@ -1,4 +1,4 @@
-package SearchServiceCategory;
+package customer;
 
 import java.util.Map;
 

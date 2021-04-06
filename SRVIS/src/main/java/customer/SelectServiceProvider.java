@@ -1,6 +1,5 @@
-package SearchServiceProvider;
+package customer;
 
-import bookingserviceprovider.BookServiceProvider;
 import database.DatabaseConnection;
 import enums.EnumServiceCategory;
 import presentationlayer.DisplayToGetUserChoice;
@@ -57,10 +56,6 @@ public class SelectServiceProvider implements ISelectServiceProvider
     {
         objGetUserChoice = new DisplayToGetUserChoice();
         int userSelectedForServiceProvider = objGetUserChoice.displayMessageGetNumberChoiceFromUser("Enter the Id of the service provider you want to select: ");
-
-        objBookServiceProvider = new BookServiceProvider(CUSTOMER_SESSION);
-        Map<String, String> objSelectedProviderInfo = mapOfDataFromDatabase.get(String.valueOf(userSelectedForServiceProvider));
-        objBookServiceProvider.finalizeServiceProvider(String.valueOf(userSelectedForServiceProvider), objSelectedProviderInfo);
 
         return userSelectedForServiceProvider;
     }
