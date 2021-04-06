@@ -1,6 +1,5 @@
 package customer;
 
-import customer.*;
 import enums.EnumServiceCategory;
 import login.EnumLoginOption;
 

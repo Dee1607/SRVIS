@@ -1,10 +1,10 @@
 package presentationlayer;
+
 import payment.IPaymentInfo;
 import payment.PaymentInfo;
 import payment.PaymentInfoDAO;
 import serviceprovider.ServiceProviderService;
 
-import java.sql.SQLOutput;
 import java.util.Map;
 import java.util.Scanner;
 

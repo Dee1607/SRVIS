@@ -1,8 +1,12 @@
 package database;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.sql.*;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
 
 public class DatabaseConnection implements IDatabaseConnection {
 
@@ -23,11 +27,24 @@ public class DatabaseConnection implements IDatabaseConnection {
         return dbSingleton;
     }
 
+        Properties prop = new Properties();
+        InputStream input;
+
+    {
+        try {
+            input = new FileInputStream("./src/main/resources/config.properties");
+            prop.load(input);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
     public Connection makeConnection() {
         try {
-            this.dbURL = "jdbc:mysql://db-5308.cs.dal.ca:3306/CSCI5308_3_DEVINT?useJDBCCompliantTimezoneShift=true&serverTimezone=UTC";
-            this.dbUsername = "CSCI5308_3_DEVINT_USER";
-            this.dbPassword = "LGAf8ynVwrSQUa3m";
+            this.dbURL =prop.getProperty("dbURL");
+            this.dbUsername = prop.getProperty("dbUsername");
+            this.dbPassword = prop.getProperty("dbPassword");
             Class.forName("com.mysql.cj.jdbc.Driver");
             conn = DriverManager.getConnection(dbURL, dbUsername, dbPassword);
         } catch (Exception e) {

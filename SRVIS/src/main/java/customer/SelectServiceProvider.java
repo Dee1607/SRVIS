@@ -2,8 +2,8 @@ package customer;
 
 import database.DatabaseConnection;
 import enums.EnumServiceCategory;
-import presentationlayer.DisplayToGetUserChoice;
 import presentationlayer.DisplayServiceProviderInfoUI;
+import presentationlayer.DisplayToGetUserChoice;
 
 import java.util.Map;
 

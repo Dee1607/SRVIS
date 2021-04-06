@@ -2,7 +2,9 @@ package customer;
 
 import database.DatabaseConnection;
 import feedback.*;
-import payment.*;
+import payment.IPaymentInfo;
+import payment.PaymentInfo;
+import payment.PaymentInfoDAO;
 import presentationlayer.*;
 
 import java.util.Calendar;
