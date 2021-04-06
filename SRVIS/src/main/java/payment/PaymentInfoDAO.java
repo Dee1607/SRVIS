@@ -1,0 +1,63 @@
+package payment;
+
+import database.DatabaseConnection;
+import database.IDatabaseConnection;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Map;
+
+public class PaymentInfoDAO {
+    private static DatabaseConnection paymentDB = DatabaseConnection.databaseInstance();
+    private IDatabaseConnection db = DatabaseConnection.databaseInstance();
+
+    public IPaymentInfo read(String userID) {
+        IPaymentInfo paymentInfo = null;
+        String paymentType;
+        String cardNumber;
+        String fullName;
+        String securityCode;
+        String expiryDate;
+        String readPaymentQuery = String.format("SELECT * FROM CSCI5308_3_DEVINT.payment_info WHERE user_id = '%s' LIMIT 1;", userID);
+        db.makeConnection();
+        Map<String, Map<String, String>> resultMap = db.selectQuery(readPaymentQuery);
+        Map<String, String> tempValues;
+        for (String str : resultMap.keySet())
+        {
+            tempValues = resultMap.get(str);
+            paymentType = tempValues.get("payment_type");
+            cardNumber = tempValues.get("card_number");
+            fullName = tempValues.get("full_name");
+            securityCode = tempValues.get("security_code");
+            expiryDate = tempValues.get("expiry_date");
+            paymentInfo = new PaymentInfo();
+            paymentInfo.setUserID(userID);
+            paymentInfo.setPaymentType(PaymentType.valueOf(paymentType));
+            paymentInfo.setCardNumber(cardNumber);
+            paymentInfo.setFullName(fullName);
+            paymentInfo.setSecurityCode(securityCode);
+            paymentInfo.setExpiryDate(expiryDate);
+        }
+        return paymentInfo;
+    }
+
+    public boolean write(IPaymentInfo paymentInfo) {
+        boolean result = false;
+        String userID = paymentInfo.getUserID();
+        String paymentType = paymentInfo.getPaymentType();
+        String cardNumber = paymentInfo.getCardNumber();
+        String fullName = paymentInfo.getFullName();
+        String securityCode = paymentInfo.getSecurityCode();
+        String expiryDate = paymentInfo.getExpiryDate();
+        String writePaymentQuery = String.format("INSERT INTO `CSCI5308_3_DEVINT`.`payment_info`" +
+                "(`user_id`,`payment_type`,`card_number`,`full_name`,`security_code`,`expiry_date`)" +
+                "VALUES('%s','%s','%s','%s','%s','%s');",
+                userID, paymentType, cardNumber, fullName, securityCode, expiryDate);;
+        db.makeConnection();
+        result = db.insertQuery(writePaymentQuery);
+        db.closeConnection();
+        return result;
+    }
+}

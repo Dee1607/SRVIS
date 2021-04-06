@@ -2,27 +2,37 @@ package serviceprovider;
 
 import java.util.Map;
 
-public class ServiceProviderService {
+public class ServiceProviderService implements IServiceProviderService
+{
 
-    ServiceProviderDAO d = new ServiceProviderDAO();
-    public void updateAvailability(String Email) throws Exception {
-        d.updateServiceStatus(Email);
+    ServiceProviderDAO serviceProviderDAO = new ServiceProviderDAO();
+
+    public void updateAvailability(String Email)
+    {
+        serviceProviderDAO.updateAvailabilityStatus(Email);
     }
 
 
-    public void acceptBooking(){
-
-
-    }
-
-    public void rejectBooking(){
-
+    public void rejectBooking(String customerID,String serviceProviderID)
+    {
 
     }
 
 
-    public Map<String , Map<String,String>>  showBooking() throws Exception {
-        Map<String , Map<String,String>> bookingResult=d.showAllBooking();
+    public Map<String , Map<String,String>>  showBooking()
+    {
+        Map<String , Map<String,String>> bookingResult = serviceProviderDAO.showAllBooking();
         return bookingResult;
+    }
+
+    @Override
+    public void acceptBooking(String customerID, String serviceProviderID)
+    {
+        serviceProviderDAO.updateBookingStatus(customerID,serviceProviderID);
+    }
+
+
+    public void recivePayment(){
+
     }
 }

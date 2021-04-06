@@ -1,13 +1,14 @@
-package SearchServiceCategory;
+package customer;
 
+import customer.*;
 import enums.EnumServiceCategory;
+import login.EnumLoginOption;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Scanner;
 
-public class GenerateDataToDisplay {
-
+public class GenerateDataToDisplay implements IGenerateDataToDisplay
+{
     public Map<Integer,String> generateServiceCategoryData()
     {
         Map<Integer,String> mapSearchCategories = new HashMap<Integer,String>();
@@ -23,5 +24,14 @@ public class GenerateDataToDisplay {
         return mapSearchCategories;
     }
 
+    public Map<Integer,String> generateLoginData()
+    {
+        Map<Integer,String> mapSearchCategories = new HashMap<Integer,String>();
 
+        String questionMessage = "Select any option: ";
+        mapSearchCategories.put(0,questionMessage);
+        mapSearchCategories.put(1,"1."+ EnumLoginOption.Login);
+        mapSearchCategories.put(2,"2."+ EnumLoginOption.Register);
+        return mapSearchCategories;
+    }
 }

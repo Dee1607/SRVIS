@@ -1,6 +1,6 @@
 package feedback;
 
-import database.Database;
+import database.DatabaseConnection;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -12,7 +12,7 @@ public class FeedbackDAO {
     public static IFeedback read(String id) {
         IFeedback feedback = null;
         try {
-            Database db = Database.databaseInstance();
+            DatabaseConnection db = DatabaseConnection.databaseInstance();
             Connection con = db.makeConnection();
 
             String selectQuery = "SELECT `feedback`.`feedback_id`,\n" +
@@ -53,7 +53,7 @@ public class FeedbackDAO {
     public static boolean write(IFeedback feedback) {
         boolean writeSuccessful = false;
         try {
-            Database db = Database.databaseInstance();
+            DatabaseConnection db = DatabaseConnection.databaseInstance();
             Connection con = db.makeConnection();
             con.setAutoCommit(false);
 

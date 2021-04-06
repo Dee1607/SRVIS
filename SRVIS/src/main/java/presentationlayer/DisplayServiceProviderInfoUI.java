@@ -13,7 +13,7 @@ public class DisplayServiceProviderInfoUI
         for(String key : mapServiceProviderInfo.keySet())
         {
             Map<String,String> mapOtherValues = mapServiceProviderInfo.get(key);
-            System.out.format("%1s%20s%20s%20s%20s", "|",key+" |", mapOtherValues.get("firstName")+" "+ mapOtherValues.get("lastName")+" |", mapOtherValues.get("spContact")+" |","$"+mapOtherValues.get("spHourlyRate")+" |\n");
+            System.out.format("%1s%20s%20s%20s%20s", "|",key+" |", mapOtherValues.get("firstName")+" "+ mapOtherValues.get("lastName")+" |", mapOtherValues.get("contact")+" |","$"+mapOtherValues.get("hourlyRate")+" |\n");
             System.out.format("%1s%20s%20s%20s%20s", "|","-------------------"+"|", "-------------------"+"|", "-------------------"+"|","------------------"+"|\n");
         }
     }
@@ -23,14 +23,14 @@ public class DisplayServiceProviderInfoUI
         System.out.format("%1s%20s%1s%55s%1s", "|","====================","|", "========================================================","|\n");
         System.out.format("%1s%-20s%1s%-55s%1s", "|"," ID ","| ", key ,"|\n");
         System.out.format("%1s%-20s%1s%-55s%1s", "|"," Name ","| ", mapOtherValues.get("firstName")+" "+ mapOtherValues.get("lastName"),"|\n");
-        System.out.format("%1s%-20s%1s%-55s%1s", "|"," Address ","| ", mapOtherValues.get("spAddress"),"|\n");
-        System.out.format("%1s%-20s%1s%-55s%1s", "|"," Email ","| ", mapOtherValues.get("Email"),"|\n");
-        System.out.format("%1s%-20s%1s%-55s%1s", "|"," Mobile ","| ", mapOtherValues.get("spContact"),"|\n");
-        System.out.format("%1s%-20s%1s%-55s%1s", "|"," Date Of Birth ","| ", mapOtherValues.get("spAge"),"|\n");
-        System.out.format("%1s%-20s%1s%-55s%1s", "|"," Service Type ","| ", mapOtherValues.get("spJobType"),"|\n");
-        System.out.format("%1s%-20s%1s%-55s%1s", "|"," Hourly Rate ($) ","| ", "$" + mapOtherValues.get("spHourlyRate"),"|\n");
-        System.out.format("%1s%-20s%1s%-55s%1s", "|"," Experience (years)","| ", mapOtherValues.get("spExperience") + "years" , "|\n");
-        System.out.format("%1s%-20s%1s%-55s%1s", "|"," Rating ","| ", mapOtherValues.get("spRatings"),"|\n");
+        System.out.format("%1s%-20s%1s%-55s%1s", "|"," Address ","| ", mapOtherValues.get("address"),"|\n");
+        System.out.format("%1s%-20s%1s%-55s%1s", "|"," Email ","| ", mapOtherValues.get("email"),"|\n");
+        System.out.format("%1s%-20s%1s%-55s%1s", "|"," Mobile ","| ", mapOtherValues.get("contact"),"|\n");
+        System.out.format("%1s%-20s%1s%-55s%1s", "|"," Date Of Birth ","| ", mapOtherValues.get("age"),"|\n");
+        System.out.format("%1s%-20s%1s%-55s%1s", "|"," Service Type ","| ", mapOtherValues.get("jobType"),"|\n");
+        System.out.format("%1s%-20s%1s%-55s%1s", "|"," Hourly Rate ($) ","| ", "$" + mapOtherValues.get("hourlyRate"),"|\n");
+        System.out.format("%1s%-20s%1s%-55s%1s", "|"," Experience (years)","| ", mapOtherValues.get("experience") + "years" , "|\n");
+        System.out.format("%1s%-20s%1s%-55s%1s", "|"," Rating ","| ", mapOtherValues.get("ratings"),"|\n");
         System.out.format("%1s%-20s%1s%-55s%1s", "|","--------------------","|", "--------------------------------------------------------","|\n");
     }
 }
