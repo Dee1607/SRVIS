@@ -3,15 +3,15 @@ package controller;
 import customer.*;
 import enums.EnumServiceCategory;
 import login.LoginService;
+import presentationlayer.DisplayToGetUserChoice;
 import presentationlayer.LoginUI;
 import presentationlayer.ServiceProviderCustomerUI;
 import registration.IRegistrationMain;
 import registration.IValidation;
 import registration.Validation;
-
 import java.util.Map;
 
-public class ApplicationController
+public class ApplicationController implements IApplicationController
 {
     private IRegistrationMain registerObj=null;
     private IValidation validate;
@@ -20,11 +20,13 @@ public class ApplicationController
     private LoginService objLoginService = null;
     private Map<String,String> SESSION_DETAILS = null;
     private SelectServiceProvider objSelectedServiceProvider = null;
-    IBookServiceProvider objBookServiceProvider = null;
+    private IBookServiceProvider objBookServiceProvider = null;
+    private DisplayToGetUserChoice display = null;
 
-    public ApplicationController(){
+    public ApplicationController(DisplayToGetUserChoice objToDisplay){
         validate = new Validation();
         objLoginService = new LoginService();
+        this.display = objToDisplay;
     }
 
     public void initializeApplication()

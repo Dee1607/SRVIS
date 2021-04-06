@@ -39,7 +39,6 @@ public class LoginUI
           try {
               Scanner sc = new Scanner(System.in);
 
-              System.out.println("########## Welcome to SRVIS ##########");
               Map<Integer,String> objDataToDisplay = objgetDataToDisplay.generateLoginData();
 
               objDisplay.displayServiceCategory(objDataToDisplay);
