@@ -1,13 +1,46 @@
 package feedback;
 
 import database.DatabaseConnection;
+import database.IDatabaseConnection;
+import payment.*;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Map;
 
 public class FeedbackDAO {
+
+    private IDatabaseConnection db = DatabaseConnection.databaseInstance();
+
+    public IFeedback read(String id) {
+        String rating;
+        String reviewString;
+        String author;
+        String reviewee;
+        String date;
+
+        IFeedback feedback = null;
+        db.makeConnection();
+        Map<String, Map<String, String>> resultMap = db.selectQuery(readPaymentQuery);
+        Map<String, String> tempValues;
+        for (String str : resultMap.keySet())
+        {
+            tempValues = resultMap.get(str);
+            rating = tempValues.get("rating");
+            reviewString = tempValues.get("review");
+            author = tempValues.get("author");
+            reviewee = tempValues.get("reviewee");
+            date = tempValues.get("date");
+
+            feedback = new Feedback(id);
+            feedback.setRating(rating);
+            feedback.setReview(reviewString);
+
+        }
+        return feedback;
+    }
 
     public static IFeedback read(String id) {
         IFeedback feedback = null;
