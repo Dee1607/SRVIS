@@ -29,6 +29,11 @@ public class Payment implements IPayment{
         this.sender = sender;
     }
 
+    public void setSender(String senderID) {
+        PaymentInfoDAO paymentInfoDAO = new PaymentInfoDAO();
+        this.sender = paymentInfoDAO.read(senderID);
+    }
+
     public IPaymentInfo getSender() {
         return sender;
     }
@@ -39,6 +44,11 @@ public class Payment implements IPayment{
 
     public void setReceiver(IPaymentInfo receiver) {
         this.receiver = receiver;
+    }
+
+    public void setReceiver(String receiverID) {
+        PaymentInfoDAO paymentInfoDAO = new PaymentInfoDAO();
+        this.sender = paymentInfoDAO.read(receiverID);
     }
 
     public IPaymentInfo getReceiver() {
