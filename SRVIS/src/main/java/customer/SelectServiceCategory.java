@@ -1,10 +1,11 @@
-package SearchServiceCategory;
+package customer;
 
-import SearchServiceProvider.SelectServiceProvider;
+import customer.*;
 import enums.EnumServiceCategory;
 import presentationlayer.DisplayServiceCategoriesUI;
 import presentationlayer.DisplayToGetUserChoice;
-import java.util.*;
+
+import java.util.Map;
 
 public class SelectServiceCategory implements ISelectServiceCategory
 {

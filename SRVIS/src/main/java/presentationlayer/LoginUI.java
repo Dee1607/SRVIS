@@ -1,6 +1,7 @@
 package presentationlayer;
 
-import SearchServiceCategory.GenerateDataToDisplay;
+
+import customer.GenerateDataToDisplay;
 import login.LoginService;
 import registration.IRegistrationMain;
 import registration.IValidation;
@@ -14,8 +15,10 @@ public class LoginUI
     private LoginService login=null;
     private DisplayToGetUserChoice objGetData=null;
     private Map<String,String> pendingBookingValues =null;
-    IValidation validate=null;
-    IRegistrationMain registerObj;
+    private IValidation validate=null;
+    private IRegistrationMain registerObj=null;
+    private GenerateDataToDisplay objgetDataToDisplay=null;
+    private DisplayServiceCategoriesUI objDisplay=null;
 
     public LoginUI()
     {
@@ -23,6 +26,8 @@ public class LoginUI
         objGetData=new DisplayToGetUserChoice();
         validate=new Validation();
         registerObj = new RegistrationMain();
+        objgetDataToDisplay = new GenerateDataToDisplay();
+        objDisplay = new DisplayServiceCategoriesUI();
     }
 
 
@@ -32,11 +37,8 @@ public class LoginUI
               Scanner sc = new Scanner(System.in);
 
               System.out.println("########## Welcome to SRVIS ##########");
-
-              GenerateDataToDisplay objgetDataToDisplay = new GenerateDataToDisplay();
               Map<Integer,String> objDataToDisplay = objgetDataToDisplay.generateLoginData();
 
-              DisplayServiceCategoriesUI objDisplay = new DisplayServiceCategoriesUI();
               objDisplay.displayServiceCategory(objDataToDisplay);
 
               String userInput = sc.nextLine();

@@ -24,17 +24,6 @@ public class PaymentDAO {
             String date = payment.getDate();
             String status = payment.getStatusString();
 
-            String createTableQuery = "CREATE TABLE `payment` (\n" +
-                    "  `payment_id` varchar(45) NOT NULL,\n" +
-                    "  `service_request_id` varchar(45) DEFAULT NULL,\n" +
-                    "  `sender_id` varchar(45) DEFAULT NULL,\n" +
-                    "  `receiver_id` varchar(45) DEFAULT NULL,\n" +
-                    "  `amount` varchar(45) DEFAULT NULL,\n" +
-                    "  `date` varchar(45) DEFAULT NULL,\n" +
-                    "  `status` varchar(45) DEFAULT NULL,\n" +
-                    "  PRIMARY KEY (`payment_id`)\n" +
-                    ") ENGINE=InnoDB DEFAULT CHARSET=latin1;\n";
-
             String insertQuery = "INSERT INTO `CSCI5308_3_DEVINT`.`payment`\n" +
                     "(`payment_id`,\n" +
                     "`service_request_id`,\n" +

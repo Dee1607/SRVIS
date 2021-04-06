@@ -1,6 +1,5 @@
-package SearchServiceProvider;
+package customer;
 
-import bookingserviceprovider.BookServiceProvider;
 import database.DatabaseConnection;
 import enums.EnumServiceCategory;
 import presentationlayer.DisplayToGetUserChoice;

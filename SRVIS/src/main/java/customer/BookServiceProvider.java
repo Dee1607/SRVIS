@@ -1,11 +1,10 @@
-package bookingserviceprovider;
+package customer;
 
 import database.DatabaseConnection;
 import feedback.*;
 import payment.*;
-import presentationlayer.DisplayServiceProviderInfoUI;
-import presentationlayer.DisplayToGetUserChoice;
-import presentationlayer.DisplayUpdates;
+import presentationlayer.*;
+
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
@@ -14,9 +13,14 @@ import java.util.Scanner;
 public class BookServiceProvider implements IBookServiceProvider
 {
     private Map<String,String> CUSTOMER_SESSION;
+    private IPaymentInfo senderPaymentDetails = null;
+    private PaymentUI paymentUI=null;
+    private ServiceProviderCustomerUI serviceProvider=null;
 
     public BookServiceProvider(Map<String, String> customer_session) {
         this.CUSTOMER_SESSION = customer_session;
+        senderPaymentDetails = new PaymentInfo();
+        paymentUI=new PaymentUI();
     }
 
     public boolean finalizeServiceProvider(String serviceProviderID, Map<String,String> selectedServiceProvider)
@@ -87,41 +91,13 @@ public class BookServiceProvider implements IBookServiceProvider
             objDisplayMessage = new DisplayUpdates();
             db.makeConnection();
             boolean insertStatus = db.insertQuery(query1,dataToInsert);
-
-
-            PaymentInfo objPayment = new PaymentInfo();
-            objPayment.setPaymentType(PaymentType.valueOf("VISA"));
-            objPayment.setCardNumber("1234567890");
-            objPayment.setUserID("111");
-            objPayment.setFullName("Johnny Appleseed");
-            objPayment.setExpiryDate("12/12/12");
-            objPayment.setSecurityCode("123");
-
-            PaymentInfo objPayment1 = new PaymentInfo();
-            objPayment1.setPaymentType(PaymentType.valueOf("VISA"));
-            objPayment1.setCardNumber("1234567890");
-            objPayment1.setUserID("222");
-            objPayment1.setFullName("Johnny Appleseed");
-            objPayment1.setExpiryDate("12/12/12");
-            objPayment1.setSecurityCode("123");
-
-            IPayment paymentTestObject = new Payment("ReadTestPaymentID");
-            paymentTestObject.setSender(objPayment);
-            paymentTestObject.setReceiver(objPayment1);
-            paymentTestObject.setAmount("100");
-            paymentTestObject.setStatus(PaymentStatus.PENDING);
-            paymentTestObject.setDate("2021/12/12");
-            paymentTestObject.setServiceRequestID("ServiceID");
-
-            boolean paymentStatus = false;
-
+            System.out.println("Please enter payment details : ");
+            paymentUI.getPaymentSenderDetailsInput(senderPaymentDetails);
+            boolean paymentStatus=serviceProvider.acceptPayment(senderPaymentDetails);
             if(insertStatus)
             {
-                objDisplayMessage.displayMessage("Ticket Has been Generated.");
-
-                PaymentInfoDAO.write(objPayment);
-                PaymentInfoDAO.write(objPayment1);
-                paymentStatus =  PaymentDAO.write(paymentTestObject);
+                objDisplayMessage.displayMessage("Ticket has been generated.");
+                PaymentInfoDAO.write(senderPaymentDetails);
             }
 
             boolean feedbackStatus = false;

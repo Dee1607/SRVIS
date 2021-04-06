@@ -1,4 +1,4 @@
-package bookingserviceprovider;
+package customer;
 
 import java.util.Map;
 
