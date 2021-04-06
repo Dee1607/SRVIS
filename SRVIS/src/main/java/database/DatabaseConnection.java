@@ -152,6 +152,20 @@ public class DatabaseConnection implements IDatabaseConnection {
         }
     }
 
+    public boolean insertQuery(String query) {
+        boolean result = false;
+        try {
+            Statement stmt = conn.createStatement();
+            if (stmt.executeUpdate(query) == 1) {
+                result = true;
+            }
+            stmt.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
     public boolean insertQuery(String query, Map<String, String> insertData) {
         PreparedStatement preparedStmt = null;
         try {
