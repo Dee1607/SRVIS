@@ -1,6 +1,6 @@
-package SearchServiceCategory;
+package customer;
 
-import SearchServiceProvider.SelectServiceProvider;
+import customer.SelectServiceProvider;
 import enums.EnumServiceCategory;
 import presentationlayer.DisplayServiceCategoriesUI;
 import presentationlayer.DisplayToGetUserChoice;

@@ -1,4 +1,7 @@
 package presentationlayer;
+import payment.IPaymentInfo;
+import payment.PaymentInfo;
+import payment.PaymentInfoDAO;
 import serviceprovider.ServiceProviderService;
 
 import java.sql.SQLOutput;
@@ -7,14 +10,18 @@ import java.util.Scanner;
 
 public class ServiceProviderCustomerUI
 {
-    Map<String, Map<String,String>> activeLoginServiceProvider;
-    ServiceProviderService serviceProvider;
-    Map<String,String> serviceProviderDetails =null;
+    private Map<String, Map<String,String>> activeLoginServiceProvider;
+    private ServiceProviderService serviceProvider;
+    private Map<String,String> serviceProviderDetails =null;
+    private PaymentUI paymentUI=null;
+    private IPaymentInfo receiverPayment=null;
 
     public ServiceProviderCustomerUI(Map<String, Map<String,String>> loginUser)
     {
             this.activeLoginServiceProvider=loginUser;
             serviceProvider=new ServiceProviderService();
+            paymentUI=new PaymentUI();
+            receiverPayment=new PaymentInfo();
             for(String str : activeLoginServiceProvider.keySet())
             {
                 serviceProviderDetails = activeLoginServiceProvider.get(str);
@@ -86,5 +93,14 @@ public class ServiceProviderCustomerUI
             System.out.println("--------------------------------------------------------------");
         }
         return bookingValues;
+    }
+
+
+    public boolean acceptPayment(IPaymentInfo senderPaymentDetails)
+    {
+        paymentUI.getPaymentReceiverDetailsInput(receiverPayment);
+        PaymentInfoDAO.write(receiverPayment);
+        paymentUI.addPaymentProcessInput(senderPaymentDetails,receiverPayment);
+        return true;
     }
 }

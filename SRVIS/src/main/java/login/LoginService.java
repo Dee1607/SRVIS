@@ -1,8 +1,7 @@
 package login;
 
-import SearchServiceCategory.ISelectServiceCategory;
-import SearchServiceCategory.SelectServiceCategory;
-import SearchServiceProvider.ISelectServiceProvider;
+import customer.SearchServiceCategory.ISelectServiceCategory;
+import customer.SearchServiceCategory.SelectServiceCategory;
 import presentationlayer.ServiceProviderCustomerUI;
 import java.util.Map;
 

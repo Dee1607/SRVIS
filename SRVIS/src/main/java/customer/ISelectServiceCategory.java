@@ -1,4 +1,4 @@
-package SearchServiceCategory;
+package customer;
 
 public interface ISelectServiceCategory
 {
