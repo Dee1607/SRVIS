@@ -1,8 +1,9 @@
 package login;
 
-import customer.SearchServiceCategory.ISelectServiceCategory;
-import customer.SearchServiceCategory.SelectServiceCategory;
+import customer.ISelectServiceCategory;
+import customer.SelectServiceCategory;
 import presentationlayer.ServiceProviderCustomerUI;
+
 import java.util.Map;
 
 public class LoginService implements ILoginService

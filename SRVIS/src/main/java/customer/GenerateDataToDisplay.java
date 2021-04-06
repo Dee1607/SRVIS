@@ -1,4 +1,4 @@
-package customer.SearchServiceCategory;
+package customer;
 
 import customer.*;
 import enums.EnumServiceCategory;

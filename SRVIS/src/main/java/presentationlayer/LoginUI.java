@@ -1,6 +1,7 @@
 package presentationlayer;
 
-import customer.SearchServiceCategory.GenerateDataToDisplay;
+
+import customer.GenerateDataToDisplay;
 import login.LoginService;
 import registration.IRegistrationMain;
 import registration.IValidation;
