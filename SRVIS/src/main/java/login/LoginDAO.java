@@ -18,7 +18,7 @@ public class LoginDAO implements ILoginDAO{
         {
             sql1 = "SELECT * FROM customer WHERE email='"+email+"'AND password="+password+"";
         }else{
-            sql1 = "SELECT * FROM service_provider WHERE email='"+email+"'AND password="+password+"";
+            sql1 = "SELECT * FROM service_provider WHERE email='"+email+"'AND password='"+password+"'";
         }
         Map<String,Map<String,String>> queryResult= db.selectQuery(sql1);
         db.closeConnection();
@@ -31,7 +31,7 @@ public class LoginDAO implements ILoginDAO{
         db.makeConnection();
         if(type.equalsIgnoreCase("c")) {
             query = "SELECT * FROM customer INNER JOIN service_request on customer.customer_id=service_request.customer_id WHERE email='" + email + "'";
-        }else{
+        }else if(type.equalsIgnoreCase("sp")){
             query = "SELECT * FROM service_provider INNER JOIN service_request on service_provider.service_provider_id=service_request.service_provider_id WHERE email='" + email + "'";
         }
         Map<String, Map<String, String>> pendingRequest = null;

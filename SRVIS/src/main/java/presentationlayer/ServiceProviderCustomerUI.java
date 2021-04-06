@@ -3,40 +3,33 @@ import payment.IPaymentInfo;
 import payment.PaymentInfo;
 import payment.PaymentInfoDAO;
 import serviceprovider.ServiceProviderService;
-
-import java.sql.SQLOutput;
 import java.util.Map;
 import java.util.Scanner;
 
 public class ServiceProviderCustomerUI
 {
-    private Map<String, Map<String,String>> activeLoginServiceProvider;
+    private Map<String,String> activeLoginServiceProvider;
     private ServiceProviderService serviceProvider;
-    private Map<String,String> serviceProviderDetails =null;
     private PaymentUI paymentUI=null;
     private IPaymentInfo receiverPayment=null;
 
-    public ServiceProviderCustomerUI(Map<String, Map<String,String>> loginUser)
+    public ServiceProviderCustomerUI(Map<String,String> loginUser)
     {
             this.activeLoginServiceProvider=loginUser;
             serviceProvider=new ServiceProviderService();
             paymentUI=new PaymentUI();
             receiverPayment=new PaymentInfo();
-            for(String str : activeLoginServiceProvider.keySet())
-            {
-                serviceProviderDetails = activeLoginServiceProvider.get(str);
-            }
     }
 
-    public void showCustomerRequestUI(Map<String,String> serviceProviderDetails)
+    public void showCustomerRequestUI()
     {
-            String firstName= serviceProviderDetails.get("firstName");
-            String lastName= serviceProviderDetails.get("lastName");
-            String Email=serviceProviderDetails.get("email");
+            String firstName= activeLoginServiceProvider.get("firstName");
+            String lastName= activeLoginServiceProvider.get("lastName");
+            String Email=activeLoginServiceProvider.get("email");
             System.out.println("Hi "+ firstName +  lastName);
             showAvailability(Email);
             getJobRequests();
-            bookingOperation(serviceProviderDetails);
+            bookingOperation(activeLoginServiceProvider);
 
     }
 

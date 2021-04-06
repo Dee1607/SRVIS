@@ -40,7 +40,7 @@ public class BookServiceProvider implements IBookServiceProvider
 
             if(choiceToSelect.equalsIgnoreCase("Y"))
             {
-                getAdditionalDetailsToBookServiceProvider(selectedServiceProvider);
+//                getAdditionalDetailsToBookServiceProvider(selectedServiceProvider);
                 isSelected = true;
             }
             return isSelected;
@@ -48,15 +48,15 @@ public class BookServiceProvider implements IBookServiceProvider
         catch (Exception e)
         {
             e.printStackTrace();
-            return isSelected;
         }
         finally
         {
             sc.close();
+            return isSelected;
         }
     }
 
-    public void getAdditionalDetailsToBookServiceProvider(Map<String,String> selectedServiceProvider)
+    public Map<String,String> getAdditionalDetailsToBookServiceProvider(Map<String,String> selectedServiceProvider)
     {
 
         DisplayToGetUserChoice objToDisplayData;
@@ -75,7 +75,7 @@ public class BookServiceProvider implements IBookServiceProvider
         insertData.put("service_request_category_id",selectedServiceProvider.get("service_category_id"));
         insertData.put("service_request_description",descriptionOfWork);
 
-        generateBookingRequest(insertData);
+        return insertData;
     }
 
     public boolean generateBookingRequest(Map<String,String> dataToInsert)
@@ -91,6 +91,9 @@ public class BookServiceProvider implements IBookServiceProvider
             objDisplayMessage = new DisplayUpdates();
             db.makeConnection();
             boolean insertStatus = db.insertQuery(query1,dataToInsert);
+
+            //return insertStatus;
+
             System.out.println("Please enter payment details : ");
             paymentUI.getPaymentSenderDetailsInput(senderPaymentDetails);
             boolean paymentStatus=serviceProvider.acceptPayment(senderPaymentDetails);
