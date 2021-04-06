@@ -1,7 +1,8 @@
 package customer;
 
+import enums.EnumServiceCategory;
+
 public interface ISelectServiceCategory
 {
-    void getUserSelectedService();
-
+    EnumServiceCategory getUserSelectedService();
 }
