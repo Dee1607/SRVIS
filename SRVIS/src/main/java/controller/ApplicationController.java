@@ -4,6 +4,7 @@ import customer.*;
 import enums.EnumServiceCategory;
 import login.LoginService;
 import presentationlayer.DisplayToGetUserChoice;
+import presentationlayer.IDisplayToGetUserChoice;
 import presentationlayer.LoginUI;
 import presentationlayer.ServiceProviderCustomerUI;
 import registration.IRegistrationMain;
@@ -21,9 +22,9 @@ public class ApplicationController implements IApplicationController
     private Map<String,String> SESSION_DETAILS = null;
     private SelectServiceProvider objSelectedServiceProvider = null;
     private IBookServiceProvider objBookServiceProvider = null;
-    private DisplayToGetUserChoice display = null;
+    private IDisplayToGetUserChoice display = null;
 
-    public ApplicationController(DisplayToGetUserChoice objToDisplay){
+    public ApplicationController(IDisplayToGetUserChoice objToDisplay){
         validate = new Validation();
         objLoginService = new LoginService();
         this.display = objToDisplay;
@@ -65,26 +66,31 @@ public class ApplicationController implements IApplicationController
                             objBookServiceProvider.generateBookingRequest(mapServiceProviderToBook);
 
                         }
-                    } else {
+                    }else if (mapLoginData.get("type").equalsIgnoreCase("sp")){
                         // **********************
                         // SP CODE LEFT TO MERGE
                         // *********************
-                        serviceProvider = new ServiceProviderCustomerUI(tempValues);
-                        serviceProvider.showCustomerRequestUI();
+
+                        serviceProvider = new ServiceProviderCustomerUI(tempValues,display);
+                        Map<String,String> serviceProviderSession =serviceProvider.getActiveServiceProvider();
+
+                    }else
+                    {
+                        display.displayMessage("Please enter valid option for the type");
                     }
-                    System.out.println("All the pending requests in your queue.!!!!");
+                    display.displayMessage("All the pending requests in your queue.!!!!");
                     login.showPendingRequest(mapLoginData.get("email"), mapLoginData.get("type"));
                 }
                 else
                 {
-                    System.out.println("Please enter valid email-id or Password !!!!");
+                    display.displayMessage("Please enter valid email-id or Password !!!!");
                 }
             }
             else if (userChoice == 2)
             {
                 registerObj.register();
             } else {
-                System.out.println("Please enter valid input .");
+                display.displayMessage("Please enter valid input .");
             }
         }
         catch(Exception e)

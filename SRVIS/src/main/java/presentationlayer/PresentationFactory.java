@@ -29,7 +29,7 @@ public class PresentationFactory {
         public RegistrationPageUI RegistrationPageUI(){
             return new RegistrationPageUI();
         }
-        public ServiceProviderCustomerUI ServiceProviderCustomerUI(Map<String,String> loginUser){
-            return new ServiceProviderCustomerUI(loginUser);
+        public ServiceProviderCustomerUI ServiceProviderCustomerUI(Map<String,String> loginUser,IDisplayToGetUserChoice display){
+            return new ServiceProviderCustomerUI(loginUser,display);
         }
 }

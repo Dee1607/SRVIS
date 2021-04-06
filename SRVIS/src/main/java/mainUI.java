@@ -1,12 +1,13 @@
 import controller.ApplicationController;
 import presentationlayer.DisplayToGetUserChoice;
+import presentationlayer.IDisplayToGetUserChoice;
 import presentationlayer.LoginUI;
 
 public class mainUI
 {
     public static void main(String[] args)
     {
-        DisplayToGetUserChoice objToDisplay = new DisplayToGetUserChoice();
+        IDisplayToGetUserChoice objToDisplay =new DisplayToGetUserChoice();
 
         ApplicationController objApplication = new ApplicationController(objToDisplay);
         objToDisplay.displayMessage("########################### Welcome to SRVIS ###########################");

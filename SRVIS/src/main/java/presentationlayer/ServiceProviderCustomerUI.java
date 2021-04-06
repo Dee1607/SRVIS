@@ -12,28 +12,27 @@ public class ServiceProviderCustomerUI
     private ServiceProviderService serviceProvider;
     private PaymentUI paymentUI=null;
     private IPaymentInfo receiverPayment=null;
+    private IDisplayToGetUserChoice display;
 
-    public ServiceProviderCustomerUI(Map<String,String> loginUser)
+    public ServiceProviderCustomerUI(Map<String,String> loginUser,IDisplayToGetUserChoice display )
     {
             this.activeLoginServiceProvider=loginUser;
             serviceProvider=new ServiceProviderService();
             paymentUI=new PaymentUI();
             receiverPayment=new PaymentInfo();
+            this.display=display;
     }
 
-    public void showCustomerRequestUI()
+    public Map<String,String> getActiveServiceProvider()
     {
             String firstName= activeLoginServiceProvider.get("firstName");
             String lastName= activeLoginServiceProvider.get("lastName");
             String Email=activeLoginServiceProvider.get("email");
-            System.out.println("Hi "+ firstName +  lastName);
-            showAvailability(Email);
-            getJobRequests();
-            bookingOperation(activeLoginServiceProvider);
-
+            display.displayMessage("Hi "+ firstName +  lastName);
+            return activeLoginServiceProvider;
     }
 
-    public void bookingOperation(Map<String,String> serviceProviderDetails)
+    public String bookingOperation(Map<String,String> serviceProviderDetails)
     {
             String serviceProviderID=serviceProviderDetails.get("service_provider_id");
             String customerID = null;
@@ -54,9 +53,10 @@ public class ServiceProviderCustomerUI
                 serviceProvider.rejectBooking(customerID,serviceProviderID);
                 System.out.println("Please enter valid customer ID");
             }
-        }
+        return customerID;
+    }
 
-    public void showAvailability(String Email)
+    public boolean showAvailability(String Email)
     {
         Scanner sc = new Scanner(System.in);
         System.out.println("Are you available for work (yes/no)?");
@@ -65,10 +65,12 @@ public class ServiceProviderCustomerUI
         {
             serviceProvider.updateAvailability(Email);
             System.out.println("Status : ACTIVE");
+            return true;
         }
         else
         {
             System.out.println("Your availability has been marked as NO ");
+            return false;
         }
     }
 

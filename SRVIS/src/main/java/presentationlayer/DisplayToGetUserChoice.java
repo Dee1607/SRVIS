@@ -2,7 +2,7 @@ package presentationlayer;
 
 import java.util.Scanner;
 
-public class DisplayToGetUserChoice
+public class DisplayToGetUserChoice implements IDisplayToGetUserChoice
 {
     private Scanner objToGetValue = new Scanner(System.in);
 
