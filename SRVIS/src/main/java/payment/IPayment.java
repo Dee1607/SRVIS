@@ -2,7 +2,6 @@ package payment;
 
 public interface IPayment {
     boolean isValid();
-    void processPayment();
     void setSender(IPaymentInfo sender);
     IPaymentInfo getSender();
     String getSenderID ();

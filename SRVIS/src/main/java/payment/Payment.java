@@ -20,18 +20,8 @@ public class Payment implements IPayment{
         return senderIsValid && receiverIsValid && amountIsValid;
     }
 
-    public void processPayment() {
-        PaymentDAO paymentDAO = new PaymentDAO();
-        paymentDAO.write(this);
-    }
-
     public void setSender(IPaymentInfo sender) {
         this.sender = sender;
-    }
-
-    public void setSender(String senderID) {
-        PaymentInfoDAO paymentInfoDAO = new PaymentInfoDAO();
-        this.sender = paymentInfoDAO.read(senderID);
     }
 
     public IPaymentInfo getSender() {
@@ -44,11 +34,6 @@ public class Payment implements IPayment{
 
     public void setReceiver(IPaymentInfo receiver) {
         this.receiver = receiver;
-    }
-
-    public void setReceiver(String receiverID) {
-        PaymentInfoDAO paymentInfoDAO = new PaymentInfoDAO();
-        this.sender = paymentInfoDAO.read(receiverID);
     }
 
     public IPaymentInfo getReceiver() {
