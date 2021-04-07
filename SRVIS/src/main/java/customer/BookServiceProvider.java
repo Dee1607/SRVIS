@@ -71,7 +71,7 @@ public class BookServiceProvider implements IBookServiceProvider
         DisplayToGetUserChoice objToDisplayData;
 
         objToDisplayData = new DisplayToGetUserChoice();
-        String descriptionOfWork = objToDisplayData.displayMessageGetStringChoiceFromUser("Give some brief information on the work needs to be done: ");
+        String descriptionOfWork = objToDisplayData.displayMessageGetStringChoiceFromUser("Give some brief information on the work needs to be done:");
 
         Calendar calendar = Calendar.getInstance();
         java.sql.Date bookingDate = new java.sql.Date(calendar.getTime().getTime());
