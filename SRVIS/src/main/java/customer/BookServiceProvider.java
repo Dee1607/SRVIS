@@ -97,12 +97,10 @@ public class BookServiceProvider implements IBookServiceProvider
             //return insertStatus;
 
             System.out.println("Please enter payment details : ");
-            paymentUI.getPaymentSenderDetailsInput(senderPaymentDetails);
-            boolean paymentStatus=serviceProvider.acceptPayment(senderPaymentDetails);
+            paymentUI.getPaymentDetailsInput(senderPaymentDetails);
             if(insertStatus)
             {
                 objDisplayMessage.displayMessage("Ticket has been generated.");
-                PaymentInfoDAO.write(senderPaymentDetails);
             }
 
             boolean feedbackStatus = false;
