@@ -45,13 +45,16 @@ public class RegistrationPageUI
             getType.put(4,"Painter");
             getType.put(5,"Cleaner");
 
-            displayData.displayServiceCategory(getType);
+            for(Integer i: getType.keySet())
+            {
+                System.out.println (i + " " + getType.get(i));
+            }
 
             Scanner sc = new Scanner(System.in);
             String jobType = sc.nextLine();
             boolean validation = validate.isValidString(pattern, jobType);
-            Integer intJobType = Integer.valueOf(jobType);
             if (validation == true){
+                Integer intJobType = Integer.valueOf(jobType);
                 return "Success-" + getType.get(intJobType);
             }
         }

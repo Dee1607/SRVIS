@@ -1,4 +1,6 @@
 package presentationlayer;
+
+import CustomerDetails.AcceptedCustomer;
 import payment.*;
 import serviceprovider.ServiceProviderService;
 import java.util.Map;
@@ -39,13 +41,16 @@ public class ServiceProviderCustomerUI
             System.out.println("Please enter the customer id for selecting request:");
             customerID=sc.nextLine();
             System.out.println("Please follow below options :");
-            System.out.println("1 : Accept");
+            System.out.println("1: Accept");
             System.out.println("2: Reject");
             String input=sc.nextLine();
             if(input.equals("1"))
             {
                 serviceProvider.acceptBooking(customerID,serviceProviderID);
                 System.out.println("Booking for " + customerID + " has been assigned");
+                System.out.println("==========Customer Details==========");
+                AcceptedCustomer customerData = new AcceptedCustomer(customerID);
+                customerData.CustomerDetails();
             }
             else if(input.equals("2"))
             {

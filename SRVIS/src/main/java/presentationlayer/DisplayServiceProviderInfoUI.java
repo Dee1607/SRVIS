@@ -33,4 +33,13 @@ public class DisplayServiceProviderInfoUI
         System.out.format("%1s%-20s%1s%-55s%1s", "|"," Rating ","| ", mapOtherValues.get("ratings"),"|\n");
         System.out.format("%1s%-20s%1s%-55s%1s", "|","--------------------","|", "--------------------------------------------------------","|\n");
     }
+    public void displayCustomerAllInfo(Map<String,String> mapOtherValues)
+    {
+        System.out.format("%1s%20s%1s%55s%1s", "|","====================","|", "========================================================","|\n");
+        System.out.format("%1s%-20s%1s%-55s%1s", "|"," Name ","| ", mapOtherValues.get("first_name")+" "+ mapOtherValues.get("last_name"),"|\n");
+        System.out.format("%1s%-20s%1s%-55s%1s", "|"," Mobile ","| ", mapOtherValues.get("contact"),"|\n");
+        System.out.format("%1s%-20s%1s%-55s%1s", "|"," Address ","| ", mapOtherValues.get("address"),"|\n");
+        System.out.format("%1s%-20s%1s%-55s%1s", "|"," Email ","| ", mapOtherValues.get("email"),"|\n");
+        System.out.format("%1s%-20s%1s%-55s%1s", "|","--------------------","|", "--------------------------------------------------------","|\n");
+    }
 }
