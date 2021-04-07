@@ -35,7 +35,6 @@ class PaymentDAOTest {
         paymentInfoTestObject2.setSecurityCode("123");
 
         IPayment paymentTestObject = new Payment();
-        paymentTestObject.setPaymentID(13);
         paymentTestObject.setSender(paymentInfoTestObject1);
         paymentTestObject.setReceiver(paymentInfoTestObject2);
         paymentTestObject.setAmount("100");
@@ -44,10 +43,10 @@ class PaymentDAOTest {
         paymentTestObject.setServiceRequestID("ServiceID");
 
         PaymentInfoDAO testPaymentInfoDAO = new PaymentInfoDAO();
-        // testPaymentInfoDAO.write(paymentInfoTestObject1);
-        // testPaymentInfoDAO.write(paymentInfoTestObject2);
+        testPaymentInfoDAO.write(paymentInfoTestObject1);
+        testPaymentInfoDAO.write(paymentInfoTestObject2);
         testPaymentDAO.write(paymentTestObject);
-        IPayment readObject = testPaymentDAO.read(13);
+        IPayment readObject = testPaymentDAO.read(1);
         assertEquals(readObject, paymentTestObject);
 
         try {
