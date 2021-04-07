@@ -1,6 +1,6 @@
 package feedback;
 
-import database.Database;
+import database.DatabaseConnection;
 import org.junit.Assert;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -31,7 +31,7 @@ class FeedbackDAOTest {
     @AfterEach
     void tearDown() throws Exception {
         testFeedbackObject = null;
-        Database db = Database.databaseInstance();
+        DatabaseConnection db = DatabaseConnection.databaseInstance();
         Connection con = db.makeConnection();
         String deleteQuery = "DELETE FROM `CSCI5308_3_DEVINT`.`feedback`\n" +
                 "WHERE `feedback`.`feedback_id` = \"testID\";";
@@ -43,8 +43,9 @@ class FeedbackDAOTest {
 
     @Test
     void readAndWrite() {
-        assertTrue(FeedbackDAO.write(testFeedbackObject));
-        IFeedback read = FeedbackDAO.read("testID");
+        FeedbackDAO feedbackDAOTest = new FeedbackDAO();
+        assertTrue(feedbackDAOTest.write(testFeedbackObject));
+        IFeedback read = feedbackDAOTest.read("testID");
         assertNotNull(read);
         assertEquals(read, testFeedbackObject);
     }

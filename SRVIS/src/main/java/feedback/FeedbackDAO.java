@@ -12,7 +12,7 @@ import java.util.Map;
 
 public class FeedbackDAO {
 
-    private IDatabaseConnection db = DatabaseConnection.databaseInstance();
+    private final IDatabaseConnection db = DatabaseConnection.databaseInstance();
 
     public IFeedback read(String id) {
         String rating;
@@ -22,8 +22,11 @@ public class FeedbackDAO {
         String date;
 
         IFeedback feedback = null;
+        String readFeedbackQuery = String.format("SELECT `feedback`.`feedback_id`,`feedback`.`rating`,`feedback`.`review`,`feedback`.`author`,`feedback`.`reviewee`,`feedback`.`date`" +
+                "FROM `CSCI5308_3_DEVINT`.`feedback`" +
+                "WHERE `feedback`.`feedback_id` = '%s';", id);
         db.makeConnection();
-        Map<String, Map<String, String>> resultMap = db.selectQuery(readPaymentQuery);
+        Map<String, Map<String, String>> resultMap = db.selectQuery(readFeedbackQuery);
         Map<String, String> tempValues;
         for (String str : resultMap.keySet())
         {
@@ -36,105 +39,30 @@ public class FeedbackDAO {
 
             feedback = new Feedback(id);
             feedback.setRating(rating);
-            feedback.setReview(reviewString);
-
+            IReview review = new Review();
+            review.setAuthor(author);
+            review.setReviewee(reviewee);
+            review.setDate(date);
+            review.setReviewString(reviewString);
+            feedback.setReview(review);
         }
         return feedback;
     }
 
-    public static IFeedback read(String id) {
-        IFeedback feedback = null;
-        try {
-            DatabaseConnection db = DatabaseConnection.databaseInstance();
-            Connection con = db.makeConnection();
-
-            String selectQuery = "SELECT `feedback`.`feedback_id`,\n" +
-                    "    `feedback`.`rating`,\n" +
-                    "    `feedback`.`review`,\n" +
-                    "    `feedback`.`author`,\n" +
-                    "    `feedback`.`reviewee`,\n" +
-                    "    `feedback`.`date`\n" +
-                    "FROM `CSCI5308_3_DEVINT`.`feedback`\n" +
-                    "WHERE `feedback`.`feedback_id` = ?;";
-            PreparedStatement readStatement = con.prepareStatement(selectQuery);
-            readStatement.setString(1, id);
-            ResultSet rs = readStatement.executeQuery();
-            if (rs.next()) {
-                String rating = rs.getString("rating");
-                String reviewString = rs.getString("review");
-                String author = rs.getString("author");
-                String reviewee = rs.getString("reviewee");
-                String date = rs.getString("date");
-
-                IReview review = new Review();
-                review.setReviewString(reviewString);
-                review.setAuthor(author);
-                review.setReviewee(reviewee);
-                review.setDate(date);
-                feedback = new Feedback(id);
-                feedback.setRating(rating);
-                feedback.setReview(review);
-            }
-            con.close();
-            db.closeConnection();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return feedback;
-    }
-
-    public static boolean write(IFeedback feedback) {
-        boolean writeSuccessful = false;
-        try {
-            DatabaseConnection db = DatabaseConnection.databaseInstance();
-            Connection con = db.makeConnection();
-            con.setAutoCommit(false);
-
-            String id = feedback.getID();
-            String rating = feedback.getRating();
-            IReview review = feedback.getReview();
-            String reviewString = review.getReviewString();
-            String author = review.getAuthor();
-            String reviewee = review.getReviewee();
-            String date = review.getDate();
-
-            String insertQuery = "INSERT INTO `CSCI5308_3_DEVINT`.`feedback`\n" +
-                    "(`feedback_id`,\n" +
-                    "`rating`,\n" +
-                    "`review`,\n" +
-                    "`author`,\n" +
-                    "`reviewee`,\n" +
-                    "`date`)\n" +
-                    "VALUES\n" +
-                    "(?,\n" +
-                    "?,\n" +
-                    "?,\n" +
-                    "?,\n" +
-                    "?,\n" +
-                    "?);";
-
-            PreparedStatement insertFeedback = con.prepareStatement(insertQuery);
-            insertFeedback.setString(1, id);
-            insertFeedback.setString(2, rating);
-            insertFeedback.setString(3, reviewString);
-            insertFeedback.setString(4, author);
-            insertFeedback.setString(5, reviewee);
-            insertFeedback.setString(6, date);
-
-            if (insertFeedback.executeUpdate() == 1) {
-                con.commit();
-                writeSuccessful = true;
-            }
-            else {
-                System.err.println("Error. Transaction is being rolled back");
-                con.rollback();
-            }
-            insertFeedback.close();
-            con.close();
-            db.closeConnection();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return writeSuccessful;
+    public boolean write(IFeedback feedback) {
+        boolean result = false;
+        String feedbackID = feedback.getID();
+        String rating = feedback.getRating();
+        IReview review = feedback.getReview();
+        String reviewString = review.getReviewString();
+        String author = review.getAuthor();
+        String reviewee = review.getReviewee();
+        String date = review.getDate();
+        String writeFeedbackQuery = String.format("INSERT INTO `CSCI5308_3_DEVINT`.`feedback`(`feedback_id`,`rating`,`review`,`author`,`reviewee`,`date`)" +
+                "VALUES('%s','%s','%s','%s','%s','%s');", feedbackID, rating, reviewString, author, reviewee, date);
+        db.makeConnection();
+        result = db.insertQuery(writeFeedbackQuery);
+        db.closeConnection();
+        return result;
     }
 }

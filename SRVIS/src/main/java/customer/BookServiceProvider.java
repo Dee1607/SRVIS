@@ -100,7 +100,7 @@ public class BookServiceProvider implements IBookServiceProvider
             if(insertStatus)
             {
                 objDisplayMessage.displayMessage("Ticket has been generated.");
-                PaymentInfoDAO.write(senderPaymentDetails);
+                // PaymentInfoDAO.write(senderPaymentDetails);
             }
 
             boolean feedbackStatus = false;
@@ -116,7 +116,7 @@ public class BookServiceProvider implements IBookServiceProvider
                 testFeedbackObject.setRating("5");
                 testFeedbackObject.setReview(review);
 
-                feedbackStatus = FeedbackDAO.write(testFeedbackObject);
+                // feedbackStatus = FeedbackDAO.write(testFeedbackObject);
                 if(feedbackStatus){
                     System.out.println("Thanks For feedback!");
                 }

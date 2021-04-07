@@ -29,10 +29,6 @@ public class Feedback implements IFeedback{
         return false;
     }
 
-    public void publishFeedback() {
-        FeedbackDAO.write(this);
-    }
-
     public String getID() {
         return id;
     }

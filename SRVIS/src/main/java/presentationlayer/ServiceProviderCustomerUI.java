@@ -92,7 +92,7 @@ public class ServiceProviderCustomerUI
     public boolean acceptPayment(IPaymentInfo senderPaymentDetails)
     {
         paymentUI.getPaymentReceiverDetailsInput(receiverPayment);
-        PaymentInfoDAO.write(receiverPayment);
+        // PaymentInfoDAO.write(receiverPayment);
         paymentUI.addPaymentProcessInput(senderPaymentDetails,receiverPayment);
         return true;
     }
