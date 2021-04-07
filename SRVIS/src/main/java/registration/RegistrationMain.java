@@ -25,8 +25,10 @@ public class RegistrationMain implements IRegistrationMain{
             HashMap<Integer, String> registerAs = new HashMap<>();
             registerAs.put(1,"Customer");
             registerAs.put(2,"Service Provider");
-
-            displayData.displayServiceCategory(registerAs);
+            for(Integer i: registerAs.keySet())
+            {
+                System.out.println (i + " " + registerAs.get(i));
+            }
 
             Scanner sc = new Scanner(System.in);
             String  value = sc.nextLine();

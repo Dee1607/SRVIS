@@ -1,6 +1,7 @@
 import controller.ApplicationController;
 import presentationlayer.DisplayToGetUserChoice;
 import presentationlayer.LoginUI;
+import registration.RegistrationMain;
 
 public class mainUI
 {

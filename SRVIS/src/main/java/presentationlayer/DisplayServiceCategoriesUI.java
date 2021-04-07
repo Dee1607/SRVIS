@@ -9,7 +9,7 @@ public class DisplayServiceCategoriesUI
         System.out.println("=========================================================================");
         for(Integer tempNumber: mapOfServiceCategory.keySet())
         {
-            System.out.println ( mapOfServiceCategory.get(tempNumber));
+            System.out.println (mapOfServiceCategory.get(tempNumber));
         }
         System.out.println("=========================================================================");
     }
