@@ -42,7 +42,7 @@ public class BookServiceProvider implements IBookServiceProvider
 
             if(choiceToSelect.equalsIgnoreCase("Y"))
             {
-//                getAdditionalDetailsToBookServiceProvider(selectedServiceProvider);
+                getAdditionalDetailsToBookServiceProvider(selectedServiceProvider);
                 isSelected = true;
             }
             return isSelected;
@@ -104,7 +104,7 @@ public class BookServiceProvider implements IBookServiceProvider
             }
 
             boolean feedbackStatus = false;
-            if(paymentStatus){
+            if(true){
                 IFeedback testFeedbackObject;
                 IReview review = new Review();
                 String reviewString = "This is a test review string.";
@@ -116,7 +116,7 @@ public class BookServiceProvider implements IBookServiceProvider
                 testFeedbackObject.setRating("5");
                 testFeedbackObject.setReview(review);
 
-                feedbackStatus = FeedbackDAO.write(testFeedbackObject);
+                // feedbackStatus = FeedbackDAO.write(testFeedbackObject);
                 if(feedbackStatus){
                     System.out.println("Thanks For feedback!");
                 }
