@@ -25,18 +25,6 @@ public class PaymentUI {
         PaymentDetails.setExpiryDate(expirydate);
         String securityCode = objGetData.displayMessageGetStringChoiceFromUser("Enter your security code : ");
         PaymentDetails.setSecurityCode(securityCode);
-
     }
 
-    public void addPaymentProcessInput(IPaymentInfo senderPaymentDetails,IPaymentInfo receiverPaymentDetails){
-
-//        IPayment paymentTestObject = new Payment("PaymentID");
-//        paymentTestObject.setSender(senderPaymentDetails);
-//        paymentTestObject.setReceiver(receiverPaymentDetails);
-//        paymentTestObject.setAmount("100");
-//        paymentTestObject.setStatus(PaymentStatus.PENDING);
-//        paymentTestObject.setDate("2021/12/12");
-//        paymentTestObject.setServiceRequestID("ServiceID");
-//        PaymentDAO.write(paymentTestObject);
-    }
 }

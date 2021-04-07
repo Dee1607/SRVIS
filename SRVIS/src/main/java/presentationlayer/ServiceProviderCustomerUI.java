@@ -1,7 +1,5 @@
 package presentationlayer;
-import payment.IPaymentInfo;
-import payment.PaymentInfo;
-import payment.PaymentInfoDAO;
+import payment.*;
 import serviceprovider.ServiceProviderService;
 import java.util.Map;
 import java.util.Scanner;
@@ -11,16 +9,17 @@ public class ServiceProviderCustomerUI
     private Map<String,String> activeLoginServiceProvider;
     private ServiceProviderService serviceProvider;
     private PaymentUI paymentUI=null;
-    private IPaymentInfo receiverPayment=null;
     private IDisplayToGetUserChoice display;
+    private IPayment acceptPay=null;
+    private IPaymentService paymentProcess=null;
 
     public ServiceProviderCustomerUI(Map<String,String> loginUser,IDisplayToGetUserChoice display )
     {
             this.activeLoginServiceProvider=loginUser;
-            serviceProvider=new ServiceProviderService();
-            paymentUI=new PaymentUI();
-            receiverPayment=new PaymentInfo();
+            this.serviceProvider=new ServiceProviderService();
+            this.paymentUI=new PaymentUI();
             this.display=display;
+            this.acceptPay=new Payment();
     }
 
     public Map<String,String> getActiveServiceProvider()
@@ -32,7 +31,7 @@ public class ServiceProviderCustomerUI
             return activeLoginServiceProvider;
     }
 
-    public String bookingOperation(Map<String,String> serviceProviderDetails)
+    public void bookingOperation(Map<String,String> serviceProviderDetails)
     {
             String serviceProviderID=serviceProviderDetails.get("service_provider_id");
             String customerID = null;
@@ -51,9 +50,8 @@ public class ServiceProviderCustomerUI
             else if(input.equals("2"))
             {
                 serviceProvider.rejectBooking(customerID,serviceProviderID);
-                System.out.println("Please enter valid customer ID");
+                System.out.println("Booking has been removed from your queue.!!");
             }
-        return customerID;
     }
 
     public boolean showAvailability(String Email)
@@ -91,10 +89,14 @@ public class ServiceProviderCustomerUI
     }
 
 
-    public boolean acceptPayment(IPaymentInfo senderPaymentDetails)
+    public boolean acceptPayment(IPaymentInfo paySenderObject,String amount)
     {
-        // PaymentInfoDAO.write(receiverPayment);
-        paymentUI.addPaymentProcessInput(senderPaymentDetails,receiverPayment);
-        return true;
+        IPaymentInfo receiverPayment=new PaymentInfo();
+        paymentUI.getPaymentDetailsInput(receiverPayment);
+        acceptPay.setReceiver(receiverPayment);
+        acceptPay.setSender(paySenderObject);
+        acceptPay.setAmount(amount);
+        boolean paymentStatus=paymentProcess.processPayment(acceptPay);
+        return paymentStatus;
     }
 }

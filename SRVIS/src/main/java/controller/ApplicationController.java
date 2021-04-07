@@ -24,9 +24,10 @@ public class ApplicationController implements IApplicationController
     private IBookServiceProvider objBookServiceProvider = null;
     private IDisplayToGetUserChoice display = null;
 
-    public ApplicationController(IDisplayToGetUserChoice objToDisplay){
-        validate = new Validation();
-        objLoginService = new LoginService();
+    public ApplicationController(IDisplayToGetUserChoice objToDisplay)
+    {
+        this.validate = new Validation();
+        this.objLoginService = new LoginService();
         this.display = objToDisplay;
     }
 
@@ -40,10 +41,13 @@ public class ApplicationController implements IApplicationController
             if (userChoice == 1)
             {
                 Map<String,String> mapLoginData = login.userLogin();
+                String email=mapLoginData.get("email");
+                String password=mapLoginData.get("password");
+                String type=mapLoginData.get("type");
 
-                if(validate.isValidString("^\\w{1,}@[\\w+]+.\\w+",mapLoginData.get("email")))
+                if(validate.isValidString("^\\w{1,}@[\\w+]+.\\w+",email))
                 {
-                    Map<String,String> tempValues =  objLoginService.loginUser(mapLoginData.get("email"), mapLoginData.get("password"), mapLoginData.get("type"));
+                    Map<String,String> tempValues =  objLoginService.loginUser(email,password,type);
 
                     SESSION_DETAILS = tempValues;
 
@@ -73,7 +77,11 @@ public class ApplicationController implements IApplicationController
 
                         serviceProvider = new ServiceProviderCustomerUI(tempValues,display);
                         Map<String,String> serviceProviderSession =serviceProvider.getActiveServiceProvider();
-
+                        boolean onlineStatus=serviceProvider.showAvailability(email);
+                        if(onlineStatus) {
+                            serviceProvider.getJobRequests();
+                        }
+                        serviceProvider.bookingOperation(serviceProviderSession);
                     }else
                     {
                         display.displayMessage("Please enter valid option for the type");

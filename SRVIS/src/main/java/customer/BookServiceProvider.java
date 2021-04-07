@@ -2,9 +2,7 @@ package customer;
 
 import database.DatabaseConnection;
 import feedback.*;
-import payment.IPaymentInfo;
-import payment.PaymentInfo;
-import payment.PaymentInfoDAO;
+import payment.*;
 import presentationlayer.*;
 
 import java.util.Calendar;
@@ -18,11 +16,20 @@ public class BookServiceProvider implements IBookServiceProvider
     private IPaymentInfo senderPaymentDetails = null;
     private PaymentUI paymentUI=null;
     private ServiceProviderCustomerUI serviceProvider=null;
+    private FeedbackUI feedbackUI=null;
+    private FeedbackDAO feedbackDAO=null;
+    private IFeedback customerReview=null;
+    private IReview review=null;
 
     public BookServiceProvider(Map<String, String> customer_session) {
         this.CUSTOMER_SESSION = customer_session;
-        senderPaymentDetails = new PaymentInfo();
-        paymentUI=new PaymentUI();
+        this.senderPaymentDetails = new PaymentInfo();
+        this.paymentUI=new PaymentUI();
+        this.feedbackUI=new FeedbackUI();
+        this.customerReview=new Feedback("1");
+        this.review = new Review();
+        this.feedbackDAO=new FeedbackDAO();
+
     }
 
     public boolean finalizeServiceProvider(String serviceProviderID, Map<String,String> selectedServiceProvider)
@@ -42,7 +49,7 @@ public class BookServiceProvider implements IBookServiceProvider
 
             if(choiceToSelect.equalsIgnoreCase("Y"))
             {
-                getAdditionalDetailsToBookServiceProvider(selectedServiceProvider);
+//             getAdditionalDetailsToBookServiceProvider(selectedServiceProvider);
                 isSelected = true;
             }
             return isSelected;
@@ -98,25 +105,19 @@ public class BookServiceProvider implements IBookServiceProvider
 
             System.out.println("Please enter payment details : ");
             paymentUI.getPaymentDetailsInput(senderPaymentDetails);
+            boolean paymentStatus=serviceProvider.acceptPayment(senderPaymentDetails,"100");
             if(insertStatus)
             {
                 objDisplayMessage.displayMessage("Ticket has been generated.");
             }
 
             boolean feedbackStatus = false;
-            if(true){
-                IFeedback testFeedbackObject;
-                IReview review = new Review();
-                String reviewString = "This is a test review string.";
-                review.setReviewString(reviewString);
-                review.setDate("January 1, 2020");
-                review.setReviewee("Reviewee");
-                review.setAuthor("Author");
-                testFeedbackObject = new Feedback("testID");
-                testFeedbackObject.setRating("5");
-                testFeedbackObject.setReview(review);
+            if(paymentStatus){
 
-                // feedbackStatus = FeedbackDAO.write(testFeedbackObject);
+                feedbackUI.getReviewDetailsInput(review);
+                feedbackUI.setFeedback(customerReview);
+                customerReview.setReview(review);
+                feedbackStatus=feedbackDAO.write(customerReview);
                 if(feedbackStatus){
                     System.out.println("Thanks For feedback!");
                 }
