@@ -49,19 +49,20 @@ public class RegistrationMethods implements IRegistrationMethods{
     }
 
     public boolean callMethod(){
-        registerUserMethods = genericList.getRegisterUserMethods();
-        Iterator<Integer> iterator = registerUserMethods.keySet().iterator();
+        Map<Integer,Runnable> registerMethods = new ConcurrentHashMap<Integer,Runnable>();
+        registerMethods = genericList.getRegisterUserMethods();
+        Iterator<Integer> iterator = registerMethods.keySet().iterator();
         boolean dbStatus=false;
         while(iterator.hasNext()){
-            for (int key : registerUserMethods.keySet()) {
-                registerUserMethods.get(key).run();
+            for (int key : registerMethods.keySet()) {
+                registerMethods.get(key).run();
                 String[] getValueresult = result.split("-");
                 if (getValueresult[0].equals("Success")){
                     genericList.removeRegisterUserMethods(key);
                     genericList.setUserDetails(String.valueOf(key), getValueresult[1]);
                 }
             }
-            if(registerUserMethods.size() == 0){
+            if(registerMethods.size() == 0){
                 dbStatus = hitDB.getConnection(genericList.getUserDetails());
                 return dbStatus;
             }
