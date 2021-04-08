@@ -8,40 +8,40 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class RegistrationMethods implements IRegistrationMethods{
+public class RegistrationMethods implements IRegistrationMethods {
 
-    public static int count =1;
+    public static int count = 1;
     public ArrayList<String> result;
-    Map<Integer,Runnable> registerUserMethods = new ConcurrentHashMap<Integer,Runnable>();
+    Map<Integer, Runnable> registerUserMethods = new ConcurrentHashMap<Integer, Runnable>();
 
     RegistrationList genericList;
     DisplayRegistrationPageUI registerUser;
     IRegistrationDAO hitDB;
-    public RegistrationMethods(){
+
+    public RegistrationMethods() {
         hitDB = new RegistrationDAO();
         registerUser = new DisplayRegistrationPageUI();
         genericList = new RegistrationList();
     }
 
-    public void addMethodToHashMap(String methodDetail, String pattern){
-        if(methodDetail=="job type"){
-            registerUserMethods.put(count,() -> result = registerUser.getJobType(pattern));
-        }
-        else{
-            registerUserMethods.put(count,() -> result = registerUser.getUserDetails(methodDetail,pattern));
+    public void addMethodToHashMap(String methodDetail, String pattern) {
+        if (methodDetail == "job type") {
+            registerUserMethods.put(count, () -> result = registerUser.getJobType(pattern));
+        } else {
+            registerUserMethods.put(count, () -> result = registerUser.getUserDetails(methodDetail, pattern));
         }
         count++;
     }
 
-    public void addMethods(String getUser){
+    public void addMethods(String getUser) {
         addMethodToHashMap("first name", "[a-zA-Z]+");
         addMethodToHashMap("last name", "[a-zA-Z]+");
         addMethodToHashMap("contact number", "^[0-9]{10}$");
         addMethodToHashMap("address", "^[a-zA-Z0-9-/,]+$");
         addMethodToHashMap("email ID", "^[a-zA-Z0-9][-\\w\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$");
         addMethodToHashMap("new password(only characters and numbers are allowed)", "^[a-zA-Z0-9]+$");
-        if(getUser == "Service Provider"){
-            addMethodToHashMap("job type","^[1-5]$");
+        if (getUser == "Service Provider") {
+            addMethodToHashMap("job type", "^[1-5]$");
             addMethodToHashMap("years of experience in the field", "^[0-9]+$");
             addMethodToHashMap("certification", "^[a-zA-Z0-9]+$");
             addMethodToHashMap("hourly rate", "^[\\d]+$");
@@ -50,12 +50,12 @@ public class RegistrationMethods implements IRegistrationMethods{
         genericList.setRegisterUserMethods(registerUserMethods);
     }
 
-    public boolean callMethod(){
-        Map<Integer,Runnable> registerMethods = new ConcurrentHashMap<Integer,Runnable>();
+    public boolean callMethod() {
+        Map<Integer, Runnable> registerMethods = new ConcurrentHashMap<Integer, Runnable>();
         registerMethods = genericList.getRegisterUserMethods();
         Iterator<Integer> iterator = registerMethods.keySet().iterator();
-        boolean dbStatus=false;
-        while(iterator.hasNext()){
+        boolean dbStatus = false;
+        while (iterator.hasNext()) {
             for (int key : registerMethods.keySet()) {
                 registerMethods.get(key).run();
                 if (result.size() > 0) {
@@ -67,11 +67,10 @@ public class RegistrationMethods implements IRegistrationMethods{
                     }
                 }
             }
-            if(registerMethods.size() == 0){
+            if (registerMethods.size() == 0) {
                 dbStatus = hitDB.getConnection(genericList.getUserDetails());
                 return dbStatus;
-            }
-            else {
+            } else {
                 System.out.println("Please enter invalid values");
             }
         }

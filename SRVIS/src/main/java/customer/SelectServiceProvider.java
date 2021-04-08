@@ -6,23 +6,19 @@ import presentationlayer.DisplayToGetUserChoice;
 
 import java.util.Map;
 
-public class SelectServiceProvider implements ISelectServiceProvider
-{
+public class SelectServiceProvider implements ISelectServiceProvider {
     private DisplayToGetUserChoice objGetUserChoice = null;
     private DisplayServiceProviderInfoUI objDisplayServiceProvider = null;
     private final DatabaseConnection db = DatabaseConnection.databaseInstance();
-    private Map<String,String> CUSTOMER_SESSION;
-    private BookServiceProvider objBookServiceProvider= null;
+    private Map<String, String> CUSTOMER_SESSION;
+    private BookServiceProvider objBookServiceProvider = null;
 
-    public SelectServiceProvider(Map<String,String> customerSession)
-    {
+    public SelectServiceProvider(Map<String, String> customerSession) {
         this.CUSTOMER_SESSION = customerSession;
     }
 
-    public Map<String,Map<String,String>> getServiceProvidersOfSelectedCategory(EnumServiceCategory userChoice)
-    {
-        try
-        {
+    public Map<String, Map<String, String>> getServiceProvidersOfSelectedCategory(EnumServiceCategory userChoice) {
+        try {
             db.makeConnection();
             Map<String, Map<String, String>> mapOfDataFromDatabase = db.selectQuery("SELECT * FROM CSCI5308_3_DEVINT.service_provider where jobType = '"
                     + userChoice.toString() + "'");
@@ -32,27 +28,19 @@ public class SelectServiceProvider implements ISelectServiceProvider
 
             //selectFromAvailableServiceProvider(mapOfDataFromDatabase);
             return mapOfDataFromDatabase;
-        }
-        catch(Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
             return null;
-        }
-        finally
-        {
-            try
-            {
+        } finally {
+            try {
                 db.closeConnection();
-            }
-            catch(Exception e)
-            {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
     }
 
-    public int selectFromAvailableServiceProvider(Map<String, Map<String, String>> mapOfDataFromDatabase)
-    {
+    public int selectFromAvailableServiceProvider(Map<String, Map<String, String>> mapOfDataFromDatabase) {
         objGetUserChoice = new DisplayToGetUserChoice();
         int userSelectedForServiceProvider = objGetUserChoice.displayMessageGetNumberChoiceFromUser("Enter the id of the service provider you want to select: ");
         return userSelectedForServiceProvider;

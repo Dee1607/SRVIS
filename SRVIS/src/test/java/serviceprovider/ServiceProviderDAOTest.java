@@ -6,7 +6,7 @@ class ServiceProviderDAOTest {
 
     @Test
     void updateAvailabilityStatusTest() {
-        ServiceProviderDAO serviceDAO=new ServiceProviderDAO();
+        ServiceProviderDAO serviceDAO = new ServiceProviderDAO();
     }
 
     @Test

@@ -2,7 +2,7 @@ package feedback;
 
 import java.util.Objects;
 
-public class Feedback implements IFeedback{
+public class Feedback implements IFeedback {
     private String id;
     private IReview review;
     private String rating;

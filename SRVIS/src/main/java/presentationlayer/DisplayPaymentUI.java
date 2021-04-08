@@ -1,17 +1,18 @@
 package presentationlayer;
 
-import payment.*;
+import payment.IPaymentInfo;
+import payment.PaymentType;
 
 public class DisplayPaymentUI {
 
     private DisplayToGetUserChoice objGetData = null;
 
-    public DisplayPaymentUI(){
+    public DisplayPaymentUI() {
 
         objGetData = new DisplayToGetUserChoice();
     }
 
-    public void getPaymentDetailsInput(IPaymentInfo PaymentDetails){
+    public void getPaymentDetailsInput(IPaymentInfo PaymentDetails) {
         String paymentType = objGetData.displayMessageGetStringChoiceFromUser("Enter your payment type (DEBIT/MASTERCARD/VISA):");
         PaymentDetails.setPaymentType(PaymentType.valueOf(paymentType));
         String cardNumber = objGetData.displayMessageGetStringChoiceFromUser("Enter your card number: ");

@@ -13,7 +13,7 @@ public class PaymentService {
     public IPaymentInfo getPaymentInfoFromDatabase(String userID) {
         return paymentInfoDAO.read(userID);
     }
-    
+
     public boolean writePaymentInfoToDatabase(IPaymentInfo paymentInfo) {
         return paymentInfoDAO.write(paymentInfo);
     }

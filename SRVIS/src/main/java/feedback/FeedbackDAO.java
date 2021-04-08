@@ -1,18 +1,12 @@
 package feedback;
 
-import database.DatabaseConnection;
 import database.IDatabaseConnection;
-import payment.*;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.Map;
 
 public class FeedbackDAO implements IFeedbackDAO {
 
-    private final IDatabaseConnection db = DatabaseConnection.databaseInstance();
+    private final IDatabaseConnection db = IDatabaseConnection.databaseInstance();
 
     @Override
     public IFeedback read(String id) {
@@ -24,15 +18,14 @@ public class FeedbackDAO implements IFeedbackDAO {
 
         IFeedback feedback = null;
 
-        try{
+        try {
             String readFeedbackQuery = String.format("SELECT `feedback`.`feedback_id`,`feedback`.`rating`,`feedback`.`review`,`feedback`.`author`,`feedback`.`reviewee`,`feedback`.`date`" +
                     "FROM `CSCI5308_3_DEVINT`.`feedback`" +
                     "WHERE `feedback`.`feedback_id` = '%s';", id);
             db.makeConnection();
             Map<String, Map<String, String>> resultMap = db.selectQuery(readFeedbackQuery);
             Map<String, String> tempValues;
-            for (String str : resultMap.keySet())
-            {
+            for (String str : resultMap.keySet()) {
                 tempValues = resultMap.get(str);
                 rating = tempValues.get("rating");
                 reviewString = tempValues.get("review");
@@ -49,12 +42,12 @@ public class FeedbackDAO implements IFeedbackDAO {
                 review.setReviewString(reviewString);
                 feedback.setReview(review);
             }
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
-        }finally {
-            try{
+        } finally {
+            try {
                 db.closeConnection();
-            }catch(Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
@@ -64,7 +57,7 @@ public class FeedbackDAO implements IFeedbackDAO {
     @Override
     public boolean write(IFeedback feedback) {
         boolean result = false;
-        try{
+        try {
             String feedbackID = feedback.getID();
             String rating = feedback.getRating();
             IReview review = feedback.getReview();
@@ -76,12 +69,12 @@ public class FeedbackDAO implements IFeedbackDAO {
                     "VALUES('%s','%s','%s','%s','%s','%s');", feedbackID, rating, reviewString, author, reviewee, date);
             db.makeConnection();
             result = db.insertQuery(writeFeedbackQuery);
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
-        }finally {
-            try{
+        } finally {
+            try {
                 db.closeConnection();
-            }catch(Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }

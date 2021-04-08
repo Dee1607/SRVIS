@@ -15,23 +15,21 @@ import java.util.Map;
 import java.util.Scanner;
 
 
-public class DisplayLoginUI
-{
-    private LoginService login=null;
-    private DisplayToGetUserChoice objGetData=null;
-    private Map<String,String> pendingBookingValues =null;
-    private IValidation validate=null;
-    private IRegistrationMain registerObj=null;
-    private GenerateDataToDisplay objectDataToDisplay=null;
-    private DisplayServiceCategoriesUI objDisplay=null;
-    private IDisplayToGetUserChoice display=null;
-    private IEncryption encrypt=null;
+public class DisplayLoginUI {
+    private LoginService login = null;
+    private DisplayToGetUserChoice objGetData = null;
+    private Map<String, String> pendingBookingValues = null;
+    private IValidation validate = null;
+    private IRegistrationMain registerObj = null;
+    private GenerateDataToDisplay objectDataToDisplay = null;
+    private DisplayServiceCategoriesUI objDisplay = null;
+    private IDisplayToGetUserChoice display = null;
+    private IEncryption encrypt = null;
 
-    public DisplayLoginUI(IDisplayToGetUserChoice display)
-    {
-        login=new LoginService();
-        objGetData=new DisplayToGetUserChoice();
-        validate=new Validation();
+    public DisplayLoginUI(IDisplayToGetUserChoice display) {
+        login = new LoginService();
+        objGetData = new DisplayToGetUserChoice();
+        validate = new Validation();
         registerObj = new RegistrationMain(display);
         objectDataToDisplay = new GenerateDataToDisplay();
         registerObj = new RegistrationMain(new DisplayToGetUserChoice());
@@ -40,49 +38,42 @@ public class DisplayLoginUI
         encrypt = new Encryption();
     }
 
-    public int showLoginScreen()
-    {
+    public int showLoginScreen() {
         int userInput = 0;
-          try
-          {
-              Scanner sc = new Scanner(System.in);
-              Map<Integer,String> objDataToDisplay = objectDataToDisplay.generateLoginData();
-              objDisplay.displayServiceCategory(objDataToDisplay);
-              userInput = sc.nextInt();
-          }
-          catch (Exception e)
-          {
-              e.printStackTrace();
-          }
-          return userInput;
+        try {
+            Scanner sc = new Scanner(System.in);
+            Map<Integer, String> objDataToDisplay = objectDataToDisplay.generateLoginData();
+            objDisplay.displayServiceCategory(objDataToDisplay);
+            userInput = sc.nextInt();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return userInput;
     }
 
-    public Map<String,String> userLogin()
-    {
+    public Map<String, String> userLogin() {
         String email = objGetData.displayMessageGetStringChoiceFromUser("Enter your emailID: ");
         String getpassword = objGetData.displayMessageGetStringChoiceFromUser("Enter your password: ");
         ArrayList<String> getEncryptedValue = encrypt.encryptString(getpassword);
         String password = getEncryptedValue.get(0);
         String type = objGetData.displayMessageGetStringChoiceFromUser("Login as Customer(C)/Service Provider(SP) ( Type C or SP ): ");
-        Map<String,String> mapLoginData = new HashMap<>();
-        mapLoginData.put("email",email);
-        mapLoginData.put("password",password);
-        mapLoginData.put("type",type);
+        Map<String, String> mapLoginData = new HashMap<>();
+        mapLoginData.put("email", email);
+        mapLoginData.put("password", password);
+        mapLoginData.put("type", type);
         return mapLoginData;
     }
 
-    public void userRegistration()
-    {
+    public void userRegistration() {
         registerObj.register();
     }
 
-    public void showPendingRequest(String email,String type)
-    {
-            Map<String,String> pendingRequests = login.getPendingRequests(email,type);
-            System.out.format("%1s%-20s%1s%-55s%1s", "|", "====================", "|", "========================================================", "|\n");
-            System.out.format("%1s%-20s%1s%-55s%1s", "|", " Request ID ", "| ", pendingRequests.get("service_request_id"), "|\n");
-            System.out.format("%1s%-20s%1s%-55s%1s", "|", " Service Provider ID ", "| ", pendingRequests.get("service_provider_id"), "|\n");
-            System.out.format("%1s%-20s%1s%-55s%1s", "|", " Request Description ", "| ", pendingRequests.get("service_request_description"), "|\n");
-            System.out.format("%1s%-20s%1s%-55s%1s", "|", "--------------------", "|", "--------------------------------------------------------", "|\n");
+    public void showPendingRequest(String email, String type) {
+        Map<String, String> pendingRequests = login.getPendingRequests(email, type);
+        System.out.format("%1s%-20s%1s%-55s%1s", "|", "====================", "|", "========================================================", "|\n");
+        System.out.format("%1s%-20s%1s%-55s%1s", "|", " Request ID ", "| ", pendingRequests.get("service_request_id"), "|\n");
+        System.out.format("%1s%-20s%1s%-55s%1s", "|", " Service Provider ID ", "| ", pendingRequests.get("service_provider_id"), "|\n");
+        System.out.format("%1s%-20s%1s%-55s%1s", "|", " Request Description ", "| ", pendingRequests.get("service_request_description"), "|\n");
+        System.out.format("%1s%-20s%1s%-55s%1s", "|", "--------------------", "|", "--------------------------------------------------------", "|\n");
     }
 }
