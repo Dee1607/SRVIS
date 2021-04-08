@@ -2,7 +2,6 @@ package customer;
 
 import database.DatabaseConnection;
 import presentationlayer.DisplayToGetUserChoice;
-
 import java.sql.PreparedStatement;
 import java.util.Map;
 
@@ -20,7 +19,7 @@ public class BookServiceProviderDAO implements IBookServiceProviderDAO{
         PreparedStatement preparedStmt = null;
         boolean insertStatus = false;
 
-        String query1= " insert into CSCI5308_3_DEVINT.service_request (customer_id, service_provider_id, service_request_date, service_request_category_id,service_request_description)"
+        String query1= " insert into `service_request` (`customer_id`, `service_provider_id` , `service_request_date` , `service_request_category_id` , `service_request_description` )"
                 + " values (?, ?, ?, ?, ?)";
         try
         {
@@ -31,9 +30,11 @@ public class BookServiceProviderDAO implements IBookServiceProviderDAO{
             preparedStmt.setInt (4, 333);
             preparedStmt.setString(5,(dataToInsert.get("service_request_description")));
 
+            String str = preparedStmt.toString();
+            String[] arrSplitString = str.split(":");
             objDisplayMessage = new DisplayToGetUserChoice();
             db.makeConnection();
-            insertStatus = db.insertQuery(preparedStmt.toString());
+            insertStatus = db.insertQuery(arrSplitString[1]);
         }
         catch(Exception e)
         {

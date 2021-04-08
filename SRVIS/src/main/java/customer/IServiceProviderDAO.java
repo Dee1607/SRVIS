@@ -1,6 +1,5 @@
 package customer;
 
-import enums.EnumServiceCategory;
 import java.util.Map;
 
 public interface IServiceProviderDAO

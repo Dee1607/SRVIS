@@ -1,29 +1,18 @@
-import encryption.Encryption;
 import controller.ApplicationController;
+import presentationlayer.DisplayLoginUI;
 import presentationlayer.DisplayToGetUserChoice;
 import presentationlayer.IDisplayToGetUserChoice;
-import presentationlayer.LoginUI;
 
-public class mainUI
-{
-    public static void main(String[] args)
-    {
-        Encryption ob = new Encryption();
-        ob.encryptString("Hello1");
-
-        IDisplayToGetUserChoice objToDisplay =new DisplayToGetUserChoice();
+public class mainUI {
+    public static void main(String[] args) {
+        IDisplayToGetUserChoice objToDisplay = new DisplayToGetUserChoice();
 
         ApplicationController objApplication = new ApplicationController(objToDisplay);
         objToDisplay.displayMessage("########################### Welcome to SRVIS ###########################");
-        LoginUI login = new LoginUI(objToDisplay);
-
-        try
-        {
+        DisplayLoginUI login = new DisplayLoginUI(objToDisplay);
+        try {
             objApplication.initializeApplication();
-            //login.showLoginScreen();
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

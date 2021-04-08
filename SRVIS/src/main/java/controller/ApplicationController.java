@@ -1,107 +1,93 @@
 package controller;
 
 import customer.*;
-import enums.EnumServiceCategory;
 import login.LoginService;
+import presentationlayer.DisplayLoginUI;
+import presentationlayer.DisplayServiceProviderUI;
 import presentationlayer.DisplayToGetUserChoice;
 import presentationlayer.IDisplayToGetUserChoice;
-import presentationlayer.LoginUI;
-import presentationlayer.ServiceProviderCustomerUI;
 import registration.IRegistrationMain;
 import registration.IValidation;
 import registration.RegistrationMain;
 import registration.Validation;
+
 import java.util.Map;
 
-public class ApplicationController implements IApplicationController
-{
+public class ApplicationController implements IApplicationController {
     public IRegistrationMain registerObj;
     private IValidation validate;
     private ISelectServiceCategory objServiceCategory = null;
-    private ServiceProviderCustomerUI serviceProvider = null;
+    private DisplayServiceProviderUI serviceProvider = null;
     private LoginService objLoginService = null;
-    private Map<String,String> SESSION_DETAILS = null;
+    private Map<String, String> SESSION_DETAILS = null;
     private SelectServiceProvider objSelectedServiceProvider = null;
     private IBookServiceProvider objBookServiceProvider = null;
     private IDisplayToGetUserChoice display = null;
-    private LoginUI login = null;
+    private DisplayLoginUI login = null;
 
-    public ApplicationController(IDisplayToGetUserChoice objToDisplay)
-    {
+    public ApplicationController(IDisplayToGetUserChoice objToDisplay) {
         this.validate = new Validation();
         this.objLoginService = new LoginService();
         this.display = objToDisplay;
-        this.login = new LoginUI(objToDisplay);
+        this.login = new DisplayLoginUI(objToDisplay);
     }
 
-    public void initializeApplication()
-    {
-        try
-        {
+    public void initializeApplication() {
+        try {
             int userChoice = login.showLoginScreen();
-            if (userChoice == 1)
-            {
-                Map<String,String> mapLoginData = login.userLogin();
-                String email=mapLoginData.get("email");
-                String password=mapLoginData.get("password");
-                String type=mapLoginData.get("type");
+            if (userChoice == 1) {
+                Map<String, String> mapLoginData = login.userLogin();
+                String email = mapLoginData.get("email");
+                String password = mapLoginData.get("password");
+                String type = mapLoginData.get("type");
 
-                if(validate.isValidString("^\\w{1,}@[\\w+]+.\\w+",email))
-                {
-                    Map<String,String> tempValues =  objLoginService.loginUser(email,password,type);
+                if (validate.isValidString("^\\w{1,}@[\\w+]+.\\w+", email)) {
+                    Map<String, String> tempValues = objLoginService.loginUser(email, password, type);
 
                     SESSION_DETAILS = tempValues;
 
-                    if (mapLoginData.get("type").equalsIgnoreCase("c"))
-                    {
+                    if (mapLoginData.get("type").equalsIgnoreCase("c")) {
                         objServiceCategory = new SelectServiceCategory(tempValues);
-                        EnumServiceCategory enumChoice= objServiceCategory.getUserSelectedService();
+                        EnumServiceCategory enumChoice = objServiceCategory.getUserSelectedService();
 
                         objSelectedServiceProvider = new SelectServiceProvider(SESSION_DETAILS);
-                        Map<String,Map<String,String>> mapServiceProvider = objSelectedServiceProvider.getServiceProvidersOfSelectedCategory(enumChoice);
+                        Map<String, Map<String, String>> mapServiceProvider = objSelectedServiceProvider.getServiceProvidersOfSelectedCategory(enumChoice);
                         int userSelectedServiceProvider = objSelectedServiceProvider.selectFromAvailableServiceProvider(mapServiceProvider);
 
                         objBookServiceProvider = new BookServiceProvider(SESSION_DETAILS,display);
                         Map<String, String> objSelectedProviderInfo = mapServiceProvider.get(String.valueOf(userSelectedServiceProvider));
 
-                        boolean isSelected = objBookServiceProvider.finalizeServiceProvider(String.valueOf(userSelectedServiceProvider),objSelectedProviderInfo);
+                        boolean isSelected = objBookServiceProvider.finalizeServiceProvider(String.valueOf(userSelectedServiceProvider), objSelectedProviderInfo);
 
-                        if(isSelected){
-                            Map<String,String> mapServiceProviderToBook = objBookServiceProvider.getAdditionalDetailsToBookServiceProvider(objSelectedProviderInfo);
+                        if (isSelected) {
+                            Map<String, String> mapServiceProviderToBook = objBookServiceProvider.getAdditionalDetailsToBookServiceProvider(objSelectedProviderInfo);
                             objBookServiceProvider.generateBookingRequest(mapServiceProviderToBook);
                         }
 
-                    }else if (mapLoginData.get("type").equalsIgnoreCase("sp")){
+                    } else if (mapLoginData.get("type").equalsIgnoreCase("sp")) {
 
-                        serviceProvider = new ServiceProviderCustomerUI(tempValues,display);
-                        Map<String,String> serviceProviderSession =serviceProvider.getActiveServiceProvider();
-                        boolean onlineStatus=serviceProvider.showAvailability(email);
-                        if(onlineStatus) {
+                        serviceProvider = new DisplayServiceProviderUI(tempValues, display);
+                        Map<String, String> serviceProviderSession = serviceProvider.getActiveServiceProvider();
+                        boolean onlineStatus = serviceProvider.showAvailability(email);
+                        if (onlineStatus) {
                             serviceProvider.getJobRequests();
                         }
                         serviceProvider.bookingOperation(serviceProviderSession);
-                    }else
-                    {
+                    } else {
                         display.displayMessage("Please enter valid option for the type");
                     }
                     display.displayMessage("All the pending requests in your queue.!!!!");
                     login.showPendingRequest(mapLoginData.get("email"), mapLoginData.get("type"));
-                }
-                else
-                {
+                } else {
                     display.displayMessage("Please enter valid email-id or Password !!!!");
                 }
-            }
-            else if (userChoice == 2)
-            {
+            } else if (userChoice == 2) {
                 registerObj = new RegistrationMain(new DisplayToGetUserChoice());
                 registerObj.register();
             } else {
                 display.displayMessage("Please enter valid input .");
             }
-        }
-        catch(Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

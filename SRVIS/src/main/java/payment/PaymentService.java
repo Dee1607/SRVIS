@@ -2,8 +2,8 @@ package payment;
 
 public class PaymentService implements IPaymentService{
 
-    private final PaymentInfoDAO paymentInfoDAO;
-    private final PaymentDAO paymentDAO;
+    private final IPaymentInfoDAO paymentInfoDAO;
+    private final IPaymentDAO paymentDAO;
 
     public PaymentService() {
         paymentDAO = new PaymentDAO();
@@ -13,7 +13,7 @@ public class PaymentService implements IPaymentService{
     public IPaymentInfo getPaymentInfoFromDatabase(String userID) {
         return paymentInfoDAO.read(userID);
     }
-    
+
     public boolean writePaymentInfoToDatabase(IPaymentInfo paymentInfo) {
         return paymentInfoDAO.write(paymentInfo);
     }

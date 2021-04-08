@@ -2,45 +2,40 @@ package customer;
 
 import database.DatabaseConnection;
 import feedback.*;
-import payment.*;
+import payment.IPaymentInfo;
+import payment.PaymentInfo;
 import presentationlayer.*;
 
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Scanner;
 
-public class BookServiceProvider implements IBookServiceProvider
-{
-    private Map<String,String> CUSTOMER_SESSION;
+public class BookServiceProvider implements IBookServiceProvider {
+    private Map<String, String> CUSTOMER_SESSION;
     private IPaymentInfo senderPaymentDetails = null;
-    private PaymentUI paymentUI=null;
-    private ServiceProviderCustomerUI serviceProvider=null;
-    private FeedbackUI feedbackUI=null;
-    private FeedbackDAO feedbackDAO=null;
-    private IFeedback customerReview=null;
-    private IReview review=null;
+    private DisplayPaymentUI displayPaymentUI = null;
+    private DisplayServiceProviderUI serviceProvider = null;
+    private DisplayFeedbackUI feedbackUI = null;
+    private FeedbackDAO feedbackDAO = null;
+    private IFeedback customerReview = null;
+    private IReview review = null;
 
     public BookServiceProvider(Map<String, String> customer_session,IDisplayToGetUserChoice display) {
         this.CUSTOMER_SESSION = customer_session;
         this.senderPaymentDetails = new PaymentInfo();
-        this.paymentUI=new PaymentUI();
-        this.feedbackUI=new FeedbackUI();
-        this.customerReview=new Feedback("1");
+        this.displayPaymentUI = new DisplayPaymentUI();
+        this.feedbackUI = new DisplayFeedbackUI();
+        this.customerReview = new Feedback("1");
         this.review = new Review();
-        this.feedbackDAO=new FeedbackDAO();
-        serviceProvider = new ServiceProviderCustomerUI(customer_session,display);
-
+        this.feedbackDAO = new FeedbackDAO();
     }
 
-    public boolean finalizeServiceProvider(String serviceProviderID, Map<String,String> selectedServiceProvider)
-    {
+    public boolean finalizeServiceProvider(String serviceProviderID, Map<String, String> selectedServiceProvider) {
         DisplayServiceProviderInfoUI objDisplayServiceProvider;
         DisplayToGetUserChoice objGetUserChoice = null;
         boolean isSelected = false;
 
-        try
-        {
+        try {
             objDisplayServiceProvider = new DisplayServiceProviderInfoUI();
             objGetUserChoice = new DisplayToGetUserChoice();
             objDisplayServiceProvider.displayServiceProviderAllInfo(serviceProviderID, selectedServiceProvider);
@@ -52,19 +47,14 @@ public class BookServiceProvider implements IBookServiceProvider
                 isSelected = true;
             }
             return isSelected;
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
-        }
-        finally
-        {
+        } finally {
             return isSelected;
         }
     }
 
-    public Map<String,String> getAdditionalDetailsToBookServiceProvider(Map<String,String> selectedServiceProvider)
-    {
+    public Map<String, String> getAdditionalDetailsToBookServiceProvider(Map<String, String> selectedServiceProvider) {
 
         DisplayToGetUserChoice objToDisplayData = null;
 
@@ -74,13 +64,13 @@ public class BookServiceProvider implements IBookServiceProvider
         Calendar calendar = Calendar.getInstance();
         java.sql.Date bookingDate = new java.sql.Date(calendar.getTime().getTime());
 
-        Map<String,String> insertData = new HashMap<>();
+        Map<String, String> insertData = new HashMap<>();
 
-        insertData.put("customer_id",CUSTOMER_SESSION.get("customer_id"));
-        insertData.put("service_provider_id",selectedServiceProvider.get("service_provider_id"));
-        insertData.put("service_request_date",bookingDate.toString());
-        insertData.put("service_request_category_id",selectedServiceProvider.get("service_category_id"));
-        insertData.put("service_request_description",descriptionOfWork);
+        insertData.put("customer_id", CUSTOMER_SESSION.get("customer_id"));
+        insertData.put("service_provider_id", selectedServiceProvider.get("service_provider_id"));
+        insertData.put("service_request_date", bookingDate.toString());
+        insertData.put("service_request_category_id", selectedServiceProvider.get("service_category_id"));
+        insertData.put("service_request_description", descriptionOfWork);
 
         return insertData;
     }
@@ -119,15 +109,13 @@ public class BookServiceProvider implements IBookServiceProvider
 //            }
 
             return insertStatus;
-        }
-        catch(Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
             return false;
         } finally {
-            try{
+            try {
                 db.closeConnection();
-            }catch(Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }

@@ -1,22 +1,19 @@
 package customer;
 
 import database.DatabaseConnection;
-import enums.EnumServiceCategory;
 import presentationlayer.DisplayServiceProviderInfoUI;
 import presentationlayer.DisplayToGetUserChoice;
 import java.util.Map;
 
-public class SelectServiceProvider implements ISelectServiceProvider
-{
-    private Map<String,String> CUSTOMER_SESSION;
-    private final DatabaseConnection db = DatabaseConnection.databaseInstance();
-
+public class SelectServiceProvider implements ISelectServiceProvider {
     private DisplayToGetUserChoice objGetUserChoice = null;
     private DisplayServiceProviderInfoUI objDisplayServiceProvider = null;
-    private IServiceProviderDAO objServiceProviderDAO = null;
+    private final DatabaseConnection db = DatabaseConnection.databaseInstance();
+    private Map<String, String> CUSTOMER_SESSION;
+    private BookServiceProvider objBookServiceProvider = null;
+    ServiceProviderDAO objServiceProviderDAO = null;
 
-    public SelectServiceProvider(Map<String,String> customerSession)
-    {
+    public SelectServiceProvider(Map<String, String> customerSession) {
         this.CUSTOMER_SESSION = customerSession;
         objServiceProviderDAO = new ServiceProviderDAO();
     }
@@ -32,26 +29,24 @@ public class SelectServiceProvider implements ISelectServiceProvider
 
             return mapOfDataFromDatabase;
         }
-        catch(Exception e)
+        catch (Exception e)
         {
             e.printStackTrace();
             return null;
         }
-        finally
-        {
+        finally {
             try
             {
-                //db.closeConnection();
+                db.closeConnection();
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 e.printStackTrace();
             }
         }
     }
 
-    public int selectFromAvailableServiceProvider(Map<String, Map<String, String>> mapOfDataFromDatabase)
-    {
+    public int selectFromAvailableServiceProvider(Map<String, Map<String, String>> mapOfDataFromDatabase) {
         objGetUserChoice = new DisplayToGetUserChoice();
         int userSelectedForServiceProvider = objGetUserChoice.displayMessageGetNumberChoiceFromUser("Enter the id of the service provider you want to select: ");
 

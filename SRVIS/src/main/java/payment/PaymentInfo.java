@@ -2,7 +2,7 @@ package payment;
 
 import java.util.Objects;
 
-public class PaymentInfo implements IPaymentInfo{
+public class PaymentInfo implements IPaymentInfo {
     private String userID;
     private PaymentType paymentType;
     private String cardNumber;
