@@ -11,7 +11,7 @@ public class mainUI
         Encryption ob = new Encryption();
         ob.encryptString("Hello1");
 
-        IDisplayToGetUserChoice objToDisplay =new DisplayToGetUserChoice();
+        IDisplayToGetUserChoice objToDisplay = new DisplayToGetUserChoice();
 
         ApplicationController objApplication = new ApplicationController(objToDisplay);
         objToDisplay.displayMessage("########################### Welcome to SRVIS ###########################");

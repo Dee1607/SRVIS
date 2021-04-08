@@ -14,20 +14,20 @@ import java.util.Scanner;
 
 public class LoginUI
 {
-    private LoginService login=null;
-    private DisplayToGetUserChoice objGetData=null;
-    private Map<String,String> pendingBookingValues =null;
-    private IValidation validate=null;
-    private IRegistrationMain registerObj=null;
-    private GenerateDataToDisplay objgetDataToDisplay=null;
-    private DisplayServiceCategoriesUI objDisplay=null;
-    private IDisplayToGetUserChoice display=null;
+    private LoginService login = null;
+    private DisplayToGetUserChoice objGetData = null;
+    private Map<String,String> pendingBookingValues = null;
+    private IValidation validate = null;
+    private IRegistrationMain registerObj = null;
+    private GenerateDataToDisplay objgetDataToDisplay = null;
+    private DisplayServiceCategoriesUI objDisplay = null;
+    private IDisplayToGetUserChoice display = null;
 
     public LoginUI(IDisplayToGetUserChoice display)
     {
-        login=new LoginService();
-        objGetData=new DisplayToGetUserChoice();
-        validate=new Validation();
+        login = new LoginService();
+        objGetData = new DisplayToGetUserChoice();
+        validate = new Validation();
         registerObj = new RegistrationMain(new DisplayToGetUserChoice());
         objgetDataToDisplay = new GenerateDataToDisplay();
         objDisplay = new DisplayServiceCategoriesUI();

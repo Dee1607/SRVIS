@@ -10,10 +10,10 @@ public class ServiceProviderCustomerUI
 {
     private Map<String,String> activeLoginServiceProvider;
     private ServiceProviderService serviceProvider;
-    private PaymentUI paymentUI=null;
+    private PaymentUI paymentUI = null;
     private IDisplayToGetUserChoice display;
-    private IPayment acceptPay=null;
-    private IPaymentService paymentProcess=null;
+    private IPayment acceptPay = null;
+    private IPaymentService paymentProcess = null;
 
     public ServiceProviderCustomerUI(Map<String,String> loginUser,IDisplayToGetUserChoice display )
     {
@@ -28,7 +28,7 @@ public class ServiceProviderCustomerUI
     {
             String firstName= activeLoginServiceProvider.get("firstName");
             String lastName= activeLoginServiceProvider.get("lastName");
-            String Email=activeLoginServiceProvider.get("email");
+            String Email = activeLoginServiceProvider.get("email");
             display.displayMessage("Hi "+ firstName +  lastName);
             return activeLoginServiceProvider;
     }

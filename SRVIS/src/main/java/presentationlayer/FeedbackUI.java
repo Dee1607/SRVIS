@@ -5,23 +5,22 @@ import feedback.IReview;
 
 public class FeedbackUI {
 
-    private DisplayToGetUserChoice objGetData=null;
+    private final DisplayToGetUserChoice objGetData;
 
-    public FeedbackUI(){
+    public FeedbackUI() {
 
-        objGetData=new DisplayToGetUserChoice();
+        objGetData = new DisplayToGetUserChoice();
     }
 
     public void getReviewDetailsInput(IReview review){
-
         String comment = objGetData.displayMessageGetStringChoiceFromUser("Enter the review :");
         review.setReviewString(comment);
         String setDate = objGetData.displayMessageGetStringChoiceFromUser("Enter the date :");
-        review.setDate("January 1, 2020");
+        review.setDate(setDate);
         String setReviewee = objGetData.displayMessageGetStringChoiceFromUser("Enter the reviewee ");
-        review.setReviewee("Reviewee");
+        review.setReviewee(setReviewee);
         String setAuthor = objGetData.displayMessageGetStringChoiceFromUser("Enter the name of author : ");
-        review.setAuthor("Author");
+        review.setAuthor(setAuthor);
     }
 
 

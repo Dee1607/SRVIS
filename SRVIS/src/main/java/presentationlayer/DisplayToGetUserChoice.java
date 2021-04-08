@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class DisplayToGetUserChoice implements IDisplayToGetUserChoice
 {
-    private Scanner objToGetValue=null;
+    private final Scanner objToGetValue;
 
     public DisplayToGetUserChoice(){
         objToGetValue = new Scanner(System.in);
