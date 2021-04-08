@@ -2,17 +2,16 @@ package payment;
 
 import database.DatabaseConnection;
 import database.IDatabaseConnection;
-
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.Map;
 
-public class PaymentInfoDAO {
-    private static DatabaseConnection paymentDB = DatabaseConnection.databaseInstance();
-    private IDatabaseConnection db = DatabaseConnection.databaseInstance();
+public class PaymentInfoDAO implements IPaymentInfoDAO {
+    private final IDatabaseConnection db;
 
+    public PaymentInfoDAO() {
+        db = DatabaseConnection.databaseInstance();
+    }
+
+    @Override
     public IPaymentInfo read(String userID) {
         IPaymentInfo paymentInfo = null;
         String paymentType;
@@ -40,11 +39,13 @@ public class PaymentInfoDAO {
             paymentInfo.setSecurityCode(securityCode);
             paymentInfo.setExpiryDate(expiryDate);
         }
+        db.closeConnection();
         return paymentInfo;
     }
 
+    @Override
     public boolean write(IPaymentInfo paymentInfo) {
-        boolean result = false;
+        boolean result;
         String userID = paymentInfo.getUserID();
         String paymentType = paymentInfo.getPaymentType();
         String cardNumber = paymentInfo.getCardNumber();
@@ -54,7 +55,7 @@ public class PaymentInfoDAO {
         String writePaymentQuery = String.format("INSERT INTO `CSCI5308_3_DEVINT`.`payment_info`" +
                 "(`user_id`,`payment_type`,`card_number`,`full_name`,`security_code`,`expiry_date`)" +
                 "VALUES('%s','%s','%s','%s','%s','%s');",
-                userID, paymentType, cardNumber, fullName, securityCode, expiryDate);;
+                userID, paymentType, cardNumber, fullName, securityCode, expiryDate);
         db.makeConnection();
         result = db.insertQuery(writePaymentQuery);
         db.closeConnection();

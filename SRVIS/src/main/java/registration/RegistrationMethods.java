@@ -3,6 +3,7 @@ package registration;
 
 import presentationlayer.DisplayRegistrationPageUI;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -10,7 +11,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class RegistrationMethods implements IRegistrationMethods{
 
     public static int count =1;
-    public String result;
+    public ArrayList<String> result;
     Map<Integer,Runnable> registerUserMethods = new ConcurrentHashMap<Integer,Runnable>();
 
     RegistrationList genericList;
@@ -57,10 +58,13 @@ public class RegistrationMethods implements IRegistrationMethods{
         while(iterator.hasNext()){
             for (int key : registerMethods.keySet()) {
                 registerMethods.get(key).run();
-                String[] getValueresult = result.split("-");
-                if (getValueresult[0].equals("Success")){
-                    genericList.removeRegisterUserMethods(key);
-                    genericList.setUserDetails(String.valueOf(key), getValueresult[1]);
+                if (result.size() > 0) {
+                    String getData = result.get(0);
+                    String[] getValueresult = getData.split("-");
+                    if (getValueresult[0].equals("true")) {
+                        genericList.removeRegisterUserMethods(key);
+                        genericList.setUserDetails(String.valueOf(key), getValueresult[1]);
+                    }
                 }
             }
             if(registerMethods.size() == 0){

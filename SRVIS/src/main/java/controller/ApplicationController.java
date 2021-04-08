@@ -3,17 +3,20 @@ package controller;
 import customer.*;
 import customer.EnumServiceCategory;
 import login.LoginService;
+import presentationlayer.DisplayToGetUserChoice;
 import presentationlayer.IDisplayToGetUserChoice;
 import presentationlayer.DisplayLoginUI;
 import presentationlayer.DisplayServiceProviderUI;
 import registration.IRegistrationMain;
 import registration.IValidation;
+import registration.RegistrationMain;
 import registration.Validation;
 import java.util.Map;
+import java.util.Scanner;
 
 public class ApplicationController implements IApplicationController
 {
-    private IRegistrationMain registerObj=null;
+    public IRegistrationMain registerObj;
     private IValidation validate;
     private ISelectServiceCategory objServiceCategory = null;
     private DisplayServiceProviderUI serviceProvider = null;
@@ -69,10 +72,8 @@ public class ApplicationController implements IApplicationController
                             objBookServiceProvider.generateBookingRequest(mapServiceProviderToBook);
 
                         }
+
                     }else if (mapLoginData.get("type").equalsIgnoreCase("sp")){
-                        // **********************
-                        // SP CODE LEFT TO MERGE
-                        // *********************
 
                         serviceProvider = new DisplayServiceProviderUI(tempValues,display);
                         Map<String,String> serviceProviderSession =serviceProvider.getActiveServiceProvider();
@@ -95,6 +96,7 @@ public class ApplicationController implements IApplicationController
             }
             else if (userChoice == 2)
             {
+                registerObj = new RegistrationMain(new DisplayToGetUserChoice());
                 registerObj.register();
             } else {
                 display.displayMessage("Please enter valid input .");

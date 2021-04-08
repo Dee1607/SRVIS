@@ -30,6 +30,8 @@ public class DisplayLoginUI
         validate=new Validation();
         registerObj = new RegistrationMain(display);
         objectDataToDisplay = new GenerateDataToDisplay();
+        registerObj = new RegistrationMain(new DisplayToGetUserChoice());
+        objectDataToDisplay = new GenerateDataToDisplay();
         objDisplay = new DisplayServiceCategoriesUI();
     }
 

@@ -8,7 +8,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
-public class DatabaseConnection implements IDatabaseConnection {
+public class DatabaseConnection implements IDatabaseConnection
+{
 
     private Connection conn = null;
     private String dbURL=null;
@@ -19,10 +20,8 @@ public class DatabaseConnection implements IDatabaseConnection {
 
     private static DatabaseConnection dbSingleton;
 
-    private DatabaseConnection() {
-    }
-
-    public static DatabaseConnection databaseInstance() {
+    public static DatabaseConnection databaseInstance()
+    {
         dbSingleton = new DatabaseConnection();
         return dbSingleton;
     }
@@ -40,7 +39,8 @@ public class DatabaseConnection implements IDatabaseConnection {
     }
 
 
-    public Connection makeConnection() {
+    public Connection makeConnection()
+    {
         try {
             this.dbURL =prop.getProperty("dbURL");
             this.dbUsername = prop.getProperty("dbUsername");
@@ -94,7 +94,6 @@ public class DatabaseConnection implements IDatabaseConnection {
     }
 
     public boolean updateQuery(String query) {
-
         try {
             stmt = conn.createStatement();
             int rowCount = stmt.executeUpdate(query);
