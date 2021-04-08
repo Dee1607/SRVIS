@@ -23,13 +23,13 @@ public class PresentationFactory {
         public DisplayUpdates DisplayUpdates(){
             return new DisplayUpdates();
         }
-        public LoginUI LoginUI(){
-            return new LoginUI();
+        public LoginUI LoginUI(IDisplayToGetUserChoice display){
+            return new LoginUI(display);
         }
         public RegistrationPageUI RegistrationPageUI(){
             return new RegistrationPageUI();
         }
-        public ServiceProviderCustomerUI ServiceProviderCustomerUI(Map<String,String> loginUser){
-            return new ServiceProviderCustomerUI(loginUser);
+        public ServiceProviderCustomerUI ServiceProviderCustomerUI(Map<String,String> loginUser,IDisplayToGetUserChoice display){
+            return new ServiceProviderCustomerUI(loginUser,display);
         }
 }

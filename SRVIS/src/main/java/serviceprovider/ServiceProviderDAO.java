@@ -1,6 +1,7 @@
 package serviceprovider;
 
 import database.DatabaseConnection;
+
 import java.util.Map;
 
 public class ServiceProviderDAO implements IServiceProviderDAO

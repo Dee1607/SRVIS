@@ -1,65 +1,50 @@
 package login;
 
-import customer.ISelectServiceCategory;
-import customer.SelectServiceCategory;
-import presentationlayer.ServiceProviderCustomerUI;
+import presentationlayer.DisplayToGetUserChoice;
+import presentationlayer.IDisplayToGetUserChoice;
+
 import java.util.Map;
 
 public class LoginService implements ILoginService
 {
-   private Map<String,String> tempValues = null;
    private ILoginDAO IloginDAO = null;
-   private Map<String , Map<String,String>> result = null;
-
+   private IDisplayToGetUserChoice display=null;
 
    public LoginService()
    {
+      this.display=new DisplayToGetUserChoice();
       IloginDAO=new LoginDAO();
    }
 
-   public Map<String,String> loginUser(String email, String password,String type)
-   {
-      result = IloginDAO.applicationLogin(email,password,type);
-      String Email=null;
-      String Password=null;
+   public Map<String,String> loginUser(String email, String password,String type) {
 
-      try
-      {
-         if(result.isEmpty())
-         {
-            System.out.println("Username/Password is incorrect . Please try again .");
-         }
-         else
-         {
-            for(String str : result.keySet())
-            {
-               tempValues = result.get(str);
-               Email = tempValues.get("email");
-               Password = tempValues.get("password");
-            }
-            if (Email.equals(email) && Password.equals(password))
-            {
-               return tempValues;
-            }
-         }
+      String Email = null;
+      String Password = null;
+      String name=null;
+      Map<String,String> tempValues = null;
+      Map<String , Map<String,String>> result = IloginDAO.applicationLogin(email, password, type);
+      for (String str : result.keySet()) {
+         tempValues = result.get(str);
+         Email = tempValues.get("email");
+         Password = tempValues.get("password");
+         name=tempValues.get("first_name");
       }
-      catch(Exception e)
-      {
-         e.printStackTrace();
+
+      if ((Email.equals(email) && Password.equals(password))) {
+               display.displayMessage("Hi"+name);
       }
-      return tempValues;
+         return tempValues;
    }
 
-   public Map<String, Map<String,String>>  getPendingRequests(String email,String type)
+   public Map<String,String>  getPendingRequests(String email,String type)
    {
-      Map<String, Map<String,String>> customerRequests= null;
-      try
+      Map<String, Map<String,String>> customerRequests=null;
+      customerRequests = IloginDAO.getAllCustomerRequests(email,type);
+      Map<String,String> result=null;
+      for (String str : customerRequests.keySet())
       {
-         customerRequests = IloginDAO.getAllCustomerRequests(email,type);
-      } catch (Exception e)
-      {
-         e.printStackTrace();
+         result = customerRequests.get(str);
       }
-      return customerRequests;
+      return result;
    }
 }

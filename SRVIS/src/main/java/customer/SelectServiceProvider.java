@@ -2,8 +2,8 @@ package customer;
 
 import database.DatabaseConnection;
 import enums.EnumServiceCategory;
-import presentationlayer.DisplayToGetUserChoice;
 import presentationlayer.DisplayServiceProviderInfoUI;
+import presentationlayer.DisplayToGetUserChoice;
 
 import java.util.Map;
 
@@ -31,7 +31,7 @@ public class SelectServiceProvider implements ISelectServiceProvider
             objDisplayServiceProvider = new DisplayServiceProviderInfoUI();
             objDisplayServiceProvider.displayServiceProviderBriefInfo(mapOfDataFromDatabase);
 
-            selectFromAvailableServiceProvider(mapOfDataFromDatabase);
+            //selectFromAvailableServiceProvider(mapOfDataFromDatabase);
             return mapOfDataFromDatabase;
         }
         catch(Exception e)
@@ -55,8 +55,7 @@ public class SelectServiceProvider implements ISelectServiceProvider
     public int selectFromAvailableServiceProvider(Map<String, Map<String, String>> mapOfDataFromDatabase)
     {
         objGetUserChoice = new DisplayToGetUserChoice();
-        int userSelectedForServiceProvider = objGetUserChoice.displayMessageGetNumberChoiceFromUser("Enter the Id of the service provider you want to select: ");
-
+        int userSelectedForServiceProvider = objGetUserChoice.displayMessageGetNumberChoiceFromUser("Enter the id of the service provider you want to select: ");
         return userSelectedForServiceProvider;
     }
 }

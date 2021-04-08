@@ -1,8 +1,7 @@
 package presentationlayer;
+
 import CustomerDetails.AcceptedCustomer;
-import payment.IPaymentInfo;
-import payment.PaymentInfo;
-import payment.PaymentInfoDAO;
+import payment.*;
 import serviceprovider.ServiceProviderService;
 import java.util.Map;
 import java.util.Scanner;
@@ -12,26 +11,26 @@ public class ServiceProviderCustomerUI
     private Map<String,String> activeLoginServiceProvider;
     private ServiceProviderService serviceProvider;
     private PaymentUI paymentUI=null;
-    private IPaymentInfo receiverPayment=null;
+    private IDisplayToGetUserChoice display;
+    private IPayment acceptPay=null;
+    private IPaymentService paymentProcess=null;
 
-    public ServiceProviderCustomerUI(Map<String,String> loginUser)
+    public ServiceProviderCustomerUI(Map<String,String> loginUser,IDisplayToGetUserChoice display )
     {
             this.activeLoginServiceProvider=loginUser;
-            serviceProvider=new ServiceProviderService();
-            paymentUI=new PaymentUI();
-            receiverPayment=new PaymentInfo();
+            this.serviceProvider=new ServiceProviderService();
+            this.paymentUI=new PaymentUI();
+            this.display=display;
+            this.acceptPay=new Payment();
     }
 
-    public void showCustomerRequestUI()
+    public Map<String,String> getActiveServiceProvider()
     {
             String firstName= activeLoginServiceProvider.get("firstName");
             String lastName= activeLoginServiceProvider.get("lastName");
             String Email=activeLoginServiceProvider.get("email");
-            System.out.println("Hi "+ firstName +  lastName);
-            showAvailability(Email);
-            getJobRequests();
-            bookingOperation(activeLoginServiceProvider);
-
+            display.displayMessage("Hi "+ firstName +  lastName);
+            return activeLoginServiceProvider;
     }
 
     public void bookingOperation(Map<String,String> serviceProviderDetails)
@@ -56,11 +55,11 @@ public class ServiceProviderCustomerUI
             else if(input.equals("2"))
             {
                 serviceProvider.rejectBooking(customerID,serviceProviderID);
-                System.out.println("Please enter valid customer ID");
+                System.out.println("Booking has been removed from your queue.!!");
             }
-        }
+    }
 
-    public void showAvailability(String Email)
+    public boolean showAvailability(String Email)
     {
         Scanner sc = new Scanner(System.in);
         System.out.println("Are you available for work (yes/no)?");
@@ -69,10 +68,12 @@ public class ServiceProviderCustomerUI
         {
             serviceProvider.updateAvailability(Email);
             System.out.println("Status : ACTIVE");
+            return true;
         }
         else
         {
             System.out.println("Your availability has been marked as NO ");
+            return false;
         }
     }
 
@@ -93,11 +94,14 @@ public class ServiceProviderCustomerUI
     }
 
 
-    public boolean acceptPayment(IPaymentInfo senderPaymentDetails)
+    public boolean acceptPayment(IPaymentInfo paySenderObject,String amount)
     {
-        paymentUI.getPaymentReceiverDetailsInput(receiverPayment);
-        // PaymentInfoDAO.write(receiverPayment);
-        paymentUI.addPaymentProcessInput(senderPaymentDetails,receiverPayment);
-        return true;
+        IPaymentInfo receiverPayment=new PaymentInfo();
+        paymentUI.getPaymentDetailsInput(receiverPayment);
+        acceptPay.setReceiver(receiverPayment);
+        acceptPay.setSender(paySenderObject);
+        acceptPay.setAmount(amount);
+        boolean paymentStatus=paymentProcess.processPayment(acceptPay);
+        return paymentStatus;
     }
 }

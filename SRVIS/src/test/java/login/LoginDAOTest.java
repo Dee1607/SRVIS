@@ -8,27 +8,47 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class LoginDAOTest {
 
+    LoginDAO loginDAO=null;
+
+    public LoginDAOTest()
+    {
+
+        loginDAO=new LoginDAO();
+    }
+
     @Test
-    void appLoginTest() {
-        LoginDAO loginDAO=new LoginDAO();
-        try {
-            Map<String, Map<String,String>> result=loginDAO.applicationLogin("bp@gmail.com","12345678","SP");
-            assertFalse(result.isEmpty());
-        } catch (Exception e) {
-            e.printStackTrace();
+    void applicationLoginTest()
+    {
+        Map<String, Map<String,String>> result=loginDAO.applicationLogin("th@gmail.com","123abc","c");
+        Map<String,String> tempValues;
+        String name=null;
+        for(String str : result.keySet())
+        {
+            tempValues = result.get(str);
+            name = tempValues.get("first_name");
         }
+        assertEquals("Tom",name);
+    }
+
+    @Test
+    void applicationLoginFailureTest()
+    {
+        Map<String, Map<String,String>> result=loginDAO.applicationLogin("th@gmail.com","123abcdefgh","c");
+        assertTrue(result.isEmpty());
     }
 
     @Test
     void getAllCustomerRequestsTest() {
-        LoginDAO loginDAO=new LoginDAO();
-        Map<String, Map<String,String>> result= null;
-        try {
-            result = loginDAO.getAllCustomerRequests("th@gmail.com","C");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        assertFalse(result.isEmpty());
+        Map<String, Map<String,String>> result=loginDAO.getAllCustomerRequests("bp@gmail.com","sp");
+        Map<String,String> tempValues;
+        String name=null;
 
+        for(String str : result.keySet())
+        {
+            tempValues = result.get(str);
+            String requestID=tempValues.get("service_request_id");
+            assertEquals("4",requestID);
+        }
     }
+
 }

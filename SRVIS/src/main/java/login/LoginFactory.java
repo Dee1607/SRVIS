@@ -1,8 +1,19 @@
 package login;
 
+import presentationlayer.IDisplayToGetUserChoice;
+
 public class LoginFactory implements ILoginFactory{
 
-    private static LoginFactory loginFactory ;
+    private static LoginFactory loginFactory =null;
+    private IDisplayToGetUserChoice display=null;
+
+    public LoginFactory(IDisplayToGetUserChoice display){
+        this.display=display;
+    }
+
+    public LoginFactory() {
+
+    }
 
     public static LoginFactory LoginInstance() {
         loginFactory = new LoginFactory();
