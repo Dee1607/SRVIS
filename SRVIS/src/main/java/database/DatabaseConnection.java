@@ -66,7 +66,7 @@ public class DatabaseConnection implements IDatabaseConnection
             ResultSetMetaData rsMetadata = rs.getMetaData();
             int columnCount = rsMetadata.getColumnCount();
             tableValues = new HashMap<String, String>();
-            while (rs.next()) {
+            while(rs.next()) {
                 for (int i = 1; i <= columnCount; i++) {
                     String columnNameValue = rsMetadata.getColumnName(i);
                     if (i == 1) {

@@ -85,14 +85,14 @@ public class DisplayServiceProviderUI
     {
         Map<String , Map<String,String>> viewBooking=serviceProvider.showBooking();
         Map<String,String> bookingValues = null;
+        System.out.format("%1s%20s%25s%30s%30s%30s", "|","==================="+"|", "======================="+"|", "============================"+"|","============================"+"|","============================"+"|\n");
+        System.out.format("%1s%20s%25s%30s%30s%30s", "|","ID "+"|", "CUSTOMER ID "+"|","SERVICE REQUEST DATE "+"|","SERVICE REQUEST DESCRIPTION"+"|", "HOURLY RATE"+"|\n");
         for(String spID : viewBooking.keySet())
         {
             bookingValues = viewBooking.get(spID);
-            System.out.println("--------------------------------------------------------------");
-            System.out.println("customer_id: " +bookingValues.get("customer_id"));
-            System.out.println("service_request_date: "+bookingValues.get("service_request_date"));
-            System.out.println("service_request_description : " +bookingValues.get("service_request_description"));
-            System.out.println("--------------------------------------------------------------");
+            System.out.format("%1s%20s%25s%30s%30s%30s", "|","==================="+"|", "======================="+"|", "============================"+"|","============================"+"|","============================"+"|\n");
+            System.out.format("%1s%20s%25s%30s%30s%30s", "|",spID+" |", bookingValues.get("customer_id")+" "    + bookingValues.get("service_request_date")+" |",bookingValues.get("service_request_description")+" |","$"+bookingValues.get("hourlyRate")+" |\n");
+            System.out.format("%1s%20s%25s%30s%30s%30s", "|","-------------------"+"|", "-----------------------"+"|", "-------------------"+"|","---------------------------"+"|","---------------------------"+"|","|"+"---------------------------"+"|\n");
         }
         return bookingValues;
     }

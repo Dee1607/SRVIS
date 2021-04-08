@@ -31,6 +31,8 @@ public class LoginService implements ILoginService
 
       if ((Email.equals(email) && Password.equals(password))) {
             display.displayMessage("Login Successful !!");
+      }else{
+          display.displayMessage("Please enter correct details !!");
       }
          return tempValues;
    }
