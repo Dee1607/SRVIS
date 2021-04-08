@@ -3,7 +3,9 @@ package customer;
 import database.DatabaseConnection;
 import feedback.*;
 import payment.IPaymentInfo;
+import payment.IPaymentService;
 import payment.PaymentInfo;
+import payment.PaymentService;
 import presentationlayer.*;
 
 import java.util.Calendar;
@@ -28,6 +30,7 @@ public class BookServiceProvider implements IBookServiceProvider {
         this.customerReview = new Feedback("1");
         this.review = new Review();
         this.feedbackDAO = new FeedbackDAO();
+        this.serviceProvider=new DisplayServiceProviderUI(customer_session,display);
     }
 
     public boolean finalizeServiceProvider(String serviceProviderID, Map<String, String> selectedServiceProvider) {
@@ -86,28 +89,31 @@ public class BookServiceProvider implements IBookServiceProvider {
             boolean insertStatus = objBookServiceProvider.setBookingRequest(dataToInsert);
             objBookServiceProvider = new BookServiceProviderDAO();
 
+            IPaymentService paymentService=new PaymentService();
+            boolean paymentStatus=false;
+            IPaymentInfo paymentInfo=paymentService.getPaymentInfoFromDatabase(CUSTOMER_SESSION.get("customer_id"));
+            if(paymentInfo==null)
+            {
+                displayPaymentUI.getPaymentDetailsInput(senderPaymentDetails);
+            }
+            if (insertStatus) {
+                objDisplayMessage.displayMessage("Ticket has been generated.");
+                paymentStatus = serviceProvider.acceptPayment(senderPaymentDetails);
+            }
+            boolean feedbackStatus = false;
             if(insertStatus)
             {
                 objDisplayMessage.displayMessage("Ticket has been generated.");
             }
-
-//            System.out.println("Please enter payment details : ");
-//            paymentUI.getPaymentDetailsInput(senderPaymentDetails);
-//            boolean paymentStatus = serviceProvider.acceptPayment(senderPaymentDetails,"100");
-
-
-//            boolean feedbackStatus = false;
-//            if(paymentStatus){
-//
-//                feedbackUI.getReviewDetailsInput(review);
-//                feedbackUI.setFeedback(customerReview);
-//                customerReview.setReview(review);
-//                feedbackStatus=feedbackDAO.write(customerReview);
-//                if(feedbackStatus){
-//                    System.out.println("Thanks For feedback!");
-//                }
-//            }
-
+            if (paymentStatus)
+            {
+                feedbackUI.getReviewDetailsInput(review);
+                feedbackUI.setFeedback(customerReview,review);
+                feedbackStatus = feedbackDAO.write(customerReview);
+                if (feedbackStatus) {
+                    System.out.println("Thanks For feedback!");
+                }
+            }
             return insertStatus;
         } catch (Exception e) {
             e.printStackTrace();

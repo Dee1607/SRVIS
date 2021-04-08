@@ -26,6 +26,7 @@ public class DisplayServiceProviderUI {
         this.acceptPay = new Payment();
         this.objDisplay = new DisplayServiceCategoriesUI();
         this.objectDataToDisplay = new GenerateDataToDisplay();
+        this.paymentProcess=new PaymentService();
     }
 
     public Map<String, String> getActiveServiceProvider() {
@@ -88,12 +89,18 @@ public class DisplayServiceProviderUI {
     }
 
 
-    public boolean acceptPayment(IPaymentInfo paySenderObject, String amount) {
-        IPaymentInfo receiverPayment = new PaymentInfo();
-        displayPaymentUI.getPaymentDetailsInput(receiverPayment);
-        acceptPay.setReceiver(receiverPayment);
-        acceptPay.setSender(paySenderObject);
-        acceptPay.setAmount(amount);
+    public boolean acceptPayment(IPaymentInfo receiverObject) {
+        IPaymentInfo senderPayment = new PaymentInfo();
+        IPaymentService paymentService=new PaymentService();
+        IPayment pay=new Payment();
+        IPaymentInfo paymentInfo=paymentService.getPaymentInfoFromDatabase(activeLoginServiceProvider.get("service_provider_id"));
+        if(paymentInfo==null)
+        {
+            DisplayPaymentUI paymentUI=new DisplayPaymentUI();
+            paymentUI.getPaymentDetailsInput(senderPayment);
+        }
+        acceptPay.setReceiver(receiverObject);
+        acceptPay.setSender(senderPayment);
         boolean paymentStatus = paymentProcess.processPayment(acceptPay);
         return paymentStatus;
     }

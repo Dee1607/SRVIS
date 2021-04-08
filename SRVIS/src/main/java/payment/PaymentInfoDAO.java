@@ -20,24 +20,28 @@ public class PaymentInfoDAO implements IPaymentInfoDAO {
         String fullName;
         String securityCode;
         String expiryDate;
-        String readPaymentQuery = String.format("SELECT * FROM payment_info WHERE user_id = '%s' LIMIT 1;", userID);
+        String readPaymentQuery = String.format("SELECT * FROM payment_info WHERE user_id = '%s';", userID);
         db.makeConnection();
         Map<String, Map<String, String>> resultMap = db.selectQuery(readPaymentQuery);
         Map<String, String> tempValues;
-        for (String str : resultMap.keySet()) {
-            tempValues = resultMap.get(str);
-            paymentType = tempValues.get("payment_type");
-            cardNumber = tempValues.get("card_number");
-            fullName = tempValues.get("full_name");
-            securityCode = tempValues.get("security_code");
-            expiryDate = tempValues.get("expiry_date");
-            paymentInfo = new PaymentInfo();
-            paymentInfo.setUserID(userID);
-            paymentInfo.setPaymentType(PaymentType.valueOf(paymentType));
-            paymentInfo.setCardNumber(cardNumber);
-            paymentInfo.setFullName(fullName);
-            paymentInfo.setSecurityCode(securityCode);
-            paymentInfo.setExpiryDate(expiryDate);
+        if(resultMap==null) {
+            return null;
+        }else{
+            for (String str : resultMap.keySet()) {
+                tempValues = resultMap.get(str);
+                paymentType = tempValues.get("payment_type");
+                cardNumber = tempValues.get("card_number");
+                fullName = tempValues.get("full_name");
+                securityCode = tempValues.get("security_code");
+                expiryDate = tempValues.get("expiry_date");
+                paymentInfo = new PaymentInfo();
+                paymentInfo.setUserID(userID);
+                paymentInfo.setPaymentType(PaymentType.valueOf(paymentType));
+                paymentInfo.setCardNumber(cardNumber);
+                paymentInfo.setFullName(fullName);
+                paymentInfo.setSecurityCode(securityCode);
+                paymentInfo.setExpiryDate(expiryDate);
+            }
         }
         db.closeConnection();
         return paymentInfo;

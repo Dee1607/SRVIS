@@ -52,7 +52,7 @@ public class PaymentDAO implements IPaymentDAO {
         String receiverID = payment.getReceiverID();
         String amount = payment.getAmount();
         String date = payment.getDate();
-        String status = payment.getStatusString();
+        String status = PaymentStatus.PROCESSED.name();
         String writePaymentQuery = String.format("INSERT INTO `payment`" +
                         "(`service_request_id`,`sender_id`,`receiver_id`,`amount`,`date`,`status`)" +
                         "VALUES('%s','%s','%s','%s','%s','%s');",

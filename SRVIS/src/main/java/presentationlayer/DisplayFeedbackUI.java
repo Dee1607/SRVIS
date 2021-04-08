@@ -25,8 +25,9 @@ public class DisplayFeedbackUI {
     }
 
 
-    public void setFeedback(IFeedback feedback) {
+    public void setFeedback(IFeedback feedback, IReview review) {
         String rating = objGetData.displayMessageGetStringChoiceFromUser("Enter the rating (1-5) :");
         feedback.setRating(rating);
+        feedback.setReview(review);
     }
 }
