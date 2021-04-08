@@ -72,14 +72,16 @@ public class DatabaseConnection implements IDatabaseConnection {
         return resultMap;
     }
 
-    public void updateQuery(String query) {
+    public boolean updateQuery(String query) {
         try {
             Statement stmt = conn.createStatement();
-            stmt.executeUpdate(query);
+            int rowCount = stmt.executeUpdate(query);
             stmt.close();
+            return rowCount > 0;
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return false;
     }
 
     public boolean insertQuery1(String query, Map<String, String> insertData) {
