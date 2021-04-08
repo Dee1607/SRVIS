@@ -18,7 +18,7 @@ public class AcceptedCustomer implements IAcceptedCustomer {
         connectDB = new AcceptedCustomerDAO();
     }
 
-    public void CustomerDetails() {
+    public void customerDetails() {
         Map<String, Map<String, String>> getDetails = connectDB.getConnection(customerID);
         for (String keys : getDetails.keySet()) {
             getSelectedUserData = getDetails.get(keys);
