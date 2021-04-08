@@ -4,7 +4,6 @@ import customer.AcceptedCustomer;
 import customer.GenerateDataToDisplay;
 import payment.*;
 import serviceprovider.ServiceProviderService;
-
 import java.util.Map;
 import java.util.Scanner;
 
@@ -86,7 +85,6 @@ public class DisplayServiceProviderUI {
         }
         return bookingValues;
     }
-
 
     public boolean acceptPayment(IPaymentInfo paySenderObject, String amount) {
         IPaymentInfo receiverPayment = new PaymentInfo();
