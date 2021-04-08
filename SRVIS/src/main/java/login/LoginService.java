@@ -5,8 +5,7 @@ import presentationlayer.IDisplayToGetUserChoice;
 
 import java.util.Map;
 
-public class LoginService implements ILoginService
-{
+public class LoginService implements ILoginService {
    private ILoginDAO IloginDAO = null;
    private IDisplayToGetUserChoice display=null;
 
@@ -16,7 +15,8 @@ public class LoginService implements ILoginService
       IloginDAO=new LoginDAO();
    }
 
-   public Map<String,String> loginUser(String email, String password,String type) {
+   @Override
+   public Map<String,String> loginUser(String email, String password, String type) {
 
       String Email = null;
       String Password = null;
@@ -35,7 +35,8 @@ public class LoginService implements ILoginService
          return tempValues;
    }
 
-   public Map<String,String>  getPendingRequests(String email,String type)
+   @Override
+   public Map<String,String>  getPendingRequests(String email, String type)
    {
       Map<String, Map<String,String>> customerRequests=null;
       customerRequests = IloginDAO.getAllCustomerRequests(email,type);

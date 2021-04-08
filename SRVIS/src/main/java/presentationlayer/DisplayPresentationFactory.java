@@ -20,7 +20,7 @@ public class DisplayPresentationFactory {
         public DisplayToGetUserChoice DisplayToGetUserChoice(){
             return new DisplayToGetUserChoice();
         }
-        public DisplayUpdates DisplayUpdates(){
+        public IDisplayUpdates DisplayUpdates(){
             return new DisplayUpdates();
         }
         public DisplayLoginUI LoginUI(IDisplayToGetUserChoice display){

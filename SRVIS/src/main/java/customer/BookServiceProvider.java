@@ -8,7 +8,6 @@ import presentationlayer.*;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Scanner;
 
 public class BookServiceProvider implements IBookServiceProvider
 {
@@ -86,7 +85,7 @@ public class BookServiceProvider implements IBookServiceProvider
 
     public boolean generateBookingRequest(Map<String,String> dataToInsert)
     {
-        DisplayUpdates objDisplayMessage;
+        IDisplayUpdates objDisplayMessage;
         DatabaseConnection db= DatabaseConnection.databaseInstance();
 
         try

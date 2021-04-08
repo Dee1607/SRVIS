@@ -2,8 +2,8 @@ package login;
 
 import java.util.Map;
 
-public interface ILoginService
-{
-    public Map<String,String> loginUser(String user, String password,String type);
-    public Map<String,String>  getPendingRequests(String email,String type);
+public interface ILoginService {
+    Map<String, String> loginUser(String email, String password, String type);
+
+    Map<String, String> getPendingRequests(String email, String type);
 }
