@@ -36,7 +36,6 @@ public class BookServiceProvider implements IBookServiceProvider
     {
         DisplayServiceProviderInfoUI objDisplayServiceProvider;
         DisplayToGetUserChoice objGetUserChoice = null;
-        Scanner sc = new Scanner(System.in);
         boolean isSelected = false;
 
         try
@@ -49,7 +48,7 @@ public class BookServiceProvider implements IBookServiceProvider
 
             if(choiceToSelect.equalsIgnoreCase("Y"))
             {
-//             getAdditionalDetailsToBookServiceProvider(selectedServiceProvider);
+             getAdditionalDetailsToBookServiceProvider(selectedServiceProvider);
                 isSelected = true;
             }
             return isSelected;
@@ -60,7 +59,6 @@ public class BookServiceProvider implements IBookServiceProvider
         }
         finally
         {
-            sc.close();
             return isSelected;
         }
     }
@@ -68,7 +66,7 @@ public class BookServiceProvider implements IBookServiceProvider
     public Map<String,String> getAdditionalDetailsToBookServiceProvider(Map<String,String> selectedServiceProvider)
     {
 
-        DisplayToGetUserChoice objToDisplayData;
+        DisplayToGetUserChoice objToDisplayData = null;
 
         objToDisplayData = new DisplayToGetUserChoice();
         String descriptionOfWork = objToDisplayData.displayMessageGetStringChoiceFromUser("Give some brief information on the work needs to be done:");

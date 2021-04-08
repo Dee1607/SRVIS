@@ -40,6 +40,7 @@ public class PaymentInfoDAO {
             paymentInfo.setSecurityCode(securityCode);
             paymentInfo.setExpiryDate(expiryDate);
         }
+        db.closeConnection();
         return paymentInfo;
     }
 

@@ -42,6 +42,7 @@ public class PaymentDAO {
             payment.setDate(date);
             payment.setStatus(PaymentStatus.valueOf(status));
         }
+        db.closeConnection();
         return payment;
     }
 

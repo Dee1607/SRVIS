@@ -1,9 +1,8 @@
-import Encryption.Encryption;
+import encryption.Encryption;
 import controller.ApplicationController;
 import presentationlayer.DisplayToGetUserChoice;
 import presentationlayer.IDisplayToGetUserChoice;
 import presentationlayer.LoginUI;
-import registration.RegistrationMain;
 
 public class mainUI
 {

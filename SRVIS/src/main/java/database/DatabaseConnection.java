@@ -102,7 +102,7 @@ public class DatabaseConnection implements IDatabaseConnection {
         } finally {
             try {
                 stmt.close();
-                conn.close();
+                //conn.close();
             } catch (Exception e) {
                 e.printStackTrace();
             }

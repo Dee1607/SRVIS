@@ -27,11 +27,10 @@ public class LoginService implements ILoginService
          tempValues = result.get(str);
          Email = tempValues.get("email");
          Password = tempValues.get("password");
-         name=tempValues.get("first_name");
       }
 
       if ((Email.equals(email) && Password.equals(password))) {
-               display.displayMessage("Hi"+name);
+            display.displayMessage("Login Successful !!");
       }
          return tempValues;
    }

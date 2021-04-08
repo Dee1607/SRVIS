@@ -1,6 +1,6 @@
 package presentationlayer;
 
-import CustomerDetails.AcceptedCustomer;
+import customer.AcceptedCustomer;
 import payment.*;
 import serviceprovider.ServiceProviderService;
 import java.util.Map;

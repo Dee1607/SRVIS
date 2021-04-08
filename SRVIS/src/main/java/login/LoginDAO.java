@@ -1,9 +1,7 @@
 package login;
 
-import com.mysql.cj.log.Log;
 import database.DatabaseConnection;
 import database.IDatabaseConnection;
-
 import java.util.Map;
 
 public class LoginDAO implements ILoginDAO{

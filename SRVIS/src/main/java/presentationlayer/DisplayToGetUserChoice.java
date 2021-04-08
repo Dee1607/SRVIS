@@ -23,7 +23,7 @@ public class DisplayToGetUserChoice implements IDisplayToGetUserChoice
     {
         System.out.println("================================================================================");
         System.out.print(stringToBeDisplayed);
-        String userStringChoice = objToGetValue.next();
+        String userStringChoice = objToGetValue.nextLine();
         System.out.println("================================================================================");
         return userStringChoice;
     }

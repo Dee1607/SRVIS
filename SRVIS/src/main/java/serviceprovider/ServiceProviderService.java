@@ -9,7 +9,7 @@ public class ServiceProviderService implements IServiceProviderService
 
     public void updateAvailability(String Email)
     {
-        serviceProviderDAO.updateAvailabilityStatus(Email);
+            serviceProviderDAO.updateAvailabilityStatus(Email);
     }
 
 

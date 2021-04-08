@@ -12,6 +12,7 @@ import registration.IValidation;
 import registration.RegistrationMain;
 import registration.Validation;
 import java.util.Map;
+import java.util.Scanner;
 
 public class ApplicationController implements IApplicationController
 {
@@ -71,10 +72,8 @@ public class ApplicationController implements IApplicationController
                             objBookServiceProvider.generateBookingRequest(mapServiceProviderToBook);
 
                         }
+
                     }else if (mapLoginData.get("type").equalsIgnoreCase("sp")){
-                        // **********************
-                        // SP CODE LEFT TO MERGE
-                        // *********************
 
                         serviceProvider = new ServiceProviderCustomerUI(tempValues,display);
                         Map<String,String> serviceProviderSession =serviceProvider.getActiveServiceProvider();
