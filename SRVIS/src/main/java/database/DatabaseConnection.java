@@ -66,7 +66,7 @@ public class DatabaseConnection implements IDatabaseConnection
             ResultSetMetaData rsMetadata = rs.getMetaData();
             int columnCount = rsMetadata.getColumnCount();
             tableValues = new HashMap<String, String>();
-            if (rs.next()) {
+            while (rs.next()) {
                 for (int i = 1; i <= columnCount; i++) {
                     String columnNameValue = rsMetadata.getColumnName(i);
                     if (i == 1) {
@@ -75,9 +75,8 @@ public class DatabaseConnection implements IDatabaseConnection
                     tableValues.put(columnNameValue, rs.getString(columnNameValue));
                 }
                 resultMap.put(tempKey, tableValues);
-            }else {
-                System.out.println("No result set generated from database !!!!");
             }
+
             return resultMap;
         } catch (Exception e) {
             e.printStackTrace();
