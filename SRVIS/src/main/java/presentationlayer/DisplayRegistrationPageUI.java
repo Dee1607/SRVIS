@@ -1,6 +1,6 @@
 package presentationlayer;
 
-import Encryption.IEncryption;
+import encryption.IEncryption;
 import registration.IValidation;
 import registration.Validation;
 
