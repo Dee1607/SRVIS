@@ -10,13 +10,13 @@ import java.util.Scanner;
 
 public class RegistrationPageUI
 {
-    IValidation validate=null;
+    IValidation validate = null;
     DisplayServiceCategoriesUI displayData;
 
     public RegistrationPageUI()
     {
-        validate=new Validation();
-        displayData=new DisplayServiceCategoriesUI();
+        validate = new Validation();
+        displayData = new DisplayServiceCategoriesUI();
     }
 
     public ArrayList<String> getUserDetails(String methodName, String pattern) {

@@ -10,10 +10,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Map;
 
-public class FeedbackDAO {
+public class FeedbackDAO implements IFeedbackDAO {
 
     private final IDatabaseConnection db = DatabaseConnection.databaseInstance();
 
+    @Override
     public IFeedback read(String id) {
         String rating;
         String reviewString;
@@ -60,6 +61,7 @@ public class FeedbackDAO {
         return feedback;
     }
 
+    @Override
     public boolean write(IFeedback feedback) {
         boolean result = false;
         try{

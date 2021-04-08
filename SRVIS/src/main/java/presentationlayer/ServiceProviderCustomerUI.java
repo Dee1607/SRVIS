@@ -8,12 +8,12 @@ import java.util.Scanner;
 
 public class ServiceProviderCustomerUI
 {
-    private Map<String,String> activeLoginServiceProvider;
-    private ServiceProviderService serviceProvider;
-    private PaymentUI paymentUI = null;
-    private IDisplayToGetUserChoice display;
-    private IPayment acceptPay = null;
-    private IPaymentService paymentProcess = null;
+    private final Map<String,String> activeLoginServiceProvider;
+    private final ServiceProviderService serviceProvider;
+    private final IDisplayToGetUserChoice display;
+    private final IPaymentService paymentProcess = null;
+    private final IPayment acceptPay;
+    private final PaymentUI paymentUI;
 
     public ServiceProviderCustomerUI(Map<String,String> loginUser,IDisplayToGetUserChoice display )
     {

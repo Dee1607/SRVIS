@@ -19,14 +19,8 @@ public class Feedback implements IFeedback{
         this.review = review;
     }
 
-    public boolean validateReview() {
-        final int MAX_REVIEW_LENGTH = 500;
-        if (review != null) {
-            boolean wordCountIsValid = (review.getReviewString().length() <= MAX_REVIEW_LENGTH);
-            boolean dateIsValid = (review.getDate() != null);
-            return wordCountIsValid && dateIsValid;
-        }
-        return false;
+    public void setID(String id) {
+        this.id = id;
     }
 
     public String getID() {
