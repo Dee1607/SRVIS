@@ -21,7 +21,7 @@ public class BookServiceProvider implements IBookServiceProvider
     private IFeedback customerReview=null;
     private IReview review=null;
 
-    public BookServiceProvider(Map<String, String> customer_session) {
+    public BookServiceProvider(Map<String, String> customer_session,IDisplayToGetUserChoice display) {
         this.CUSTOMER_SESSION = customer_session;
         this.senderPaymentDetails = new PaymentInfo();
         this.paymentUI=new PaymentUI();
@@ -29,6 +29,7 @@ public class BookServiceProvider implements IBookServiceProvider
         this.customerReview=new Feedback("1");
         this.review = new Review();
         this.feedbackDAO=new FeedbackDAO();
+        serviceProvider = new ServiceProviderCustomerUI(customer_session,display);
 
     }
 
@@ -46,9 +47,8 @@ public class BookServiceProvider implements IBookServiceProvider
 
             String choiceToSelect = objGetUserChoice.displayMessageGetStringChoiceFromUser("Do you want to select this service provider [Y/N]: ");
 
-            if(choiceToSelect.equalsIgnoreCase("Y"))
+            if(choiceToSelect.equalsIgnoreCase("y"))
             {
-             getAdditionalDetailsToBookServiceProvider(selectedServiceProvider);
                 isSelected = true;
             }
             return isSelected;
@@ -87,39 +87,36 @@ public class BookServiceProvider implements IBookServiceProvider
 
     public boolean generateBookingRequest(Map<String,String> dataToInsert)
     {
-        DisplayUpdates objDisplayMessage;
-        DatabaseConnection db= DatabaseConnection.databaseInstance();
-
+        DisplayToGetUserChoice objDisplayMessage = new DisplayToGetUserChoice();
+        DatabaseConnection db = DatabaseConnection.databaseInstance();
+        IBookServiceProviderDAO objBookServiceProvider = null;
+        objBookServiceProvider = new BookServiceProviderDAO();
         try
         {
-            String query1= " insert into CSCI5308_3_DEVINT.service_request (customer_id, service_provider_id, service_request_date, service_request_category_id,service_request_description)"
-                    + " values (?, ?, ?, ?, ?)";
+            boolean insertStatus = objBookServiceProvider.setBookingRequest(dataToInsert);
+            objBookServiceProvider = new BookServiceProviderDAO();
 
-            objDisplayMessage = new DisplayUpdates();
-            db.makeConnection();
-            boolean insertStatus = db.insertQuery(query1,dataToInsert);
-
-            //return insertStatus;
-
-            System.out.println("Please enter payment details : ");
-            paymentUI.getPaymentDetailsInput(senderPaymentDetails);
-            boolean paymentStatus=serviceProvider.acceptPayment(senderPaymentDetails,"100");
             if(insertStatus)
             {
                 objDisplayMessage.displayMessage("Ticket has been generated.");
             }
 
-            boolean feedbackStatus = false;
-            if(paymentStatus){
+//            System.out.println("Please enter payment details : ");
+//            paymentUI.getPaymentDetailsInput(senderPaymentDetails);
+//            boolean paymentStatus = serviceProvider.acceptPayment(senderPaymentDetails,"100");
 
-                feedbackUI.getReviewDetailsInput(review);
-                feedbackUI.setFeedback(customerReview);
-                customerReview.setReview(review);
-                feedbackStatus=feedbackDAO.write(customerReview);
-                if(feedbackStatus){
-                    System.out.println("Thanks For feedback!");
-                }
-            }
+
+//            boolean feedbackStatus = false;
+//            if(paymentStatus){
+//
+//                feedbackUI.getReviewDetailsInput(review);
+//                feedbackUI.setFeedback(customerReview);
+//                customerReview.setReview(review);
+//                feedbackStatus=feedbackDAO.write(customerReview);
+//                if(feedbackStatus){
+//                    System.out.println("Thanks For feedback!");
+//                }
+//            }
 
             return insertStatus;
         }

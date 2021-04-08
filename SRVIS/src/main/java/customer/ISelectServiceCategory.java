@@ -4,5 +4,5 @@ import enums.EnumServiceCategory;
 
 public interface ISelectServiceCategory
 {
-    EnumServiceCategory getUserSelectedService();
+    public EnumServiceCategory getUserSelectedService();
 }

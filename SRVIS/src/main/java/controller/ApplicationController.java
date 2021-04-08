@@ -12,7 +12,6 @@ import registration.IValidation;
 import registration.RegistrationMain;
 import registration.Validation;
 import java.util.Map;
-import java.util.Scanner;
 
 public class ApplicationController implements IApplicationController
 {
@@ -25,7 +24,7 @@ public class ApplicationController implements IApplicationController
     private SelectServiceProvider objSelectedServiceProvider = null;
     private IBookServiceProvider objBookServiceProvider = null;
     private IDisplayToGetUserChoice display = null;
-    private LoginUI login=null;
+    private LoginUI login = null;
 
     public ApplicationController(IDisplayToGetUserChoice objToDisplay)
     {
@@ -62,7 +61,7 @@ public class ApplicationController implements IApplicationController
                         Map<String,Map<String,String>> mapServiceProvider = objSelectedServiceProvider.getServiceProvidersOfSelectedCategory(enumChoice);
                         int userSelectedServiceProvider = objSelectedServiceProvider.selectFromAvailableServiceProvider(mapServiceProvider);
 
-                        objBookServiceProvider = new BookServiceProvider(SESSION_DETAILS);
+                        objBookServiceProvider = new BookServiceProvider(SESSION_DETAILS,display);
                         Map<String, String> objSelectedProviderInfo = mapServiceProvider.get(String.valueOf(userSelectedServiceProvider));
 
                         boolean isSelected = objBookServiceProvider.finalizeServiceProvider(String.valueOf(userSelectedServiceProvider),objSelectedProviderInfo);
@@ -70,7 +69,6 @@ public class ApplicationController implements IApplicationController
                         if(isSelected){
                             Map<String,String> mapServiceProviderToBook = objBookServiceProvider.getAdditionalDetailsToBookServiceProvider(objSelectedProviderInfo);
                             objBookServiceProvider.generateBookingRequest(mapServiceProviderToBook);
-
                         }
 
                     }else if (mapLoginData.get("type").equalsIgnoreCase("sp")){

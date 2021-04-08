@@ -1,6 +1,6 @@
 package payment;
 
-public class PaymentService {
+public class PaymentService implements IPaymentService{
 
     private final PaymentInfoDAO paymentInfoDAO;
     private final PaymentDAO paymentDAO;

@@ -14,9 +14,9 @@ public class LoginDAO implements ILoginDAO{
         db.makeConnection();
         if(type.equalsIgnoreCase("c"))
         {
-            sql1 = "SELECT * FROM customer WHERE email='"+email+"'AND password='"+password+"'";
+            sql1 = "SELECT * FROM customer WHERE email='"+email+"' AND pass='"+password+"'";
         }else if(type.equalsIgnoreCase("sp")){
-            sql1 = "SELECT * FROM service_provider WHERE email='"+email+"'AND password='"+password+"'";
+            sql1 = "SELECT * FROM service_provider WHERE email='"+email+"' AND pass='"+password+"'" ;
         }
         Map<String,Map<String,String>> queryResult= db.selectQuery(sql1);
         db.closeConnection();

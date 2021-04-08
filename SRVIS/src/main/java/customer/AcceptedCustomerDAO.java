@@ -10,7 +10,8 @@ public class AcceptedCustomerDAO implements IAcceptedCustomerDAO{
     public boolean insertStatus;
     IDatabaseConnection db;
 
-    public AcceptedCustomerDAO(){
+    public AcceptedCustomerDAO()
+    {
         db = DatabaseConnection.databaseInstance();
     }
 

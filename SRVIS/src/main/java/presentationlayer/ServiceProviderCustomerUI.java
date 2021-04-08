@@ -22,6 +22,7 @@ public class ServiceProviderCustomerUI
             this.paymentUI=new PaymentUI();
             this.display=display;
             this.acceptPay=new Payment();
+            this.paymentProcess = new PaymentService();
     }
 
     public Map<String,String> getActiveServiceProvider()

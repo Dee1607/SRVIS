@@ -2,12 +2,14 @@ package customer;
 
 import enums.EnumServiceCategory;
 import login.EnumLoginOption;
-
 import java.util.HashMap;
 import java.util.Map;
 
 public class GenerateDataToDisplay implements IGenerateDataToDisplay
 {
+    public GenerateDataToDisplay(){
+
+    }
     public Map<Integer,String> generateServiceCategoryData()
     {
         Map<Integer,String> mapSearchCategories = new HashMap<Integer,String>();

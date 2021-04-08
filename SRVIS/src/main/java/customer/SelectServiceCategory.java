@@ -3,7 +3,6 @@ package customer;
 import enums.EnumServiceCategory;
 import presentationlayer.DisplayServiceCategoriesUI;
 import presentationlayer.DisplayToGetUserChoice;
-
 import java.util.Map;
 
 public class SelectServiceCategory implements ISelectServiceCategory
@@ -12,11 +11,9 @@ public class SelectServiceCategory implements ISelectServiceCategory
     private GenerateDataToDisplay objGenerateServiceCategoryData = null;
     private DisplayToGetUserChoice objGetUserChoice = null;
     private EnumServiceCategory enumObjectOfChoice = null;
-    private SelectServiceProvider objSelectedServiceProvider = null;
-
     private Map<Integer,String> mapSearchCategories = null;
-
     private Map<String,String> CUSTOMER_SESSION ;
+    private static final String ENTER_USER_INPUT_MESSAGE = "Enter the number of Service You need: ";
 
     public SelectServiceCategory(Map<String,String> customerSession)
     {
@@ -35,7 +32,7 @@ public class SelectServiceCategory implements ISelectServiceCategory
             objDisplayServiceCategory.displayServiceCategory(mapSearchCategories);
 
             objGetUserChoice = new DisplayToGetUserChoice();
-            userSelectedServiceCategory = objGetUserChoice.displayMessageGetNumberChoiceFromUser("Enter the number of Service You need: ");
+            userSelectedServiceCategory = objGetUserChoice.displayMessageGetNumberChoiceFromUser(ENTER_USER_INPUT_MESSAGE);
             enumObjectOfChoice = EnumServiceCategory.values()[userSelectedServiceCategory - 1];
 
             return enumObjectOfChoice;

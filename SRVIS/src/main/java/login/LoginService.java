@@ -16,23 +16,28 @@ public class LoginService implements ILoginService
       IloginDAO=new LoginDAO();
    }
 
-   public Map<String,String> loginUser(String email, String password,String type) {
+   public Map<String,String> loginUser(String email, String password, String type) {
 
       String Email = null;
       String Password = null;
-      String name=null;
       Map<String,String> tempValues = null;
       Map<String , Map<String,String>> result = IloginDAO.applicationLogin(email, password, type);
-      for (String str : result.keySet()) {
-         tempValues = result.get(str);
-         Email = tempValues.get("email");
-         Password = tempValues.get("password");
+      if(result == null){
+         display.displayMessage("User is not registered!!");
+         System.exit(0);
       }
+      else{
+         for (String str : result.keySet()) {
+            tempValues = result.get(str);
+            Email = tempValues.get("email");
+            Password = tempValues.get("password");
+         }
 
-      if ((Email.equals(email) && Password.equals(password))) {
+         if ((Email.equals(email) && Password.equals(password))) {
             display.displayMessage("Login Successful !!");
+         }
       }
-         return tempValues;
+      return tempValues;
    }
 
    public Map<String,String>  getPendingRequests(String email,String type)

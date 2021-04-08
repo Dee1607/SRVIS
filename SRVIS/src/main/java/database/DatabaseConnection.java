@@ -1,7 +1,6 @@
 package database;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.sql.*;
 import java.util.HashMap;
@@ -66,7 +65,7 @@ public class DatabaseConnection implements IDatabaseConnection {
             ResultSetMetaData rsMetadata = rs.getMetaData();
             int columnCount = rsMetadata.getColumnCount();
             tableValues = new HashMap<String, String>();
-            if (rs.next()) {
+            while (rs.next()) {
                 for (int i = 1; i <= columnCount; i++) {
                     String columnNameValue = rsMetadata.getColumnName(i);
                     if (i == 1) {
@@ -75,8 +74,6 @@ public class DatabaseConnection implements IDatabaseConnection {
                     tableValues.put(columnNameValue, rs.getString(columnNameValue));
                 }
                 resultMap.put(tempKey, tableValues);
-            }else {
-                System.out.println("No result set generated from database !!!!");
             }
             return resultMap;
         } catch (Exception e) {
@@ -126,14 +123,6 @@ public class DatabaseConnection implements IDatabaseConnection {
                 }
             }
             insertStatus = preparedStmt.executeUpdate();
-
-
-//            preparedStmt.setInt (2, Integer.parseInt(insertData.get("service_provider_id")));
-//            preparedStmt.setDate(3, java.sql.Date.valueOf(insertData.get("service_request_date")));
-//            preparedStmt.setInt (4, Integer.parseInt(insertData.get("service_request_category_id")));
-//            preparedStmt.setString(5,insertData.get("service_request_description"));
-
-
             if (insertStatus > 0) {
                 return true;
             } else {
@@ -166,39 +155,21 @@ public class DatabaseConnection implements IDatabaseConnection {
         return result;
     }
 
-    public boolean insertQuery(String query, Map<String, String> insertData) {
-        PreparedStatement preparedStmt = null;
-        try {
-            preparedStmt = conn.prepareStatement(query);
-            preparedStmt.setInt (1, Integer.parseInt(insertData.get("customer_id")));
-            preparedStmt.setInt (2, Integer.parseInt(insertData.get("service_provider_id")));
-            preparedStmt.setDate(3, java.sql.Date.valueOf(insertData.get("service_request_date")));
-            preparedStmt.setInt (4, Integer.parseInt(insertData.get("service_request_category_id")));
-            preparedStmt.setString(5,insertData.get("service_request_description"));
-
-            int insertStatus = preparedStmt.executeUpdate();
-            if (insertStatus > 0) {
-                return true;
-            } else {
-                return false;
+    public void closeConnection()
+    {
+        try
+        {
+            if(conn == null)
+            {
+                return;
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        } finally {
-            try {
-                preparedStmt.close();
-                closeConnection();
-            } catch (Exception e) {
-                e.printStackTrace();
+            else
+            {
+                conn.close();
             }
         }
-    }
-
-    public void closeConnection() {
-        try {
-            conn.close();
-        } catch (Exception e) {
+        catch (Exception e)
+        {
             e.printStackTrace();
         }
     }
