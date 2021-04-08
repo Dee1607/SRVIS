@@ -18,6 +18,7 @@ class ServiceProviderDAOTest {
     void updateAvailabilityStatusTest() {
         boolean result=serviceDAO.updateAvailabilityStatus("bp@gmail.com");
         assertTrue(result);
+        ServiceProviderDAO serviceDAO = new ServiceProviderDAO();
     }
 
     @Test

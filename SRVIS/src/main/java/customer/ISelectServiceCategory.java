@@ -1,6 +1,5 @@
 package customer;
 
-public interface ISelectServiceCategory
-{
+public interface ISelectServiceCategory {
     EnumServiceCategory getUserSelectedService();
 }

@@ -2,16 +2,14 @@ package presentationlayer;
 
 import java.util.Scanner;
 
-public class DisplayToGetUserChoice implements IDisplayToGetUserChoice
-{
-    private Scanner objToGetValue=null;
+public class DisplayToGetUserChoice implements IDisplayToGetUserChoice {
+    private final Scanner objToGetValue;
 
-    public DisplayToGetUserChoice(){
+    public DisplayToGetUserChoice() {
         objToGetValue = new Scanner(System.in);
     }
 
-    public int displayMessageGetNumberChoiceFromUser(String stringToBeDisplayed)
-    {
+    public int displayMessageGetNumberChoiceFromUser(String stringToBeDisplayed) {
         System.out.println("================================================================================");
         System.out.print(stringToBeDisplayed);
         int userServiceCategoryChoice = objToGetValue.nextInt();
@@ -19,8 +17,7 @@ public class DisplayToGetUserChoice implements IDisplayToGetUserChoice
         return userServiceCategoryChoice;
     }
 
-    public String displayMessageGetStringChoiceFromUser(String stringToBeDisplayed)
-    {
+    public String displayMessageGetStringChoiceFromUser(String stringToBeDisplayed) {
         System.out.println("================================================================================");
         System.out.print(stringToBeDisplayed);
         String userStringChoice = objToGetValue.nextLine();
@@ -28,7 +25,7 @@ public class DisplayToGetUserChoice implements IDisplayToGetUserChoice
         return userStringChoice;
     }
 
-    public void displayMessage(String message){
+    public void displayMessage(String message) {
         System.out.println("=============================================================================");
         System.out.println(message);
         System.out.println("=============================================================================");

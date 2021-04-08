@@ -1,10 +1,11 @@
 package login;
 
-import presentationlayer.IDisplayToGetUserChoice;
-
 public interface ILoginFactory {
+    static LoginFactory LoginInstance() {
+      return new LoginFactory();
+    }
 
-    public ILoginDAO loginDAO();
-    public ILoginService loginService();
+    ILoginDAO loginDAO();
 
+    ILoginService loginService();
 }

@@ -2,7 +2,7 @@ package payment;
 
 import java.util.Objects;
 
-public class Payment implements IPayment{
+public class Payment implements IPayment {
 
     private int paymentID;
     private String serviceRequestID;
@@ -28,7 +28,7 @@ public class Payment implements IPayment{
         return sender;
     }
 
-    public String getSenderID () {
+    public String getSenderID() {
         return sender.getUserID();
     }
 
@@ -40,7 +40,7 @@ public class Payment implements IPayment{
         return receiver;
     }
 
-    public String getReceiverID () {
+    public String getReceiverID() {
         return receiver.getUserID();
     }
 

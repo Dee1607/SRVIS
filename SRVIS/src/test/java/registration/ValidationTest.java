@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class ValidationTest {
     @Test
     @DisplayName("Testing validation method")
-    public void checkValidation() throws Exception{
+    public void checkValidation() throws Exception {
         Validation validation = new Validation();
         boolean actualValue = validation.isValidString("[a-zA-Z]+", "SRVIS");
         boolean expectedValue = true;

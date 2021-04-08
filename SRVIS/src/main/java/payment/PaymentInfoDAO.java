@@ -2,6 +2,7 @@ package payment;
 
 import database.DatabaseConnection;
 import database.IDatabaseConnection;
+
 import java.util.Map;
 
 public class PaymentInfoDAO implements IPaymentInfoDAO {
@@ -23,8 +24,7 @@ public class PaymentInfoDAO implements IPaymentInfoDAO {
         db.makeConnection();
         Map<String, Map<String, String>> resultMap = db.selectQuery(readPaymentQuery);
         Map<String, String> tempValues;
-        for (String str : resultMap.keySet())
-        {
+        for (String str : resultMap.keySet()) {
             tempValues = resultMap.get(str);
             paymentType = tempValues.get("payment_type");
             cardNumber = tempValues.get("card_number");
@@ -53,8 +53,8 @@ public class PaymentInfoDAO implements IPaymentInfoDAO {
         String securityCode = paymentInfo.getSecurityCode();
         String expiryDate = paymentInfo.getExpiryDate();
         String writePaymentQuery = String.format("INSERT INTO `CSCI5308_3_DEVINT`.`payment_info`" +
-                "(`user_id`,`payment_type`,`card_number`,`full_name`,`security_code`,`expiry_date`)" +
-                "VALUES('%s','%s','%s','%s','%s','%s');",
+                        "(`user_id`,`payment_type`,`card_number`,`full_name`,`security_code`,`expiry_date`)" +
+                        "VALUES('%s','%s','%s','%s','%s','%s');",
                 userID, paymentType, cardNumber, fullName, securityCode, expiryDate);
         db.makeConnection();
         result = db.insertQuery(writePaymentQuery);

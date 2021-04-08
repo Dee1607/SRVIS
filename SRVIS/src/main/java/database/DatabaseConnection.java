@@ -1,50 +1,32 @@
 package database;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
 import java.sql.*;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
-public class DatabaseConnection implements IDatabaseConnection
-{
+public class DatabaseConnection implements IDatabaseConnection {
 
+    private final Properties defaultProperties;
     private Connection conn = null;
-    private String dbURL=null;
-    private String dbUsername=null;
-    private String dbPassword=null;
-    private Statement stmt;
-    private String tempKey;
 
-    private static DatabaseConnection dbSingleton;
-
-    public static DatabaseConnection databaseInstance()
-    {
-        dbSingleton = new DatabaseConnection();
-        return dbSingleton;
+    public DatabaseConnection() {
+        defaultProperties = new Properties();
     }
 
-        Properties prop = new Properties();
-        InputStream input;
-
-    {
-        try {
-            input = new FileInputStream("./src/main/resources/config.properties");
-            prop.load(input);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    public static DatabaseConnection databaseInstance() {
+        return new DatabaseConnection();
     }
 
-
-    public Connection makeConnection()
-    {
+    public Connection makeConnection() {
+        loadProperties();
         try {
-            this.dbURL =prop.getProperty("dbURL");
-            this.dbUsername = prop.getProperty("dbUsername");
-            this.dbPassword = prop.getProperty("dbPassword");
+            String dbURL = defaultProperties.getProperty("dbURL");
+            String dbUsername = defaultProperties.getProperty("dbUsername");
+            String dbPassword = defaultProperties.getProperty("dbPassword");
             Class.forName("com.mysql.cj.jdbc.Driver");
             conn = DriverManager.getConnection(dbURL, dbUsername, dbPassword);
         } catch (Exception e) {
@@ -53,20 +35,25 @@ public class DatabaseConnection implements IDatabaseConnection
         return conn;
     }
 
-    public Map<String, Map<String, String>> selectQuery(String query) {
-        Map<String, String> tableValues;
-        ResultSet rs = null;
-        PreparedStatement ps = null;
-
+    private void loadProperties() {
         try {
-            Map<String, Map<String, String>> resultMap = new HashMap<String, Map<String, String>>();
-            ps = conn.prepareStatement(query);
-            rs = ps.executeQuery();
+            InputStream in = new FileInputStream("./src/main/resources/config.properties");
+            defaultProperties.load(in);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
+    public Map<String, Map<String, String>> selectQuery(String query) {
+        Map<String, Map<String, String>> resultMap = null;
+        try {
+            PreparedStatement ps = conn.prepareStatement(query);
+            ResultSet rs = ps.executeQuery();
             ResultSetMetaData rsMetadata = rs.getMetaData();
             int columnCount = rsMetadata.getColumnCount();
-            tableValues = new HashMap<String, String>();
-            while(rs.next()) {
+            Map<String, String> tableValues = new HashMap<>();
+            String tempKey = null;
+            while (rs.next()) {
                 for (int i = 1; i <= columnCount; i++) {
                     String columnNameValue = rsMetadata.getColumnName(i);
                     if (i == 1) {
@@ -74,40 +61,31 @@ public class DatabaseConnection implements IDatabaseConnection
                     }
                     tableValues.put(columnNameValue, rs.getString(columnNameValue));
                 }
+                resultMap = new HashMap<>();
                 resultMap.put(tempKey, tableValues);
             }
-
-            return resultMap;
+            rs.close();
+            ps.close();
         } catch (Exception e) {
             e.printStackTrace();
-            return null;
-        } finally {
-            try {
-                rs.close();
-                ps.close();
-                conn.close();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
         }
+        return resultMap;
     }
 
     public boolean updateQuery(String query) {
         try {
-            stmt = conn.createStatement();
+            Statement stmt = conn.createStatement();
             int rowCount = stmt.executeUpdate(query);
-            if (rowCount > 0) {
-                return true;
-            }
-        }catch(Exception e)
-        {
+            stmt.close();
+            return rowCount > 0;
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return false;
     }
 
     public boolean insertQuery1(String query, Map<String, String> insertData) {
-        PreparedStatement preparedStmt = null;
+        PreparedStatement preparedStmt;
 
         try {
             int insertStatus;
@@ -124,28 +102,11 @@ public class DatabaseConnection implements IDatabaseConnection
             }
             insertStatus = preparedStmt.executeUpdate();
 
-
-//            preparedStmt.setInt (2, Integer.parseInt(insertData.get("service_provider_id")));
-//            preparedStmt.setDate(3, java.sql.Date.valueOf(insertData.get("service_request_date")));
-//            preparedStmt.setInt (4, Integer.parseInt(insertData.get("service_request_category_id")));
-//            preparedStmt.setString(5,insertData.get("service_request_description"));
-
-
-            if (insertStatus > 0) {
-                return true;
-            } else {
-                return false;
-            }
+            preparedStmt.close();
+            return insertStatus > 0;
         } catch (Exception e) {
             e.printStackTrace();
             return false;
-        } finally {
-            try {
-                preparedStmt.close();
-                closeConnection();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
         }
     }
 
@@ -164,39 +125,28 @@ public class DatabaseConnection implements IDatabaseConnection
     }
 
     public boolean insertQuery(String query, Map<String, String> insertData) {
-        PreparedStatement preparedStmt = null;
+        PreparedStatement preparedStmt;
         try {
             preparedStmt = conn.prepareStatement(query);
-            preparedStmt.setInt (1, Integer.parseInt(insertData.get("customer_id")));
-            preparedStmt.setInt (2, Integer.parseInt(insertData.get("service_provider_id")));
+            preparedStmt.setInt(1, Integer.parseInt(insertData.get("customer_id")));
+            preparedStmt.setInt(2, Integer.parseInt(insertData.get("service_provider_id")));
             preparedStmt.setDate(3, java.sql.Date.valueOf(insertData.get("service_request_date")));
-            preparedStmt.setInt (4, Integer.parseInt(insertData.get("service_request_category_id")));
-            preparedStmt.setString(5,insertData.get("service_request_description"));
+            preparedStmt.setInt(4, Integer.parseInt(insertData.get("service_request_category_id")));
+            preparedStmt.setString(5, insertData.get("service_request_description"));
 
             int insertStatus = preparedStmt.executeUpdate();
-            if (insertStatus > 0) {
-                return true;
-            } else {
-                return false;
-            }
+            preparedStmt.close();
+            return insertStatus > 0;
         } catch (Exception e) {
             e.printStackTrace();
             return false;
-        } finally {
-            try {
-                preparedStmt.close();
-                closeConnection();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
         }
     }
 
     public void closeConnection() {
         try {
             conn.close();
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (Exception ignore) {
         }
     }
 }

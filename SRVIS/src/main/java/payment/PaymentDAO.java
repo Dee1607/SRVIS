@@ -2,6 +2,7 @@ package payment;
 
 import database.DatabaseConnection;
 import database.IDatabaseConnection;
+
 import java.util.Map;
 
 public class PaymentDAO implements IPaymentDAO {
@@ -19,8 +20,7 @@ public class PaymentDAO implements IPaymentDAO {
         db.makeConnection();
         Map<String, Map<String, String>> resultMap = db.selectQuery(readPaymentQuery);
         Map<String, String> tempValues;
-        for (String str : resultMap.keySet())
-        {
+        for (String str : resultMap.keySet()) {
             tempValues = resultMap.get(str);
             String serviceRequestID = tempValues.get("service_request_id");
             String senderID = tempValues.get("sender_id");
@@ -54,8 +54,8 @@ public class PaymentDAO implements IPaymentDAO {
         String date = payment.getDate();
         String status = payment.getStatusString();
         String writePaymentQuery = String.format("INSERT INTO `CSCI5308_3_DEVINT`.`payment`" +
-                "(`service_request_id`,`sender_id`,`receiver_id`,`amount`,`date`,`status`)" +
-                "VALUES('%s','%s','%s','%s','%s','%s');",
+                        "(`service_request_id`,`sender_id`,`receiver_id`,`amount`,`date`,`status`)" +
+                        "VALUES('%s','%s','%s','%s','%s','%s');",
                 serviceRequestID, senderID, receiverID, amount, date, status);
         db.makeConnection();
         result = db.insertQuery(writePaymentQuery);

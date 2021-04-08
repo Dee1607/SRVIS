@@ -1,20 +1,21 @@
-package encryption;
+package Encryption;
 
 import java.util.ArrayList;
 
 public class Encryption implements IEncryption {
-    public ArrayList<String> encryptString(String getData) {
+    public ArrayList<String> encryptString(String stringToEncrypt) {
         ArrayList<String> encryptList = new ArrayList<>();
         try {
-            String encryptedString = "";
-            for (int i = 0; i < getData.length(); i++) {
-                int ascii = (int) getData.charAt(i) + 1;
-                encryptedString = encryptedString + ascii;
+            StringBuilder encryptedString = new StringBuilder();
+            for (int i = 0; i < stringToEncrypt.length(); i++) {
+                int ascii = (int) stringToEncrypt.charAt(i) + 1;
+                encryptedString.append(ascii);
             }
-            encryptList.add(encryptedString);
+            encryptList.add(encryptedString.toString());
             //System.out.println(encryptList.get(0));
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
+            ex.printStackTrace();
         }
         return encryptList;
     }

@@ -1,23 +1,18 @@
 import controller.ApplicationController;
+import presentationlayer.DisplayLoginUI;
 import presentationlayer.DisplayToGetUserChoice;
 import presentationlayer.IDisplayToGetUserChoice;
-import presentationlayer.DisplayLoginUI;
 
-public class mainUI
-{
-    public static void main(String[] args)
-    {
-        IDisplayToGetUserChoice objToDisplay =new DisplayToGetUserChoice();
+public class mainUI {
+    public static void main(String[] args) {
+        IDisplayToGetUserChoice objToDisplay = new DisplayToGetUserChoice();
 
         ApplicationController objApplication = new ApplicationController(objToDisplay);
         objToDisplay.displayMessage("########################### Welcome to SRVIS ###########################");
         DisplayLoginUI login = new DisplayLoginUI(objToDisplay);
-        try
-        {
+        try {
             objApplication.initializeApplication();
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
