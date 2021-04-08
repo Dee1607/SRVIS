@@ -40,6 +40,7 @@ public class DisplayServiceProviderInfoUI
         System.out.format("%1s%-20s%1s%-55s%1s", "|"," Mobile ","| ", mapOtherValues.get("contact"),"|\n");
         System.out.format("%1s%-20s%1s%-55s%1s", "|"," Address ","| ", mapOtherValues.get("address"),"|\n");
         System.out.format("%1s%-20s%1s%-55s%1s", "|"," Email ","| ", mapOtherValues.get("email"),"|\n");
+        System.out.format("%1s%-20s%1s%-55s%1s", "|"," Amount ","| ", mapOtherValues.get("amount"),"|\n");
         System.out.format("%1s%-20s%1s%-55s%1s", "|","--------------------","|", "--------------------------------------------------------","|\n");
     }
 }

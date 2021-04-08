@@ -9,12 +9,13 @@ import presentationlayer.LoginUI;
 import presentationlayer.ServiceProviderCustomerUI;
 import registration.IRegistrationMain;
 import registration.IValidation;
+import registration.RegistrationMain;
 import registration.Validation;
 import java.util.Map;
 
 public class ApplicationController implements IApplicationController
 {
-    private IRegistrationMain registerObj=null;
+    public IRegistrationMain registerObj;
     private IValidation validate;
     private ISelectServiceCategory objServiceCategory = null;
     private ServiceProviderCustomerUI serviceProvider = null;
@@ -96,6 +97,7 @@ public class ApplicationController implements IApplicationController
             }
             else if (userChoice == 2)
             {
+                registerObj = new RegistrationMain(new DisplayToGetUserChoice());
                 registerObj.register();
             } else {
                 display.displayMessage("Please enter valid input .");
