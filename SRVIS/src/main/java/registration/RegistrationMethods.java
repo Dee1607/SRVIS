@@ -1,7 +1,7 @@
 package registration;
 
 
-import presentationlayer.RegistrationPageUI;
+import presentationlayer.DisplayRegistrationPageUI;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -15,11 +15,11 @@ public class RegistrationMethods implements IRegistrationMethods{
     Map<Integer,Runnable> registerUserMethods = new ConcurrentHashMap<Integer,Runnable>();
 
     RegistrationList genericList;
-    RegistrationPageUI registerUser;
+    DisplayRegistrationPageUI registerUser;
     IRegistrationDAO hitDB;
     public RegistrationMethods(){
         hitDB = new RegistrationDAO();
-        registerUser = new RegistrationPageUI();
+        registerUser = new DisplayRegistrationPageUI();
         genericList = new RegistrationList();
     }
 

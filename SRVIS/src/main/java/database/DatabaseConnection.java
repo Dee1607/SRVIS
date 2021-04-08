@@ -8,7 +8,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
-public class DatabaseConnection implements IDatabaseConnection {
+public class DatabaseConnection implements IDatabaseConnection
+{
 
     private Connection conn = null;
     private String dbURL=null;
@@ -19,10 +20,8 @@ public class DatabaseConnection implements IDatabaseConnection {
 
     private static DatabaseConnection dbSingleton;
 
-    private DatabaseConnection() {
-    }
-
-    public static DatabaseConnection databaseInstance() {
+    public static DatabaseConnection databaseInstance()
+    {
         dbSingleton = new DatabaseConnection();
         return dbSingleton;
     }
@@ -40,7 +39,8 @@ public class DatabaseConnection implements IDatabaseConnection {
     }
 
 
-    public Connection makeConnection() {
+    public Connection makeConnection()
+    {
         try {
             this.dbURL =prop.getProperty("dbURL");
             this.dbUsername = prop.getProperty("dbUsername");
@@ -66,7 +66,7 @@ public class DatabaseConnection implements IDatabaseConnection {
             ResultSetMetaData rsMetadata = rs.getMetaData();
             int columnCount = rsMetadata.getColumnCount();
             tableValues = new HashMap<String, String>();
-            if (rs.next()) {
+            while (rs.next()) {
                 for (int i = 1; i <= columnCount; i++) {
                     String columnNameValue = rsMetadata.getColumnName(i);
                     if (i == 1) {
@@ -75,9 +75,8 @@ public class DatabaseConnection implements IDatabaseConnection {
                     tableValues.put(columnNameValue, rs.getString(columnNameValue));
                 }
                 resultMap.put(tempKey, tableValues);
-            }else {
-                System.out.println("No result set generated from database !!!!");
             }
+
             return resultMap;
         } catch (Exception e) {
             e.printStackTrace();
@@ -93,20 +92,18 @@ public class DatabaseConnection implements IDatabaseConnection {
         }
     }
 
-    public void updateQuery(String query) {
+    public boolean updateQuery(String query) {
         try {
             stmt = conn.createStatement();
-            stmt.executeUpdate(query);
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                stmt.close();
-                //conn.close();
-            } catch (Exception e) {
-                e.printStackTrace();
+            int rowCount = stmt.executeUpdate(query);
+            if (rowCount > 0) {
+                return true;
             }
+        }catch(Exception e)
+        {
+            e.printStackTrace();
         }
+        return false;
     }
 
     public boolean insertQuery1(String query, Map<String, String> insertData) {

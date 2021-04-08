@@ -1,34 +1,38 @@
 package presentationlayer;
 
+import customer.GenerateDataToDisplay;
 import customer.AcceptedCustomer;
 import payment.*;
 import serviceprovider.ServiceProviderService;
 import java.util.Map;
 import java.util.Scanner;
 
-public class ServiceProviderCustomerUI
+public class DisplayServiceProviderUI
 {
     private Map<String,String> activeLoginServiceProvider;
     private ServiceProviderService serviceProvider;
-    private PaymentUI paymentUI=null;
+    private DisplayPaymentUI paymentUI=null;
     private IDisplayToGetUserChoice display;
     private IPayment acceptPay=null;
     private IPaymentService paymentProcess=null;
+    private DisplayServiceCategoriesUI objDisplay=null;
+    private GenerateDataToDisplay objectDataToDisplay=null;
 
-    public ServiceProviderCustomerUI(Map<String,String> loginUser,IDisplayToGetUserChoice display )
+    public DisplayServiceProviderUI(Map<String,String> loginUser, IDisplayToGetUserChoice display )
     {
             this.activeLoginServiceProvider=loginUser;
             this.serviceProvider=new ServiceProviderService();
-            this.paymentUI=new PaymentUI();
+            this.paymentUI=new DisplayPaymentUI();
             this.display=display;
             this.acceptPay=new Payment();
+            this.objDisplay = new DisplayServiceCategoriesUI();
+            this.objectDataToDisplay = new GenerateDataToDisplay();
     }
 
     public Map<String,String> getActiveServiceProvider()
     {
             String firstName= activeLoginServiceProvider.get("firstName");
             String lastName= activeLoginServiceProvider.get("lastName");
-            String Email=activeLoginServiceProvider.get("email");
             display.displayMessage("Hi "+ firstName +  lastName);
             return activeLoginServiceProvider;
     }
@@ -64,17 +68,17 @@ public class ServiceProviderCustomerUI
         Scanner sc = new Scanner(System.in);
         System.out.println("Are you available for work (yes/no)?");
         String availabilityStatus = sc.nextLine();
+        boolean availability = false;
         if(availabilityStatus.equals("yes"))
         {
-            serviceProvider.updateAvailability(Email);
+            availability=serviceProvider.updateAvailability(Email);
             System.out.println("Status : ACTIVE");
-            return true;
         }
         else
         {
             System.out.println("Your availability has been marked as NO ");
-            return false;
         }
+        return availability;
     }
 
     public Map<String , String> getJobRequests()

@@ -1,9 +1,8 @@
 package registration;
 
 import presentationlayer.DisplayServiceCategoriesUI;
-import presentationlayer.DisplayUpdates;
 import presentationlayer.IDisplayToGetUserChoice;
-import presentationlayer.LoginUI;
+import presentationlayer.DisplayLoginUI;
 
 import java.util.HashMap;
 import java.util.Scanner;

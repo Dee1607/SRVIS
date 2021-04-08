@@ -3,11 +3,11 @@ package presentationlayer;
 import feedback.IFeedback;
 import feedback.IReview;
 
-public class FeedbackUI {
+public class DisplayFeedbackUI {
 
     private DisplayToGetUserChoice objGetData=null;
 
-    public FeedbackUI(){
+    public DisplayFeedbackUI(){
 
         objGetData=new DisplayToGetUserChoice();
     }
