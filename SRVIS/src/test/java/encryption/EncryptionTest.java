@@ -1,4 +1,4 @@
-package Encryption;
+package encryption;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
