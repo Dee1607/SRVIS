@@ -3,7 +3,8 @@ package presentationlayer;
 import registration.IValidation;
 import registration.Validation;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Scanner;
 
 public class RegistrationPageUI
 {

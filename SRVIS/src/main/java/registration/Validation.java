@@ -1,6 +1,6 @@
 package registration;
 
-import java.util.regex.*;
+import java.util.regex.Pattern;
 
 public class Validation implements IValidation{
     public boolean isValidString(String pattern, String userDetail){

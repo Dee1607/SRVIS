@@ -16,11 +16,20 @@ public class BookServiceProvider implements IBookServiceProvider
     private IPaymentInfo senderPaymentDetails = null;
     private PaymentUI paymentUI=null;
     private ServiceProviderCustomerUI serviceProvider=null;
+    private FeedbackUI feedbackUI=null;
+    private FeedbackDAO feedbackDAO=null;
+    private IFeedback customerReview=null;
+    private IReview review=null;
 
     public BookServiceProvider(Map<String, String> customer_session) {
         this.CUSTOMER_SESSION = customer_session;
-        senderPaymentDetails = new PaymentInfo();
-        paymentUI=new PaymentUI();
+        this.senderPaymentDetails = new PaymentInfo();
+        this.paymentUI=new PaymentUI();
+        this.feedbackUI=new FeedbackUI();
+        this.customerReview=new Feedback("1");
+        this.review = new Review();
+        this.feedbackDAO=new FeedbackDAO();
+
     }
 
     public boolean finalizeServiceProvider(String serviceProviderID, Map<String,String> selectedServiceProvider)
@@ -40,7 +49,7 @@ public class BookServiceProvider implements IBookServiceProvider
 
             if(choiceToSelect.equalsIgnoreCase("Y"))
             {
-//                getAdditionalDetailsToBookServiceProvider(selectedServiceProvider);
+//             getAdditionalDetailsToBookServiceProvider(selectedServiceProvider);
                 isSelected = true;
             }
             return isSelected;
@@ -62,7 +71,7 @@ public class BookServiceProvider implements IBookServiceProvider
         DisplayToGetUserChoice objToDisplayData;
 
         objToDisplayData = new DisplayToGetUserChoice();
-        String descriptionOfWork = objToDisplayData.displayMessageGetStringChoiceFromUser("Give some brief information on the work needs to be done: ");
+        String descriptionOfWork = objToDisplayData.displayMessageGetStringChoiceFromUser("Give some brief information on the work needs to be done:");
 
         Calendar calendar = Calendar.getInstance();
         java.sql.Date bookingDate = new java.sql.Date(calendar.getTime().getTime());
@@ -95,28 +104,20 @@ public class BookServiceProvider implements IBookServiceProvider
             //return insertStatus;
 
             System.out.println("Please enter payment details : ");
-            paymentUI.getPaymentSenderDetailsInput(senderPaymentDetails);
-            boolean paymentStatus=serviceProvider.acceptPayment(senderPaymentDetails);
+            paymentUI.getPaymentDetailsInput(senderPaymentDetails);
+            boolean paymentStatus=serviceProvider.acceptPayment(senderPaymentDetails,"100");
             if(insertStatus)
             {
                 objDisplayMessage.displayMessage("Ticket has been generated.");
-                // PaymentInfoDAO.write(senderPaymentDetails);
             }
 
             boolean feedbackStatus = false;
             if(paymentStatus){
-                IFeedback testFeedbackObject;
-                IReview review = new Review();
-                String reviewString = "This is a test review string.";
-                review.setReviewString(reviewString);
-                review.setDate("January 1, 2020");
-                review.setReviewee("Reviewee");
-                review.setAuthor("Author");
-                testFeedbackObject = new Feedback("testID");
-                testFeedbackObject.setRating("5");
-                testFeedbackObject.setReview(review);
 
-                // feedbackStatus = FeedbackDAO.write(testFeedbackObject);
+                feedbackUI.getReviewDetailsInput(review);
+                feedbackUI.setFeedback(customerReview);
+                customerReview.setReview(review);
+                feedbackStatus=feedbackDAO.write(customerReview);
                 if(feedbackStatus){
                     System.out.println("Thanks For feedback!");
                 }
