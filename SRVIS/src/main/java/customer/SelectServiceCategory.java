@@ -1,6 +1,5 @@
 package customer;
 
-import enums.EnumServiceCategory;
 import presentationlayer.DisplayServiceCategoriesUI;
 import presentationlayer.DisplayToGetUserChoice;
 

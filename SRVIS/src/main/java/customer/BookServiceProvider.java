@@ -14,9 +14,9 @@ public class BookServiceProvider implements IBookServiceProvider
 {
     private Map<String,String> CUSTOMER_SESSION;
     private IPaymentInfo senderPaymentDetails = null;
-    private PaymentUI paymentUI=null;
-    private ServiceProviderCustomerUI serviceProvider=null;
-    private FeedbackUI feedbackUI=null;
+    private DisplayPaymentUI paymentUI=null;
+    private DisplayServiceProviderUI serviceProvider=null;
+    private DisplayFeedbackUI feedbackUI=null;
     private FeedbackDAO feedbackDAO=null;
     private IFeedback customerReview=null;
     private IReview review=null;
@@ -24,19 +24,17 @@ public class BookServiceProvider implements IBookServiceProvider
     public BookServiceProvider(Map<String, String> customer_session) {
         this.CUSTOMER_SESSION = customer_session;
         this.senderPaymentDetails = new PaymentInfo();
-        this.paymentUI=new PaymentUI();
-        this.feedbackUI=new FeedbackUI();
+        this.paymentUI=new DisplayPaymentUI();
+        this.feedbackUI=new DisplayFeedbackUI();
         this.customerReview=new Feedback("1");
         this.review = new Review();
         this.feedbackDAO=new FeedbackDAO();
-
     }
 
     public boolean finalizeServiceProvider(String serviceProviderID, Map<String,String> selectedServiceProvider)
     {
         DisplayServiceProviderInfoUI objDisplayServiceProvider;
         DisplayToGetUserChoice objGetUserChoice = null;
-        Scanner sc = new Scanner(System.in);
         boolean isSelected = false;
 
         try
@@ -49,7 +47,7 @@ public class BookServiceProvider implements IBookServiceProvider
 
             if(choiceToSelect.equalsIgnoreCase("Y"))
             {
-//             getAdditionalDetailsToBookServiceProvider(selectedServiceProvider);
+             getAdditionalDetailsToBookServiceProvider(selectedServiceProvider);
                 isSelected = true;
             }
             return isSelected;
@@ -60,7 +58,6 @@ public class BookServiceProvider implements IBookServiceProvider
         }
         finally
         {
-            sc.close();
             return isSelected;
         }
     }
@@ -68,7 +65,7 @@ public class BookServiceProvider implements IBookServiceProvider
     public Map<String,String> getAdditionalDetailsToBookServiceProvider(Map<String,String> selectedServiceProvider)
     {
 
-        DisplayToGetUserChoice objToDisplayData;
+        DisplayToGetUserChoice objToDisplayData = null;
 
         objToDisplayData = new DisplayToGetUserChoice();
         String descriptionOfWork = objToDisplayData.displayMessageGetStringChoiceFromUser("Give some brief information on the work needs to be done:");

@@ -2,7 +2,7 @@ package feedback;
 
 import java.util.Objects;
 
-public class Review implements IReview{
+public class Review implements IReview {
     private String reviewString;
     private String author;
     private String reviewee;

@@ -1,4 +1,4 @@
-package enums;
+package customer;
 
 public enum EnumServiceCategory
 {

@@ -1,8 +1,7 @@
-package CustomerDetails;
+package customer;
 
 import database.DatabaseConnection;
 import database.IDatabaseConnection;
-import presentationlayer.DisplayServiceProviderInfoUI;
 
 import java.util.*;
 

@@ -15,29 +15,30 @@ import java.util.Map;
 import java.util.Scanner;
 
 
-public class LoginUI
+public class DisplayLoginUI
 {
     private LoginService login=null;
     private DisplayToGetUserChoice objGetData=null;
     private Map<String,String> pendingBookingValues =null;
     private IValidation validate=null;
     private IRegistrationMain registerObj=null;
-    private GenerateDataToDisplay objgetDataToDisplay=null;
+    private GenerateDataToDisplay objectDataToDisplay=null;
     private DisplayServiceCategoriesUI objDisplay=null;
     private IDisplayToGetUserChoice display=null;
     private IEncryption encrypt=null;
 
-    public LoginUI(IDisplayToGetUserChoice display)
+    public DisplayLoginUI(IDisplayToGetUserChoice display)
     {
         login=new LoginService();
         objGetData=new DisplayToGetUserChoice();
         validate=new Validation();
+        registerObj = new RegistrationMain(display);
+        objectDataToDisplay = new GenerateDataToDisplay();
         registerObj = new RegistrationMain(new DisplayToGetUserChoice());
-        objgetDataToDisplay = new GenerateDataToDisplay();
+        objectDataToDisplay = new GenerateDataToDisplay();
         objDisplay = new DisplayServiceCategoriesUI();
         encrypt = new Encryption();
     }
-
 
     public int showLoginScreen()
     {
@@ -45,10 +46,9 @@ public class LoginUI
           try
           {
               Scanner sc = new Scanner(System.in);
-              Map<Integer,String> objDataToDisplay = objgetDataToDisplay.generateLoginData();
+              Map<Integer,String> objDataToDisplay = objectDataToDisplay.generateLoginData();
               objDisplay.displayServiceCategory(objDataToDisplay);
               userInput = sc.nextInt();
-              return userInput;
           }
           catch (Exception e)
           {

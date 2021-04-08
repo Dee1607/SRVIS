@@ -1,37 +1,38 @@
 package controller;
 
 import customer.*;
-import enums.EnumServiceCategory;
+import customer.EnumServiceCategory;
 import login.LoginService;
 import presentationlayer.DisplayToGetUserChoice;
 import presentationlayer.IDisplayToGetUserChoice;
-import presentationlayer.LoginUI;
-import presentationlayer.ServiceProviderCustomerUI;
+import presentationlayer.DisplayLoginUI;
+import presentationlayer.DisplayServiceProviderUI;
 import registration.IRegistrationMain;
 import registration.IValidation;
 import registration.RegistrationMain;
 import registration.Validation;
 import java.util.Map;
+import java.util.Scanner;
 
 public class ApplicationController implements IApplicationController
 {
     public IRegistrationMain registerObj;
     private IValidation validate;
     private ISelectServiceCategory objServiceCategory = null;
-    private ServiceProviderCustomerUI serviceProvider = null;
+    private DisplayServiceProviderUI serviceProvider = null;
     private LoginService objLoginService = null;
     private Map<String,String> SESSION_DETAILS = null;
     private SelectServiceProvider objSelectedServiceProvider = null;
     private IBookServiceProvider objBookServiceProvider = null;
     private IDisplayToGetUserChoice display = null;
-    private LoginUI login=null;
+    private DisplayLoginUI login=null;
 
     public ApplicationController(IDisplayToGetUserChoice objToDisplay)
     {
         this.validate = new Validation();
         this.objLoginService = new LoginService();
         this.display = objToDisplay;
-        this.login = new LoginUI(objToDisplay);
+        this.login = new DisplayLoginUI(objToDisplay);
     }
 
     public void initializeApplication()
@@ -71,12 +72,10 @@ public class ApplicationController implements IApplicationController
                             objBookServiceProvider.generateBookingRequest(mapServiceProviderToBook);
 
                         }
-                    }else if (mapLoginData.get("type").equalsIgnoreCase("sp")){
-                        // **********************
-                        // SP CODE LEFT TO MERGE
-                        // *********************
 
-                        serviceProvider = new ServiceProviderCustomerUI(tempValues,display);
+                    }else if (mapLoginData.get("type").equalsIgnoreCase("sp")){
+
+                        serviceProvider = new DisplayServiceProviderUI(tempValues,display);
                         Map<String,String> serviceProviderSession =serviceProvider.getActiveServiceProvider();
                         boolean onlineStatus=serviceProvider.showAvailability(email);
                         if(onlineStatus) {

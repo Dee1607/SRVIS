@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class DisplayToGetUserChoice implements IDisplayToGetUserChoice
 {
-    private Scanner objToGetValue=null;
+    private final Scanner objToGetValue;
 
     public DisplayToGetUserChoice(){
         objToGetValue = new Scanner(System.in);
@@ -23,7 +23,7 @@ public class DisplayToGetUserChoice implements IDisplayToGetUserChoice
     {
         System.out.println("================================================================================");
         System.out.print(stringToBeDisplayed);
-        String userStringChoice = objToGetValue.next();
+        String userStringChoice = objToGetValue.nextLine();
         System.out.println("================================================================================");
         return userStringChoice;
     }

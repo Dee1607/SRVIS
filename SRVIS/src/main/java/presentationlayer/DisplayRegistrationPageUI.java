@@ -10,17 +10,17 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
-public class RegistrationPageUI
+public class DisplayRegistrationPageUI
 {
-    IValidation validate=null;
+    IValidation validate = null;
     DisplayServiceCategoriesUI displayData;
-    IEncryption encrypt;
+    IEncryption encrypt = null;
 
-    public RegistrationPageUI()
+    public DisplayRegistrationPageUI()
     {
-        validate=new Validation();
-        displayData=new DisplayServiceCategoriesUI();
-        encrypt=new Encryption();
+        validate = new Validation();
+        displayData = new DisplayServiceCategoriesUI();
+        encrypt = new Encryption();
     }
 
     public ArrayList<String> getUserDetails(String methodName, String pattern) {
@@ -30,7 +30,7 @@ public class RegistrationPageUI
             Scanner sc = new Scanner(System.in);
             String value = sc.nextLine();
             boolean validation = validate.isValidString(pattern, value);
-            if(methodName == "new password(only characters and numbers are allowed)"){
+            if(methodName=="new password(only characters and numbers are allowed)"){
                 ArrayList<String> getEncryptedValue = encrypt.encryptString(value);
                 value = getEncryptedValue.get(0);
             }
