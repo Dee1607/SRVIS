@@ -1,5 +1,7 @@
 package presentationlayer;
 
+import Encryption.Encryption;
+import Encryption.IEncryption;
 import registration.IValidation;
 import registration.Validation;
 
@@ -12,11 +14,13 @@ public class RegistrationPageUI
 {
     IValidation validate=null;
     DisplayServiceCategoriesUI displayData;
+    IEncryption encrypt;
 
     public RegistrationPageUI()
     {
         validate=new Validation();
         displayData=new DisplayServiceCategoriesUI();
+        encrypt=new Encryption();
     }
 
     public ArrayList<String> getUserDetails(String methodName, String pattern) {
@@ -26,6 +30,10 @@ public class RegistrationPageUI
             Scanner sc = new Scanner(System.in);
             String value = sc.nextLine();
             boolean validation = validate.isValidString(pattern, value);
+            if(methodName == "new password(only characters and numbers are allowed)"){
+                ArrayList<String> getEncryptedValue = encrypt.encryptString(value);
+                value = getEncryptedValue.get(0);
+            }
             if (validation == true){
                 result.add(validation + "-" + value);
             }

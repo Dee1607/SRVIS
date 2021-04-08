@@ -9,9 +9,6 @@ public class mainUI
 {
     public static void main(String[] args)
     {
-        Encryption ob = new Encryption();
-        ob.encryptString("Hello1");
-
         IDisplayToGetUserChoice objToDisplay =new DisplayToGetUserChoice();
 
         ApplicationController objApplication = new ApplicationController(objToDisplay);
