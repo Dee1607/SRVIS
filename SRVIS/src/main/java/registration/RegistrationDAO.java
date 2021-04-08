@@ -27,7 +27,7 @@ public class RegistrationDAO implements IRegistrationDAO
                 insertQuery="INSERT INTO customer(first_name,last_name,contact,address,email,password)" + " values(?,?,?,?,?,?);";
             }
             db.makeConnection();
-            insertStatus = db.insertQuery1(insertQuery,userInput);
+            insertStatus = db.insertRegQuery(insertQuery,userInput);
         }
         catch(Exception e)
         {

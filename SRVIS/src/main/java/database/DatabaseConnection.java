@@ -84,7 +84,7 @@ public class DatabaseConnection implements IDatabaseConnection {
         return false;
     }
 
-    public boolean insertQuery1(String query, Map<String, String> insertData) {
+    public boolean insertRegQuery(String query, Map<String, String> insertData) {
         PreparedStatement preparedStmt;
 
         try {

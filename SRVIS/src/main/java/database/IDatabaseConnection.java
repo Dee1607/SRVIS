@@ -13,6 +13,6 @@ public interface IDatabaseConnection
     boolean updateQuery(String query);
     boolean insertQuery(String query, Map<String,String> insertData);
     void closeConnection();
-    boolean insertQuery1(String query, Map<String,String> insertData);
+    boolean insertRegQuery(String query, Map<String,String> insertData);
     boolean insertQuery(String query);
 }
