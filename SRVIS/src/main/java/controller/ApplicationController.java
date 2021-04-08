@@ -46,6 +46,14 @@ public class ApplicationController implements IApplicationController {
 
                     SESSION_DETAILS = tempValues;
 
+                    display.displayMessage("1.Show Pending Requests\n2.Search Service");
+                    int cChoice = display.displayMessageGetNumberChoiceFromUser("Select your choice:");
+
+                    if(cChoice == 1) {
+                        display.displayMessage("All the pending requests in your queue.!!!!");
+                        login.showPendingRequest(mapLoginData.get("email"), mapLoginData.get("type"));
+                    }
+
                     if (mapLoginData.get("type").equalsIgnoreCase("c")) {
                         objServiceCategory = new SelectServiceCategory(tempValues);
                         EnumServiceCategory enumChoice = objServiceCategory.getUserSelectedService();
