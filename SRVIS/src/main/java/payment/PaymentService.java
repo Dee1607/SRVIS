@@ -2,8 +2,8 @@ package payment;
 
 public class PaymentService {
 
-    private final PaymentInfoDAO paymentInfoDAO;
-    private final PaymentDAO paymentDAO;
+    private final IPaymentInfoDAO paymentInfoDAO;
+    private final IPaymentDAO paymentDAO;
 
     public PaymentService() {
         paymentDAO = new PaymentDAO();

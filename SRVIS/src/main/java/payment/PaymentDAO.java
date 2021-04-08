@@ -4,18 +4,16 @@ import database.DatabaseConnection;
 import database.IDatabaseConnection;
 import java.util.Map;
 
-public class PaymentDAO {
+public class PaymentDAO implements IPaymentDAO {
 
-    private IDatabaseConnection db = DatabaseConnection.databaseInstance();
+    private final IDatabaseConnection db;
 
+    public PaymentDAO() {
+        db = DatabaseConnection.databaseInstance();
+    }
+
+    @Override
     public IPayment read(int paymentID) {
-        String serviceRequestID;
-        String senderID;
-        String receiverID;
-        String amount;
-        String date;
-        String status;
-
         IPayment payment = null;
         String readPaymentQuery = String.format("SELECT * FROM CSCI5308_3_DEVINT.payment WHERE payment_id = %s LIMIT 1;", paymentID);
         db.makeConnection();
@@ -24,12 +22,12 @@ public class PaymentDAO {
         for (String str : resultMap.keySet())
         {
             tempValues = resultMap.get(str);
-            serviceRequestID = tempValues.get("service_request_id");
-            senderID = tempValues.get("sender_id");
-            receiverID = tempValues.get("receiver_id");
-            amount = tempValues.get("amount");
-            date = tempValues.get("date");
-            status = tempValues.get("status");
+            String serviceRequestID = tempValues.get("service_request_id");
+            String senderID = tempValues.get("sender_id");
+            String receiverID = tempValues.get("receiver_id");
+            String amount = tempValues.get("amount");
+            String date = tempValues.get("date");
+            String status = tempValues.get("status");
             PaymentInfoDAO paymentInfoDAO = new PaymentInfoDAO();
             IPaymentInfo sender = paymentInfoDAO.read(senderID);
             IPaymentInfo receiver = paymentInfoDAO.read(receiverID);
@@ -46,8 +44,9 @@ public class PaymentDAO {
         return payment;
     }
 
+    @Override
     public boolean write(IPayment payment) {
-        boolean result = false;
+        boolean result;
         String serviceRequestID = payment.getServiceRequestID();
         String senderID = payment.getSenderID();
         String receiverID = payment.getReceiverID();
