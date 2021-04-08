@@ -4,5 +4,5 @@ import java.util.HashMap;
 import java.util.Map;
 
 public interface IAcceptedCustomerDAO {
-    public Map<String, Map<String,String>> getConnection(String customerID);
+    public Map<String,String> getConnection(String customerID);
 }

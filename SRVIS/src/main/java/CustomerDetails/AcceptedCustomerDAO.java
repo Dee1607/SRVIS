@@ -2,9 +2,9 @@ package CustomerDetails;
 
 import database.DatabaseConnection;
 import database.IDatabaseConnection;
+import presentationlayer.DisplayServiceProviderInfoUI;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class AcceptedCustomerDAO implements IAcceptedCustomerDAO{
     private String insertQuery;
@@ -15,14 +15,38 @@ public class AcceptedCustomerDAO implements IAcceptedCustomerDAO{
         db = DatabaseConnection.databaseInstance();
     }
 
-    public Map<String, Map<String,String>> getConnection(String customerID)
+    public Map<String,String> getConnection(String customerID)
     {
+        ArrayList<String> queryList = new ArrayList<>();
+        queryList.add("SELECT * FROM customer WHERE customer_id='"+ customerID +"'");
+        queryList.add("SELECT * FROM payment WHERE sender_id='"+ customerID +"'");
+
         Map<String, Map<String,String>> queryResult = null;
+        Map<String, Map<String,String>> customerDetails = new HashMap<>();
+        Map<String, String> getAmount = null;
+        Map<String, String> customerAmountDetails = null;
+
         try
         {
-            db.makeConnection();
-            String selectQuery = "SELECT * FROM customer WHERE customer_id='"+ customerID +"'";
-            queryResult= db.selectQuery(selectQuery);
+            for (String query: queryList){
+                db.makeConnection();
+                queryResult= db.selectQuery(query);
+                for (String keys : queryResult.keySet()) {
+                    if(customerID.equals(keys)){
+                        customerDetails = queryResult;
+                    }
+                    else {
+                        for (String geykey : queryResult.keySet()) {
+                            getAmount = queryResult.get(geykey);
+                            String amount = getAmount.get("amount");
+                            for (String key : customerDetails.keySet()) {
+                                customerAmountDetails = customerDetails.get(key);
+                                customerAmountDetails.put("amount",amount);
+                            }
+                        }
+                    }
+                }
+            }
         }
         catch(Exception e)
         {
@@ -34,6 +58,6 @@ public class AcceptedCustomerDAO implements IAcceptedCustomerDAO{
                 e.printStackTrace();
             }
         }
-        return queryResult;
+        return customerAmountDetails;
     }
 }

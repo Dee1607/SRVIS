@@ -50,7 +50,7 @@ public class ServiceProviderCustomerUI
                 System.out.println("Booking for " + customerID + " has been assigned");
                 System.out.println("==========Customer Details==========");
                 AcceptedCustomer customerData = new AcceptedCustomer(customerID);
-                customerData.CustomerDetails();
+                customerData.customerDetails();
             }
             else if(input.equals("2"))
             {

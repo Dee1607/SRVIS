@@ -3,7 +3,9 @@ package presentationlayer;
 import registration.IValidation;
 import registration.Validation;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 public class RegistrationPageUI
@@ -17,24 +19,26 @@ public class RegistrationPageUI
         displayData=new DisplayServiceCategoriesUI();
     }
 
-    public String getUserDetails(String methodName, String pattern) {
+    public ArrayList<String> getUserDetails(String methodName, String pattern) {
+        ArrayList<String> result = new ArrayList<>();
         try {
             System.out.println("Enter " + methodName);
             Scanner sc = new Scanner(System.in);
             String value = sc.nextLine();
             boolean validation = validate.isValidString(pattern, value);
             if (validation == true){
-                return "Success-" + value;
+                result.add(validation + "-" + value);
             }
         } catch (Exception e) {
             e.printStackTrace();
             System.exit(0);
         }
-        return "fail";
+        return result;
     }
 
-    public String getJobType(String pattern)
+    public ArrayList<String> getJobType(String pattern)
     {
+        ArrayList<String> result = new ArrayList<>();
         try
         {
             System.out.println("Select the type of job.");
@@ -55,13 +59,13 @@ public class RegistrationPageUI
             boolean validation = validate.isValidString(pattern, jobType);
             if (validation == true){
                 Integer intJobType = Integer.valueOf(jobType);
-                return "Success-" + getType.get(intJobType);
+                result.add(validation + "-" + getType.get(intJobType));
             }
         }
         catch (Exception ex)
         {
             ex.printStackTrace();
         }
-        return "fail";
+        return result;
     }
 }

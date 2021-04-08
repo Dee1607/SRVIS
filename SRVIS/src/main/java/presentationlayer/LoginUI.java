@@ -28,7 +28,7 @@ public class LoginUI
         login=new LoginService();
         objGetData=new DisplayToGetUserChoice();
         validate=new Validation();
-        registerObj = new RegistrationMain(display);
+        registerObj = new RegistrationMain(new DisplayToGetUserChoice());
         objgetDataToDisplay = new GenerateDataToDisplay();
         objDisplay = new DisplayServiceCategoriesUI();
     }
