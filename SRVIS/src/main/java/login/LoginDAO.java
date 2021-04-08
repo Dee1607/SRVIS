@@ -1,5 +1,6 @@
 package login;
 
+import com.mysql.cj.log.Log;
 import database.DatabaseConnection;
 import database.IDatabaseConnection;
 
@@ -7,8 +8,7 @@ import java.util.Map;
 
 public class LoginDAO implements ILoginDAO{
 
-
-    IDatabaseConnection db = DatabaseConnection.databaseInstance();
+        IDatabaseConnection db = DatabaseConnection.databaseInstance();
 
     public Map<String, Map<String,String>> applicationLogin(String email, String password,String type)
     {
@@ -17,7 +17,7 @@ public class LoginDAO implements ILoginDAO{
         if(type.equalsIgnoreCase("c"))
         {
             sql1 = "SELECT * FROM customer WHERE email='"+email+"'AND password='"+password+"'";
-        }else{
+        }else if(type.equalsIgnoreCase("sp")){
             sql1 = "SELECT * FROM service_provider WHERE email='"+email+"'AND password='"+password+"'";
         }
         Map<String,Map<String,String>> queryResult= db.selectQuery(sql1);

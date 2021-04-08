@@ -23,21 +23,21 @@ public class ApplicationController implements IApplicationController
     private SelectServiceProvider objSelectedServiceProvider = null;
     private IBookServiceProvider objBookServiceProvider = null;
     private IDisplayToGetUserChoice display = null;
+    private LoginUI login=null;
 
     public ApplicationController(IDisplayToGetUserChoice objToDisplay)
     {
         this.validate = new Validation();
         this.objLoginService = new LoginService();
         this.display = objToDisplay;
+        this.login = new LoginUI(objToDisplay);
     }
 
     public void initializeApplication()
     {
         try
         {
-            LoginUI login = new LoginUI();
             int userChoice = login.showLoginScreen();
-
             if (userChoice == 1)
             {
                 Map<String,String> mapLoginData = login.userLogin();

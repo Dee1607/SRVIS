@@ -12,7 +12,7 @@ public class mainUI
 
         ApplicationController objApplication = new ApplicationController(objToDisplay);
         objToDisplay.displayMessage("########################### Welcome to SRVIS ###########################");
-        LoginUI login = new LoginUI();
+        LoginUI login = new LoginUI(objToDisplay);
 
         try
         {

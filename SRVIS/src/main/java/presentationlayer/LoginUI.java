@@ -21,13 +21,14 @@ public class LoginUI
     private IRegistrationMain registerObj=null;
     private GenerateDataToDisplay objgetDataToDisplay=null;
     private DisplayServiceCategoriesUI objDisplay=null;
+    private IDisplayToGetUserChoice display=null;
 
-    public LoginUI()
+    public LoginUI(IDisplayToGetUserChoice display)
     {
         login=new LoginService();
         objGetData=new DisplayToGetUserChoice();
         validate=new Validation();
-        registerObj = new RegistrationMain();
+        registerObj = new RegistrationMain(display);
         objgetDataToDisplay = new GenerateDataToDisplay();
         objDisplay = new DisplayServiceCategoriesUI();
     }
@@ -36,15 +37,12 @@ public class LoginUI
     public int showLoginScreen()
     {
         int userInput = 0;
-          try {
+          try
+          {
               Scanner sc = new Scanner(System.in);
-
               Map<Integer,String> objDataToDisplay = objgetDataToDisplay.generateLoginData();
-
               objDisplay.displayServiceCategory(objDataToDisplay);
-
               userInput = sc.nextInt();
-
               return userInput;
           }
           catch (Exception e)
@@ -63,7 +61,6 @@ public class LoginUI
         mapLoginData.put("email",email);
         mapLoginData.put("password",password);
         mapLoginData.put("type",type);
-
         return mapLoginData;
     }
 
@@ -74,16 +71,11 @@ public class LoginUI
 
     public void showPendingRequest(String email,String type)
     {
-        Map<String, Map<String, String>> pendingRequests = login.getPendingRequests(email,type);
-
-
-        for (String keys : pendingRequests.keySet()) {
-            pendingBookingValues = pendingRequests.get(keys);
+            Map<String,String> pendingRequests = login.getPendingRequests(email,type);
             System.out.format("%1s%-20s%1s%-55s%1s", "|", "====================", "|", "========================================================", "|\n");
-            System.out.format("%1s%-20s%1s%-55s%1s", "|", " Request ID ", "| ", pendingBookingValues.get("service_request_id"), "|\n");
-            System.out.format("%1s%-20s%1s%-55s%1s", "|", " Service Provider ID ", "| ", pendingBookingValues.get("service_provider_id"), "|\n");
-            System.out.format("%1s%-20s%1s%-55s%1s", "|", " Request Description ", "| ", pendingBookingValues.get("service_request_description"), "|\n");
+            System.out.format("%1s%-20s%1s%-55s%1s", "|", " Request ID ", "| ", pendingRequests.get("service_request_id"), "|\n");
+            System.out.format("%1s%-20s%1s%-55s%1s", "|", " Service Provider ID ", "| ", pendingRequests.get("service_provider_id"), "|\n");
+            System.out.format("%1s%-20s%1s%-55s%1s", "|", " Request Description ", "| ", pendingRequests.get("service_request_description"), "|\n");
             System.out.format("%1s%-20s%1s%-55s%1s", "|", "--------------------", "|", "--------------------------------------------------------", "|\n");
-        }
     }
 }

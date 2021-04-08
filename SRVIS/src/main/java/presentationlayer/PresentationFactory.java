@@ -23,8 +23,8 @@ public class PresentationFactory {
         public DisplayUpdates DisplayUpdates(){
             return new DisplayUpdates();
         }
-        public LoginUI LoginUI(){
-            return new LoginUI();
+        public LoginUI LoginUI(IDisplayToGetUserChoice display){
+            return new LoginUI(display);
         }
         public RegistrationPageUI RegistrationPageUI(){
             return new RegistrationPageUI();

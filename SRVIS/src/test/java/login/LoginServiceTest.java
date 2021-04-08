@@ -2,19 +2,25 @@ package login;
 
 import org.junit.jupiter.api.Test;
 
-import java.util.HashMap;
 import java.util.Map;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.*;
 
 class LoginServiceTest {
 
-    private Map<String , Map<String,String>> result=new HashMap<>();
+    private LoginService login=new LoginService();
 
-//    @Test
-//    void getPendingRequestsTest() throws Exception {
-//        LoginService log=new LoginService();
-//        Map<String, Map<String,String>> result=log.getPendingRequests("bp@gmail.com","service_provider");
-//        assertFalse(result.isEmpty());
-//    }
+    @Test
+    void loginUserTest() {
+        Map<String,String> result=login.loginUser("th@gmail.com","123abc","c");
+        String name=result.get("first_name");
+        assertEquals("Tom",name);
+    }
+
+    @Test
+    void getPendingRequestsTest() {
+        Map<String,String> result=login.getPendingRequests("bp@gmail.com","sp");
+        String serviceRequestID=result.get("service_request_id");
+        assertEquals("4",serviceRequestID);
+    }
 }
