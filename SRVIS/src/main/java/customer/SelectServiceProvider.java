@@ -1,7 +1,6 @@
 package customer;
 
 import database.DatabaseConnection;
-import enums.EnumServiceCategory;
 import presentationlayer.DisplayServiceProviderInfoUI;
 import presentationlayer.DisplayToGetUserChoice;
 

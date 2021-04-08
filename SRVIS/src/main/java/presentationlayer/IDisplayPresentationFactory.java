@@ -1,6 +1,6 @@
 package presentationlayer;
 
-public class IPresentationFactory {
+public class IDisplayPresentationFactory {
 
 
 //        public DisplayServiceCategoriesUI DisplayServiceCategoriesUI();

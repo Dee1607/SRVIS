@@ -2,11 +2,11 @@ package presentationlayer;
 
 import payment.*;
 
-public class PaymentUI {
+public class DisplayPaymentUI {
 
     private DisplayToGetUserChoice objGetData = null;
 
-    public PaymentUI(){
+    public DisplayPaymentUI(){
 
         objGetData = new DisplayToGetUserChoice();
     }

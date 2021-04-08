@@ -8,12 +8,12 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
-public class RegistrationPageUI
+public class DisplayRegistrationPageUI
 {
     IValidation validate = null;
     DisplayServiceCategoriesUI displayData;
 
-    public RegistrationPageUI()
+    public DisplayRegistrationPageUI()
     {
         validate = new Validation();
         displayData = new DisplayServiceCategoriesUI();

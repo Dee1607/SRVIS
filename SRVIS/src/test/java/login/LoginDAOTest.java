@@ -31,13 +31,6 @@ class LoginDAOTest {
     }
 
     @Test
-    void applicationLoginFailureTest()
-    {
-        Map<String, Map<String,String>> result=loginDAO.applicationLogin("th@gmail.com","123abcdefgh","c");
-        assertTrue(result.isEmpty());
-    }
-
-    @Test
     void getAllCustomerRequestsTest() {
         Map<String, Map<String,String>> result=loginDAO.getAllCustomerRequests("bp@gmail.com","sp");
         Map<String,String> tempValues;
@@ -47,7 +40,7 @@ class LoginDAOTest {
         {
             tempValues = result.get(str);
             String requestID=tempValues.get("service_request_id");
-            assertEquals("4",requestID);
+            assertEquals("20",requestID);
         }
     }
 

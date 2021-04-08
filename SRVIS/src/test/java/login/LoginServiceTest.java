@@ -21,6 +21,6 @@ class LoginServiceTest {
     void getPendingRequestsTest() {
         Map<String,String> result=login.getPendingRequests("bp@gmail.com","sp");
         String serviceRequestID=result.get("service_request_id");
-        assertEquals("4",serviceRequestID);
+        assertEquals("20",serviceRequestID);
     }
 }

@@ -3,24 +3,25 @@ package presentationlayer;
 import feedback.IFeedback;
 import feedback.IReview;
 
-public class FeedbackUI {
+public class DisplayFeedbackUI {
 
-    private final DisplayToGetUserChoice objGetData;
+    private DisplayToGetUserChoice objGetData=null;
 
-    public FeedbackUI() {
+    public DisplayFeedbackUI(){
 
-        objGetData = new DisplayToGetUserChoice();
+        objGetData=new DisplayToGetUserChoice();
     }
 
     public void getReviewDetailsInput(IReview review){
+
         String comment = objGetData.displayMessageGetStringChoiceFromUser("Enter the review :");
         review.setReviewString(comment);
         String setDate = objGetData.displayMessageGetStringChoiceFromUser("Enter the date :");
-        review.setDate(setDate);
+        review.setDate("January 1, 2020");
         String setReviewee = objGetData.displayMessageGetStringChoiceFromUser("Enter the reviewee ");
-        review.setReviewee(setReviewee);
+        review.setReviewee("Reviewee");
         String setAuthor = objGetData.displayMessageGetStringChoiceFromUser("Enter the name of author : ");
-        review.setAuthor(setAuthor);
+        review.setAuthor("Author");
     }
 
 
