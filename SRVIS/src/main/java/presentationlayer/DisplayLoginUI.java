@@ -35,7 +35,7 @@ public class DisplayLoginUI {
         registerObj = new RegistrationMain(new DisplayToGetUserChoice());
         objectDataToDisplay = new GenerateDataToDisplay();
         objDisplay = new DisplayServiceCategoriesUI();
-        encrypt = new Encryption();
+        // encrypt = new Encryption();
     }
 
     public int showLoginScreen() {
