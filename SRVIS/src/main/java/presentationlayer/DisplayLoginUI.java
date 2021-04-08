@@ -1,13 +1,13 @@
 package presentationlayer;
 
-import Encryption.Encryption;
-import Encryption.IEncryption;
+
 import customer.GenerateDataToDisplay;
 import login.LoginService;
 import registration.IRegistrationMain;
 import registration.IValidation;
 import registration.RegistrationMain;
 import registration.Validation;
+import securedata.SecurePassword;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -24,7 +24,7 @@ public class DisplayLoginUI {
     private GenerateDataToDisplay objectDataToDisplay = null;
     private DisplayServiceCategoriesUI objDisplay = null;
     private IDisplayToGetUserChoice display = null;
-    private IEncryption encrypt = null;
+//    private ISecurePassword secure = null;
 
     public DisplayLoginUI(IDisplayToGetUserChoice display) {
         login = new LoginService();
@@ -35,7 +35,7 @@ public class DisplayLoginUI {
         registerObj = new RegistrationMain(new DisplayToGetUserChoice());
         objectDataToDisplay = new GenerateDataToDisplay();
         objDisplay = new DisplayServiceCategoriesUI();
-        // encrypt = new Encryption();
+//        secure = new SecurePassword();
     }
 
     public int showLoginScreen() {
@@ -54,12 +54,12 @@ public class DisplayLoginUI {
     public Map<String, String> userLogin() {
         String email = objGetData.displayMessageGetStringChoiceFromUser("Enter your emailID: ");
         String getpassword = objGetData.displayMessageGetStringChoiceFromUser("Enter your password: ");
-        ArrayList<String> getEncryptedValue = encrypt.encryptString(getpassword);
-        String password = getEncryptedValue.get(0);
+//        ArrayList<String> getsecureedValue = secure.secureString(getpassword);
+//        String password = getsecureedValue.get(0);
         String type = objGetData.displayMessageGetStringChoiceFromUser("Login as Customer(C)/Service Provider(SP) ( Type C or SP ): ");
         Map<String, String> mapLoginData = new HashMap<>();
         mapLoginData.put("email", email);
-        mapLoginData.put("password", password);
+        mapLoginData.put("password", getpassword);
         mapLoginData.put("type", type);
         return mapLoginData;
     }

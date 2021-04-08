@@ -1,9 +1,8 @@
 package presentationlayer;
 
-import Encryption.Encryption;
-import Encryption.IEncryption;
 import registration.IValidation;
 import registration.Validation;
+import securedata.SecurePassword;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -12,12 +11,12 @@ import java.util.Scanner;
 public class DisplayRegistrationPageUI {
     IValidation validate = null;
     DisplayServiceCategoriesUI displayData;
-    IEncryption encrypt = null;
+//    ISecurePassword encrypt = null;
 
     public DisplayRegistrationPageUI() {
         validate = new Validation();
         displayData = new DisplayServiceCategoriesUI();
-        encrypt = new Encryption();
+//        encrypt = new SecurePassword();
     }
 
     public ArrayList<String> getUserDetails(String methodName, String pattern) {
@@ -28,8 +27,8 @@ public class DisplayRegistrationPageUI {
             String value = sc.nextLine();
             boolean validation = validate.isValidString(pattern, value);
             if (methodName == "new password(only characters and numbers are allowed)") {
-                ArrayList<String> getEncryptedValue = encrypt.encryptString(value);
-                value = getEncryptedValue.get(0);
+//                ArrayList<String> getEncryptedValue = encrypt.encryptString(value);
+//                value = getEncryptedValue.get(0);
             }
             if (validation == true) {
                 result.add(validation + "-" + value);

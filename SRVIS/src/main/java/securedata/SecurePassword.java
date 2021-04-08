@@ -1,8 +1,8 @@
-package Encryption;
+package securedata;
 
 import java.util.ArrayList;
 
-public class Encryption implements IEncryption {
+public class SecurePassword {
     public ArrayList<String> encryptString(String stringToEncrypt) {
         ArrayList<String> encryptList = new ArrayList<>();
         try {
