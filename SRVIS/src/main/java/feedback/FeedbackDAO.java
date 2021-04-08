@@ -6,18 +6,15 @@ import java.util.Map;
 
 public class FeedbackDAO implements IFeedbackDAO {
 
-    private final IDatabaseConnection db = IDatabaseConnection.databaseInstance();
+    private final IDatabaseConnection db;
+
+    public FeedbackDAO() {
+        db = IDatabaseConnection.databaseInstance();
+    }
 
     @Override
     public IFeedback read(String id) {
-        String rating;
-        String reviewString;
-        String author;
-        String reviewee;
-        String date;
-
         IFeedback feedback = null;
-
         try {
             String readFeedbackQuery = String.format("SELECT `feedback`.`feedback_id`,`feedback`.`rating`,`feedback`.`review`,`feedback`.`author`,`feedback`.`reviewee`,`feedback`.`date`" +
                     "FROM `CSCI5308_3_DEVINT`.`feedback`" +
@@ -27,11 +24,11 @@ public class FeedbackDAO implements IFeedbackDAO {
             Map<String, String> tempValues;
             for (String str : resultMap.keySet()) {
                 tempValues = resultMap.get(str);
-                rating = tempValues.get("rating");
-                reviewString = tempValues.get("review");
-                author = tempValues.get("author");
-                reviewee = tempValues.get("reviewee");
-                date = tempValues.get("date");
+                String rating = tempValues.get("rating");
+                String reviewString = tempValues.get("review");
+                String author = tempValues.get("author");
+                String reviewee = tempValues.get("reviewee");
+                String date = tempValues.get("date");
 
                 feedback = new Feedback(id);
                 feedback.setRating(rating);
@@ -78,7 +75,6 @@ public class FeedbackDAO implements IFeedbackDAO {
                 e.printStackTrace();
             }
         }
-
         return result;
     }
 }

@@ -1,8 +1,8 @@
 package presentationlayer;
 
-import Encryption.Encryption;
-import Encryption.IEncryption;
 import customer.GenerateDataToDisplay;
+import encryption.Encryption;
+import encryption.IEncryption;
 import login.LoginService;
 import registration.IRegistrationMain;
 import registration.IValidation;
@@ -35,7 +35,7 @@ public class DisplayLoginUI {
         registerObj = new RegistrationMain(new DisplayToGetUserChoice());
         objectDataToDisplay = new GenerateDataToDisplay();
         objDisplay = new DisplayServiceCategoriesUI();
-        // encrypt = new Encryption();
+        encrypt = new Encryption();
     }
 
     public int showLoginScreen() {

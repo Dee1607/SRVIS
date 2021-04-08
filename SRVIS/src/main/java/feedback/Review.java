@@ -8,34 +8,42 @@ public class Review implements IReview {
     private String reviewee;
     private String date;
 
+    @Override
     public void setReviewString(String reviewString) {
         this.reviewString = reviewString;
     }
 
+    @Override
     public void setAuthor(String author) {
         this.author = author;
     }
 
+    @Override
     public void setReviewee(String reviewee) {
         this.reviewee = reviewee;
     }
 
+    @Override
     public void setDate(String date) {
         this.date = date;
     }
 
+    @Override
     public String getReviewString() {
         return reviewString;
     }
 
+    @Override
     public String getAuthor() {
         return author;
     }
 
+    @Override
     public String getDate() {
         return date;
     }
 
+    @Override
     public String getReviewee() {
         return reviewee;
     }
