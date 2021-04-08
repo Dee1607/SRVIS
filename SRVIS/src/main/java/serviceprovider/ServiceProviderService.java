@@ -5,19 +5,23 @@ import java.util.Map;
 public class ServiceProviderService implements IServiceProviderService
 {
 
-    ServiceProviderDAO serviceProviderDAO = new ServiceProviderDAO();
+    private ServiceProviderDAO serviceProviderDAO=null;
 
-    public void updateAvailability(String Email)
-    {
-        serviceProviderDAO.updateAvailabilityStatus(Email);
+    public ServiceProviderService(){
+        serviceProviderDAO = new ServiceProviderDAO();
     }
 
-
-    public void rejectBooking(String customerID,String serviceProviderID)
+    public boolean updateAvailability(String Email)
     {
-
+        boolean availabilityStatus=serviceProviderDAO.updateAvailabilityStatus(Email);
+        return availabilityStatus;
     }
 
+    public boolean rejectBooking(String customerID,String serviceProviderID)
+    {
+        boolean rejectionStatus=serviceProviderDAO.cancelBooking(customerID,serviceProviderID);
+        return rejectionStatus;
+    }
 
     public Map<String , Map<String,String>>  showBooking()
     {
@@ -25,14 +29,9 @@ public class ServiceProviderService implements IServiceProviderService
         return bookingResult;
     }
 
-    @Override
-    public void acceptBooking(String customerID, String serviceProviderID)
+    public boolean acceptBooking(String customerID, String serviceProviderID)
     {
-        serviceProviderDAO.updateBookingStatus(customerID,serviceProviderID);
-    }
-
-
-    public void recivePayment(){
-
+        boolean acceptanceStatus=serviceProviderDAO.acceptBookingStatus(customerID,serviceProviderID);
+        return acceptanceStatus;
     }
 }

@@ -93,20 +93,19 @@ public class DatabaseConnection implements IDatabaseConnection {
         }
     }
 
-    public void updateQuery(String query) {
+    public boolean updateQuery(String query) {
+
         try {
             stmt = conn.createStatement();
-            stmt.executeUpdate(query);
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                stmt.close();
-                conn.close();
-            } catch (Exception e) {
-                e.printStackTrace();
+            int rowCount = stmt.executeUpdate(query);
+            if (rowCount > 0) {
+                return true;
             }
+        }catch(Exception e)
+        {
+            e.printStackTrace();
         }
+        return false;
     }
 
     public boolean insertQuery1(String query, Map<String, String> insertData) {

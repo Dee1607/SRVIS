@@ -1,8 +1,7 @@
 import controller.ApplicationController;
 import presentationlayer.DisplayToGetUserChoice;
 import presentationlayer.IDisplayToGetUserChoice;
-import presentationlayer.LoginUI;
-import registration.RegistrationMain;
+import presentationlayer.DisplayLoginUI;
 
 public class mainUI
 {
@@ -12,7 +11,7 @@ public class mainUI
 
         ApplicationController objApplication = new ApplicationController(objToDisplay);
         objToDisplay.displayMessage("########################### Welcome to SRVIS ###########################");
-        LoginUI login = new LoginUI(objToDisplay);
+        DisplayLoginUI login = new DisplayLoginUI(objToDisplay);
 
         try
         {

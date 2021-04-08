@@ -1,6 +1,5 @@
 package customer;
 
-import enums.EnumServiceCategory;
 import login.EnumLoginOption;
 
 import java.util.HashMap;

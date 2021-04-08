@@ -1,9 +1,8 @@
 package registration;
 
 import presentationlayer.DisplayServiceCategoriesUI;
-import presentationlayer.DisplayUpdates;
 import presentationlayer.IDisplayToGetUserChoice;
-import presentationlayer.LoginUI;
+import presentationlayer.DisplayLoginUI;
 
 import java.util.HashMap;
 import java.util.Scanner;
@@ -42,7 +41,7 @@ public class RegistrationMain implements IRegistrationMain{
                 boolean result = registrationMethods.callMethod();
                 if(result==true){
                     display.displayMessage("Thank you for registering with us." + "\n" + "Please login.");
-                    LoginUI login = new LoginUI(display);
+                    DisplayLoginUI login = new DisplayLoginUI(display);
                     login.showLoginScreen();
                 }
                 else{

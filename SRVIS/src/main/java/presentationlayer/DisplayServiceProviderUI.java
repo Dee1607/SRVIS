@@ -1,62 +1,68 @@
 package presentationlayer;
 
 import CustomerDetails.AcceptedCustomer;
+import customer.GenerateDataToDisplay;
 import payment.*;
 import serviceprovider.ServiceProviderService;
 import java.util.Map;
 import java.util.Scanner;
 
-public class ServiceProviderCustomerUI
+public class DisplayServiceProviderUI
 {
     private Map<String,String> activeLoginServiceProvider;
     private ServiceProviderService serviceProvider;
-    private PaymentUI paymentUI=null;
+    private DisplayPaymentUI paymentUI=null;
     private IDisplayToGetUserChoice display;
     private IPayment acceptPay=null;
     private IPaymentService paymentProcess=null;
+    private DisplayServiceCategoriesUI objDisplay=null;
+    private GenerateDataToDisplay objectDataToDisplay=null;
 
-    public ServiceProviderCustomerUI(Map<String,String> loginUser,IDisplayToGetUserChoice display )
+    public DisplayServiceProviderUI(Map<String,String> loginUser, IDisplayToGetUserChoice display )
     {
             this.activeLoginServiceProvider=loginUser;
             this.serviceProvider=new ServiceProviderService();
-            this.paymentUI=new PaymentUI();
+            this.paymentUI=new DisplayPaymentUI();
             this.display=display;
             this.acceptPay=new Payment();
+            this.objDisplay = new DisplayServiceCategoriesUI();
+            this.objectDataToDisplay = new GenerateDataToDisplay();
     }
 
     public Map<String,String> getActiveServiceProvider()
     {
             String firstName= activeLoginServiceProvider.get("firstName");
             String lastName= activeLoginServiceProvider.get("lastName");
-            String Email=activeLoginServiceProvider.get("email");
             display.displayMessage("Hi "+ firstName +  lastName);
             return activeLoginServiceProvider;
     }
 
     public void bookingOperation(Map<String,String> serviceProviderDetails)
     {
-            String serviceProviderID=serviceProviderDetails.get("service_provider_id");
-            String customerID = null;
-            Scanner sc = new Scanner(System.in);
-            System.out.println("Please enter the customer id for selecting request:");
-            customerID=sc.nextLine();
-            System.out.println("Please follow below options :");
-            System.out.println("1: Accept");
-            System.out.println("2: Reject");
-            String input=sc.nextLine();
-            if(input.equals("1"))
-            {
-                serviceProvider.acceptBooking(customerID,serviceProviderID);
-                System.out.println("Booking for " + customerID + " has been assigned");
-                System.out.println("==========Customer Details==========");
-                AcceptedCustomer customerData = new AcceptedCustomer(customerID);
-                customerData.CustomerDetails();
-            }
-            else if(input.equals("2"))
-            {
-                serviceProvider.rejectBooking(customerID,serviceProviderID);
-                System.out.println("Booking has been removed from your queue.!!");
-            }
+
+        String serviceProviderID=serviceProviderDetails.get("service_provider_id");
+        String customerID = null;
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Please enter the customer id for selecting request:");
+        customerID=sc.nextLine();
+        System.out.println("Please follow below options :");
+        System.out.println("1: Accept");
+        System.out.println("2: Reject");
+        String input=sc.nextLine();
+        if(input.equals("1"))
+        {
+            serviceProvider.acceptBooking(customerID,serviceProviderID);
+            System.out.println("Booking for " + customerID + " has been assigned");
+            System.out.println("==========Customer Details==========");
+            AcceptedCustomer customerData = new AcceptedCustomer(customerID);
+            customerData.CustomerDetails();
+        }
+        else if(input.equals("2"))
+        {
+            serviceProvider.rejectBooking(customerID,serviceProviderID);
+            System.out.println("Booking has been removed from your queue.!!");
+        }
+
     }
 
     public boolean showAvailability(String Email)
@@ -64,17 +70,17 @@ public class ServiceProviderCustomerUI
         Scanner sc = new Scanner(System.in);
         System.out.println("Are you available for work (yes/no)?");
         String availabilityStatus = sc.nextLine();
+        boolean availability = false;
         if(availabilityStatus.equals("yes"))
         {
-            serviceProvider.updateAvailability(Email);
+            availability=serviceProvider.updateAvailability(Email);
             System.out.println("Status : ACTIVE");
-            return true;
         }
         else
         {
             System.out.println("Your availability has been marked as NO ");
-            return false;
         }
+        return availability;
     }
 
     public Map<String , String> getJobRequests()
