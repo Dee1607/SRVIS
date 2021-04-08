@@ -13,7 +13,7 @@ public class DatabaseConnection implements IDatabaseConnection {
     private final Properties defaultProperties;
     private Connection conn = null;
 
-    private DatabaseConnection() {
+    public DatabaseConnection() {
         defaultProperties = new Properties();
     }
 
