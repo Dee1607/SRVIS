@@ -146,8 +146,7 @@ public class DatabaseConnection implements IDatabaseConnection {
     public void closeConnection() {
         try {
             conn.close();
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (Exception ignore) {
         }
     }
 }
