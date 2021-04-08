@@ -41,11 +41,6 @@ public class RegistrationMain implements IRegistrationMain{
                 boolean result = registrationMethods.callMethod();
                 if(result==true){
                     display.displayMessage("Thank you for registering with us." + "\n" + "Please login.");
-<<<<<<< HEAD
-                    DisplayLoginUI login = new DisplayLoginUI(display);
-                    login.showLoginScreen();
-=======
->>>>>>> dc01aef00a3a908351559ebb5395422cbc090c2e
                 }
                 else{
                     display.displayMessage("Problem in connection with database");
