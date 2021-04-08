@@ -1,7 +1,7 @@
-package encryption;
+package Encryption;
 
 import java.util.ArrayList;
 
 public interface IEncryption {
-    public ArrayList<String> encryptString(String getData);
+    ArrayList<String> encryptString(String stringToEncrypt);
 }
