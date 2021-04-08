@@ -66,6 +66,9 @@ public class ApplicationController implements IApplicationController {
 
                     } else if (mapLoginData.get("type").equalsIgnoreCase("sp")) {
 
+                        display.displayMessage("All the pending requests in your queue.!!!!");
+                        login.showPendingRequest(mapLoginData.get("email"), mapLoginData.get("type"));
+
                         serviceProvider = new DisplayServiceProviderUI(tempValues, display);
                         Map<String, String> serviceProviderSession = serviceProvider.getActiveServiceProvider();
                         boolean onlineStatus = serviceProvider.showAvailability(email);
@@ -76,8 +79,6 @@ public class ApplicationController implements IApplicationController {
                     } else {
                         display.displayMessage("Please enter valid option for the type");
                     }
-                    display.displayMessage("All the pending requests in your queue.!!!!");
-                    login.showPendingRequest(mapLoginData.get("email"), mapLoginData.get("type"));
                 } else {
                     display.displayMessage("Please enter valid email-id or Password !!!!");
                 }
