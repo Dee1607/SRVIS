@@ -62,6 +62,7 @@ public class DisplayLoginUI {
         System.out.format("%1s%-20s%1s%-55s%1s", "|", " Request ID ", "| ", pendingRequests.get("service_request_id"), "|\n");
         System.out.format("%1s%-20s%1s%-55s%1s", "|", " Service Provider ID ", "| ", pendingRequests.get("service_provider_id"), "|\n");
         System.out.format("%1s%-20s%1s%-55s%1s", "|", " Request Description ", "| ", pendingRequests.get("service_request_description"), "|\n");
+        System.out.format("%1s%-20s%1s%-55s%1s", "|", " Request Status ", "| ", pendingRequests.get("request_acceptance_status"), "|\n");
         System.out.format("%1s%-20s%1s%-55s%1s", "|", "--------------------", "|", "--------------------------------------------------------", "|\n");
     }
 }

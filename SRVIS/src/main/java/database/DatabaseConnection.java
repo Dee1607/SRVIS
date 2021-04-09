@@ -54,6 +54,8 @@ public class DatabaseConnection implements IDatabaseConnection {
 
             Map<String, String> tableValues = new HashMap<>();
             String tempKey = null;
+            resultMap = new HashMap<>();
+
             while (rs.next()) {
                 for (int i = 1; i <= columnCount; i++) {
                     String columnNameValue = rsMetadata.getColumnName(i);
@@ -62,7 +64,6 @@ public class DatabaseConnection implements IDatabaseConnection {
                     }
                     tableValues.put(columnNameValue, rs.getString(columnNameValue));
                 }
-                resultMap = new HashMap<>();
                 resultMap.put(tempKey, tableValues);
             }
             rs.close();
