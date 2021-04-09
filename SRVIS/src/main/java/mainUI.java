@@ -2,6 +2,7 @@ import controller.ApplicationController;
 import presentationlayer.DisplayLoginUI;
 import presentationlayer.DisplayToGetUserChoice;
 import presentationlayer.IDisplayToGetUserChoice;
+import registration.RegistrationMain;
 
 public class mainUI {
     public static void main(String[] args) {
