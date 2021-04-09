@@ -33,7 +33,7 @@ public class RegistrationMethods implements IRegistrationMethods {
         count++;
     }
 
-    public void addMethods(String getUser) {
+    public Map<Integer, Runnable> addMethods(String getUser) {
         addMethodToHashMap("first name", "[a-zA-Z]+");
         addMethodToHashMap("last name", "[a-zA-Z]+");
         addMethodToHashMap("contact number", "^[0-9]{10}$");
@@ -48,10 +48,11 @@ public class RegistrationMethods implements IRegistrationMethods {
             addMethodToHashMap("age", "^[\\d]+$");
         }
         genericList.setRegisterUserMethods(registerUserMethods);
+        return registerUserMethods;
     }
 
-    public boolean callMethod() {
-        Map<Integer, Runnable> registerMethods = new ConcurrentHashMap<Integer, Runnable>();
+    public boolean callMethod(Map<Integer, Runnable> methodList) {
+        Map<Integer, Runnable> registerMethods;
         registerMethods = genericList.getRegisterUserMethods();
         Iterator<Integer> iterator = registerMethods.keySet().iterator();
         boolean dbStatus = false;

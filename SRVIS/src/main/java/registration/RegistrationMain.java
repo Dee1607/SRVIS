@@ -4,6 +4,7 @@ import presentationlayer.DisplayServiceCategoriesUI;
 import presentationlayer.IDisplayToGetUserChoice;
 
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 public class RegistrationMain implements IRegistrationMain {
@@ -21,23 +22,27 @@ public class RegistrationMain implements IRegistrationMain {
 
     }
 
+    public HashMap<Integer, String> getUserDetails(){
+        System.out.println("Register as");
+        HashMap<Integer, String> registerAs = new HashMap<>();
+        registerAs.put(1, "Customer");
+        registerAs.put(2, "Service Provider");
+        for (Integer i : registerAs.keySet()) {
+            display.displayMessage(i + " " + registerAs.get(i));
+        }
+        return registerAs;
+    }
+
     public void register() {
         try {
-            System.out.println("Register as");
-            HashMap<Integer, String> registerAs = new HashMap<>();
-            registerAs.put(1, "Customer");
-            registerAs.put(2, "Service Provider");
-            for (Integer i : registerAs.keySet()) {
-                display.displayMessage(i + " " + registerAs.get(i));
-            }
-
+            HashMap<Integer, String> registerAs = getUserDetails();
             Scanner sc = new Scanner(System.in);
             String value = sc.nextLine();
             if (validateInput.isValidString("^[1-2]$", value)) {
                 Integer getValue = Integer.valueOf(value);
                 display.displayMessage("======== " + registerAs.get(getValue) + " Registration" + " ========");
-                registrationMethods.addMethods(registerAs.get(getValue));
-                boolean result = registrationMethods.callMethod();
+                Map<Integer, Runnable> methodList = registrationMethods.addMethods(registerAs.get(getValue));
+                boolean result = registrationMethods.callMethod(methodList);
                 if (result == true) {
                     display.displayMessage("Thank you for registering with us." + "\n" + "Please login.");
                 } else {
