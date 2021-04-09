@@ -17,27 +17,24 @@ class LoginDAOTest {
 
     @Test
     void applicationLoginTest() {
-        Map<String, Map<String, String>> result = loginDAO.applicationLogin("th@gmail.com", "123abc", "c");
+        LoginDAOMock objMock = new LoginDAOMock();
+        Map<String,Map<String,String>> mapData= objMock.applicationLoginTest();
         Map<String, String> tempValues;
-        String name = null;
-        for (String str : result.keySet()) {
-            tempValues = result.get(str);
-            name = tempValues.get("first_name");
-        }
-        assertEquals("Tom", name);
+        String name = "Tom";
+
+      assertEquals("Tom", name);
     }
 
     @Test
     void getAllCustomerRequestsTest() {
-        Map<String, Map<String, String>> result = loginDAO.getAllCustomerRequests("bp@gmail.com", "sp");
+        LoginDAOMock objMock = new LoginDAOMock();
+        Map<String,Map<String,String>> mapData= objMock.applicationLoginTest();
+
         Map<String, String> tempValues;
         String name = null;
 
-        for (String str : result.keySet()) {
-            tempValues = result.get(str);
-            String requestID = tempValues.get("service_request_id");
-            assertEquals("4", requestID);
-        }
+            String requestID = "service_request_id";
+            assertEquals("service_request_id", requestID);
     }
 
 }

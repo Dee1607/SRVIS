@@ -9,7 +9,6 @@ public class mainUI {
 
         ApplicationController objApplication = new ApplicationController(objToDisplay);
         objToDisplay.displayMessage("########################### Welcome to SRVIS ###########################");
-        DisplayLoginUI login = new DisplayLoginUI(objToDisplay);
         try {
             objApplication.initializeApplication();
         } catch (Exception e) {
