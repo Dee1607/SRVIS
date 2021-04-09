@@ -1,0 +1,5 @@
+package bookingserviceprovider;
+
+class BookServiceProviderTest {
+
+}

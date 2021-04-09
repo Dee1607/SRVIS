@@ -1,0 +1,5 @@
+package SearchServiceProvider;
+
+class SelectServiceProviderTest {
+
+}

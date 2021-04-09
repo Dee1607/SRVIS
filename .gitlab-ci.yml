@@ -1,0 +1,43 @@
+# This file is a template, and might need editing before it works on your project.
+# This is the Gradle build system for JVM applications
+# https://gradle.org/
+# https://github.com/gradle/gradle
+
+
+variables:
+  GRADLE_OPTS: "-Dorg.gradle.daemon=false"
+  GIT_STRATEGY: clone
+  EXECUTABLE_TO_DEPLOY: "SRVIS.jar"
+
+before_script:
+  - export GRADLE_USER_HOME=`pwd`/.gradle
+  - cd SRVIS
+
+stages:
+  - build
+  - test
+  - deploy
+
+build:
+  stage: build
+  script: ./gradlew assemble
+  tags:
+    - ugrad
+
+test:
+  stage: test
+  script: ./gradlew check
+  tags:
+    - ugrad
+
+deploy:
+  stage: deploy
+  script:
+   - chmod og-rwx ${DEPLOY_SSH_KEY}
+   - scp -r -o StrictHostKeyChecking=no -i "${DEPLOY_SSH_KEY}" ${EXECUTABLE_TO_DEPLOY} "${DEPLOY_USER}@timberlea.cs.dal.ca:${DEPLOY_DIR}/SRVIS.jar"	  
+  only:
+   - master
+   - develop
+  tags:
+   - ugrad
+
