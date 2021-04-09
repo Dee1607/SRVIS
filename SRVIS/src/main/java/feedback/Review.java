@@ -2,46 +2,56 @@ package feedback;
 
 import java.util.Objects;
 
-public class Review implements IReview {
+public class Review implements IReview
+{
     private String reviewString;
     private String author;
     private String reviewee;
     private String date;
 
-    public void setReviewString(String reviewString) {
+    public void setReviewString(String reviewString)
+    {
         this.reviewString = reviewString;
     }
 
-    public void setAuthor(String author) {
+    public void setAuthor(String author)
+    {
         this.author = author;
     }
 
-    public void setReviewee(String reviewee) {
+    public void setReviewee(String reviewee)
+    {
         this.reviewee = reviewee;
     }
 
-    public void setDate(String date) {
+    public void setDate(String date)
+    {
         this.date = date;
     }
 
-    public String getReviewString() {
+    public String getReviewString()
+    {
         return reviewString;
     }
 
-    public String getAuthor() {
+    public String getAuthor()
+    {
         return author;
     }
 
-    public String getDate() {
+    public String getDate()
+    {
         return date;
     }
 
-    public String getReviewee() {
+    public String getReviewee()
+    {
         return reviewee;
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(Object o)
+    {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Review review = (Review) o;
@@ -49,7 +59,8 @@ public class Review implements IReview {
     }
 
     @Override
-    public int hashCode() {
+    public int hashCode()
+    {
         return Objects.hash(reviewString, author, reviewee, date);
     }
 }

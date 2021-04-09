@@ -9,7 +9,8 @@ public enum EnumServiceCategory {
 
     int categoryNumber = 0;
 
-    EnumServiceCategory(int serviceNumber) {
+    EnumServiceCategory(int serviceNumber)
+    {
         this.categoryNumber = serviceNumber;
     }
 }

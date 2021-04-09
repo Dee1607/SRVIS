@@ -1,6 +1,7 @@
 package feedback;
 
-public interface IFeedback {
+public interface IFeedback
+{
     void setRating(String rating);
 
     void setReview(IReview review);

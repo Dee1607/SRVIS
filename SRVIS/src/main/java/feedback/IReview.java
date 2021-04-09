@@ -1,6 +1,7 @@
 package feedback;
 
-public interface IReview {
+public interface IReview
+{
     void setReviewString(String reviewString);
 
     void setAuthor(String author);

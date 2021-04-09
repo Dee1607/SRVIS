@@ -2,15 +2,23 @@ package registration;
 
 import java.util.regex.Pattern;
 
-public class Validation implements IValidation {
-    public boolean isValidString(String pattern, String userDetail) {
+public class Validation implements IValidation
+{
+    public boolean isValidString(String pattern, String userDetail)
+    {
         String removeWhitespace = userDetail.replaceAll("\\s", "");
-        if (removeWhitespace.isEmpty()) {
+        if (removeWhitespace.isEmpty())
+        {
             return false;
-        } else {
-            if (Pattern.matches(pattern, removeWhitespace)) {
+        }
+        else
+        {
+            if (Pattern.matches(pattern, removeWhitespace))
+            {
                 return true;
-            } else {
+            }
+            else
+            {
                 return false;
             }
         }

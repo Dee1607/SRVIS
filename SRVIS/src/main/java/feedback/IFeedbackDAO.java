@@ -1,6 +1,7 @@
 package feedback;
 
-public interface IFeedbackDAO {
+public interface IFeedbackDAO
+{
     IFeedback read(String id);
 
     boolean write(IFeedback feedback);

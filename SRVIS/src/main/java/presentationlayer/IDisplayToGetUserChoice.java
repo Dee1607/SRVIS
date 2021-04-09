@@ -1,7 +1,7 @@
 package presentationlayer;
 
-public interface IDisplayToGetUserChoice {
-
+public interface IDisplayToGetUserChoice
+{
     int displayMessageGetNumberChoiceFromUser(String stringToBeDisplayed);
 
     String displayMessageGetStringChoiceFromUser(String stringToBeDisplayed);

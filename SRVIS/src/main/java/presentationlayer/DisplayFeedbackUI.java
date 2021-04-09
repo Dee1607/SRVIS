@@ -3,17 +3,17 @@ package presentationlayer;
 import feedback.IFeedback;
 import feedback.IReview;
 
-public class DisplayFeedbackUI {
-
+public class DisplayFeedbackUI
+{
     private DisplayToGetUserChoice objGetData = null;
 
-    public DisplayFeedbackUI() {
-
+    public DisplayFeedbackUI()
+    {
         objGetData = new DisplayToGetUserChoice();
     }
 
-    public void getReviewDetailsInput(IReview review) {
-
+    public void getReviewDetailsInput(IReview review)
+    {
         String comment = objGetData.displayMessageGetStringChoiceFromUser("Enter the review :");
         review.setReviewString(comment);
         String setDate = objGetData.displayMessageGetStringChoiceFromUser("Enter the date :");
@@ -25,7 +25,8 @@ public class DisplayFeedbackUI {
     }
 
 
-    public void setFeedback(IFeedback feedback, IReview review) {
+    public void setFeedback(IFeedback feedback, IReview review)
+    {
         String rating = objGetData.displayMessageGetStringChoiceFromUser("Enter the rating (1-5) :");
         feedback.setRating(rating);
         feedback.setReview(review);

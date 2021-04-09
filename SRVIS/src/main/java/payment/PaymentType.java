@@ -1,6 +1,7 @@
 package payment;
 
-public enum PaymentType {
+public enum PaymentType
+{
     VISA,
     MASTERCARD,
     DEBIT

@@ -2,8 +2,8 @@ package payment;
 
 import java.util.Objects;
 
-public class Payment implements IPayment {
-
+public class Payment implements IPayment
+{
     private int paymentID;
     private String serviceRequestID;
     private IPaymentInfo sender;
@@ -12,7 +12,8 @@ public class Payment implements IPayment {
     private String date;
     private PaymentStatus status;
 
-    public boolean isValid() {
+    public boolean isValid()
+    {
         boolean senderIsValid = (sender != null);
         boolean receiverIsValid = (receiver != null);
         boolean amountIsValid = (amount != null);
@@ -20,76 +21,94 @@ public class Payment implements IPayment {
         return senderIsValid && receiverIsValid && amountIsValid;
     }
 
-    public void setSender(IPaymentInfo sender) {
+    public void setSender(IPaymentInfo sender)
+    {
         this.sender = sender;
     }
 
-    public IPaymentInfo getSender() {
+    public IPaymentInfo getSender()
+    {
         return sender;
     }
 
-    public String getSenderID() {
+    public String getSenderID()
+    {
         return sender.getUserID();
     }
 
-    public void setReceiver(IPaymentInfo receiver) {
+    public void setReceiver(IPaymentInfo receiver)
+    {
         this.receiver = receiver;
     }
 
-    public IPaymentInfo getReceiver() {
+    public IPaymentInfo getReceiver()
+    {
         return receiver;
     }
 
-    public String getReceiverID() {
+    public String getReceiverID()
+    {
         return receiver.getUserID();
     }
 
-    public void setAmount(String amount) {
+    public void setAmount(String amount)
+    {
         this.amount = amount;
     }
 
-    public String getAmount() {
+    public String getAmount()
+    {
         return amount;
     }
 
-    public void setDate(String date) {
+    public void setDate(String date)
+    {
         this.date = date;
     }
 
-    public String getDate() {
+    public String getDate()
+    {
         return date;
     }
 
-    public void setStatus(PaymentStatus status) {
+    public void setStatus(PaymentStatus status)
+    {
         this.status = status;
     }
 
-    public PaymentStatus getStatus() {
+    public PaymentStatus getStatus()
+    {
         return status;
     }
 
-    public String getStatusString() {
+    public String getStatusString()
+    {
         return status.name();
     }
 
-    public void setPaymentID(int paymentID) {
+    public void setPaymentID(int paymentID)
+    {
         this.paymentID = paymentID;
     }
 
-    public int getPaymentID() {
+    public int getPaymentID()
+    {
         return paymentID;
     }
 
-    public String getServiceRequestID() {
+    public String getServiceRequestID()
+    {
         return serviceRequestID;
     }
 
-    public void setServiceRequestID(String serviceRequestID) {
+    public void setServiceRequestID(String serviceRequestID)
+    {
         this.serviceRequestID = serviceRequestID;
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(Object o)
+    {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Payment payment = (Payment) o;
@@ -97,7 +116,8 @@ public class Payment implements IPayment {
     }
 
     @Override
-    public int hashCode() {
+    public int hashCode()
+    {
         return Objects.hash(paymentID, serviceRequestID, sender, receiver, amount, date, status);
     }
 }

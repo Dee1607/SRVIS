@@ -1,5 +1,6 @@
 package registration;
 
-public interface IRegistrationMain {
+public interface IRegistrationMain
+{
     public void register();
 }

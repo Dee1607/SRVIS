@@ -1,7 +1,9 @@
 package login;
 
-public interface ILoginFactory {
-    static LoginFactory LoginInstance() {
+public interface ILoginFactory
+{
+    static LoginFactory LoginInstance()
+    {
       return new LoginFactory();
     }
 

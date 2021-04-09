@@ -2,8 +2,10 @@ package presentationlayer;
 
 import java.util.Map;
 
-public class DisplayServiceProviderInfoUI {
-    public void displayServiceProviderBriefInfo(Map<String, Map<String, String>> mapServiceProviderInfo) {
+public class DisplayServiceProviderInfoUI
+{
+    public void displayServiceProviderBriefInfo(Map<String, Map<String, String>> mapServiceProviderInfo)
+    {
         System.out.format("%1s%20s%20s%20s%20s", "|", "===================" + "|", "===================" + "|", "===================" + "|", "==================" + "|\n");
         System.out.format("%1s%20s%20s%20s%20s", "|", "Provider ID " + "|", "Name " + "|", "Contact Number " + "|", "Hourly Rate ($) " + "|\n");
         System.out.format("%1s%20s%20s%20s%20s", "|", "===================" + "|", "===================" + "|", "===================" + "|", "==================" + "|\n");
@@ -15,7 +17,8 @@ public class DisplayServiceProviderInfoUI {
         }
     }
 
-    public void displayServiceProviderAllInfo(String key, Map<String, String> mapOtherValues) {
+    public void displayServiceProviderAllInfo(String key, Map<String, String> mapOtherValues)
+    {
         System.out.format("%1s%20s%1s%55s%1s", "|", "====================", "|", "========================================================", "|\n");
         System.out.format("%1s%-20s%1s%-55s%1s", "|", " ID ", "| ", key, "|\n");
         System.out.format("%1s%-20s%1s%-55s%1s", "|", " Name ", "| ", mapOtherValues.get("firstName") + " " + mapOtherValues.get("lastName"), "|\n");
@@ -30,7 +33,8 @@ public class DisplayServiceProviderInfoUI {
         System.out.format("%1s%-20s%1s%-55s%1s", "|", "--------------------", "|", "--------------------------------------------------------", "|\n");
     }
 
-    public void displayCustomerAllInfo(Map<String, String> mapOtherValues) {
+    public void displayCustomerAllInfo(Map<String, String> mapOtherValues)
+    {
         System.out.format("%1s%20s%1s%55s%1s", "|", "====================", "|", "========================================================", "|\n");
         System.out.format("%1s%-20s%1s%-55s%1s", "|", " Name ", "| ", mapOtherValues.get("first_name") + " " + mapOtherValues.get("last_name"), "|\n");
         System.out.format("%1s%-20s%1s%-55s%1s", "|", " Mobile ", "| ", mapOtherValues.get("contact"), "|\n");

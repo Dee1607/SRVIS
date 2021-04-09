@@ -1,6 +1,7 @@
 package payment;
 
-public interface IPayment {
+public interface IPayment
+{
     boolean isValid();
 
     void setSender(IPaymentInfo sender);

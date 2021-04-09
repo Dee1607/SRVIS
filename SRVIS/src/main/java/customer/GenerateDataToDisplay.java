@@ -4,8 +4,10 @@ import login.EnumLoginOption;
 import java.util.HashMap;
 import java.util.Map;
 
-public class GenerateDataToDisplay implements IGenerateDataToDisplay {
-    public Map<Integer, String> generateServiceCategoryData() {
+public class GenerateDataToDisplay implements IGenerateDataToDisplay
+{
+    public Map<Integer, String> generateServiceCategoryData()
+    {
         Map<Integer, String> mapSearchCategories = new HashMap<Integer, String>();
 
         String questionMessage = "What service are you looking for:";
@@ -19,7 +21,8 @@ public class GenerateDataToDisplay implements IGenerateDataToDisplay {
         return mapSearchCategories;
     }
 
-    public Map<Integer, String> generateLoginData() {
+    public Map<Integer, String> generateLoginData()
+    {
         Map<Integer, String> mapSearchCategories = new HashMap<Integer, String>();
 
         String questionMessage = "Select any option: ";

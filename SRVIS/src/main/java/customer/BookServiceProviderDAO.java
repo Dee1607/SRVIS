@@ -10,7 +10,8 @@ public class BookServiceProviderDAO implements IBookServiceProviderDAO{
     DisplayToGetUserChoice objDisplayMessage;
     DatabaseConnection db= DatabaseConnection.databaseInstance();
 
-    public BookServiceProviderDAO(){
+    public BookServiceProviderDAO()
+    {
         objDisplayMessage = new DisplayToGetUserChoice();
     }
 

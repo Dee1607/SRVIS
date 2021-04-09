@@ -4,7 +4,8 @@ import java.sql.Connection;
 import java.util.Map;
 
 public interface IDatabaseConnection {
-    static DatabaseConnection databaseInstance() {
+    static DatabaseConnection databaseInstance()
+    {
         return new DatabaseConnection();
     }
 
