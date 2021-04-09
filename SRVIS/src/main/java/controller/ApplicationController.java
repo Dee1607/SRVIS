@@ -10,10 +10,10 @@ import registration.IRegistrationMain;
 import registration.IValidation;
 import registration.RegistrationMain;
 import registration.Validation;
-
 import java.util.Map;
 
-public class ApplicationController implements IApplicationController {
+public class ApplicationController implements IApplicationController
+{
     public IRegistrationMain registerObj;
     private IValidation validate;
     private ISelectServiceCategory objServiceCategory = null;
@@ -25,23 +25,28 @@ public class ApplicationController implements IApplicationController {
     private IDisplayToGetUserChoice display = null;
     private DisplayLoginUI login = null;
 
-    public ApplicationController(IDisplayToGetUserChoice objToDisplay) {
+    public ApplicationController(IDisplayToGetUserChoice objToDisplay)
+    {
         this.validate = new Validation();
         this.objLoginService = new LoginService();
         this.display = objToDisplay;
         this.login = new DisplayLoginUI(objToDisplay);
     }
 
-    public void initializeApplication() {
-        try {
+    public void initializeApplication()
+    {
+        try
+        {
             int userChoice = login.showLoginScreen();
-            if (userChoice == 1) {
+            if (userChoice == 1)
+            {
                 Map<String, String> mapLoginData = login.userLogin();
                 String email = mapLoginData.get("email");
                 String password = mapLoginData.get("password");
                 String type = mapLoginData.get("type");
 
-                if (validate.isValidString("^\\w{1,}@[\\w+]+.\\w+", email)) {
+                if (validate.isValidString("^\\w{1,}@[\\w+]+.\\w+", email))
+                {
                     Map<String, String> tempValues = objLoginService.loginUser(email, password, type);
 
                     SESSION_DETAILS = tempValues;
@@ -49,12 +54,14 @@ public class ApplicationController implements IApplicationController {
                     display.displayMessage("1.Show Pending Requests\n2.Search Service");
                     int cChoice = display.displayMessageGetNumberChoiceFromUser("Select your choice:");
 
-                    if(cChoice == 1) {
+                    if(cChoice == 1)
+                    {
                         display.displayMessage("All the pending requests in your queue.!!!!");
                         login.showPendingRequest(mapLoginData.get("email"), mapLoginData.get("type"));
                     }
 
-                    if (mapLoginData.get("type").equalsIgnoreCase("c")) {
+                    if (mapLoginData.get("type").equalsIgnoreCase("c"))
+                    {
                         objServiceCategory = new SelectServiceCategory(tempValues);
                         EnumServiceCategory enumChoice = objServiceCategory.getUserSelectedService();
 
@@ -72,8 +79,9 @@ public class ApplicationController implements IApplicationController {
                             objBookServiceProvider.generateBookingRequest(mapServiceProviderToBook);
                         }
 
-                    } else if (mapLoginData.get("type").equalsIgnoreCase("sp")) {
-
+                    }
+                    else if (mapLoginData.get("type").equalsIgnoreCase("sp"))
+                    {
                         display.displayMessage("All the pending requests in your queue.!!!!");
                         login.showPendingRequest(mapLoginData.get("email"), mapLoginData.get("type"));
 
@@ -84,19 +92,29 @@ public class ApplicationController implements IApplicationController {
                             serviceProvider.getJobRequests();
                         }
                         serviceProvider.bookingOperation(serviceProviderSession);
-                    } else {
+                    }
+                    else
+                    {
                         display.displayMessage("Please enter valid option for the type");
                     }
-                } else {
+                }
+                else
+                {
                     display.displayMessage("Please enter valid email-id or Password !!!!");
                 }
-            } else if (userChoice == 2) {
+            }
+            else if (userChoice == 2)
+            {
                 registerObj = new RegistrationMain(new DisplayToGetUserChoice());
                 registerObj.register();
-            } else {
+            }
+            else
+            {
                 display.displayMessage("Please enter valid input .");
             }
-        } catch (Exception e) {
+        }
+        catch (Exception e)
+        {
             e.printStackTrace();
         }
     }

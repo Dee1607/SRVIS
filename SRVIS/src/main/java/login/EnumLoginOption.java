@@ -1,6 +1,7 @@
 package login;
 
-public enum EnumLoginOption {
+public enum EnumLoginOption
+{
     Default,
     Login,
     Register

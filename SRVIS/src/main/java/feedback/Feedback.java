@@ -2,41 +2,50 @@ package feedback;
 
 import java.util.Objects;
 
-public class Feedback implements IFeedback {
+public class Feedback implements IFeedback
+{
     private String id;
     private IReview review;
     private String rating;
 
-    public Feedback(String id) {
+    public Feedback(String id)
+    {
         this.id = id;
     }
 
-    public void setRating(String rating) {
+    public void setRating(String rating)
+    {
         this.rating = rating;
     }
 
-    public void setReview(IReview review) {
+    public void setReview(IReview review)
+    {
         this.review = review;
     }
 
-    public void setID(String id) {
+    public void setID(String id)
+    {
         this.id = id;
     }
 
-    public String getID() {
+    public String getID()
+    {
         return id;
     }
 
-    public IReview getReview() {
+    public IReview getReview()
+    {
         return review;
     }
 
-    public String getRating() {
+    public String getRating()
+    {
         return rating;
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(Object o)
+    {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Feedback feedback = (Feedback) o;
@@ -44,7 +53,8 @@ public class Feedback implements IFeedback {
     }
 
     @Override
-    public int hashCode() {
+    public int hashCode()
+    {
         return Objects.hash(id, review, rating);
     }
 }

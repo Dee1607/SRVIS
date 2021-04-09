@@ -1,6 +1,7 @@
 package payment;
 
-public interface IPaymentService {
+public interface IPaymentService
+{
     IPaymentInfo getPaymentInfoFromDatabase(String userID);
 
     boolean writePaymentInfoToDatabase(IPaymentInfo paymentInfo);

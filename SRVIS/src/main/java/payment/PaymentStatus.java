@@ -1,6 +1,7 @@
 package payment;
 
-public enum PaymentStatus {
+public enum PaymentStatus
+{
     PENDING,
     DECLINED,
     PROCESSED

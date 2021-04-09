@@ -4,7 +4,8 @@ import presentationlayer.DisplayServiceCategoriesUI;
 import presentationlayer.DisplayToGetUserChoice;
 import java.util.Map;
 
-public class SelectServiceCategory implements ISelectServiceCategory {
+public class SelectServiceCategory implements ISelectServiceCategory
+{
     private DisplayServiceCategoriesUI objDisplayServiceCategory = null;
     private GenerateDataToDisplay objGenerateServiceCategoryData = null;
     private DisplayToGetUserChoice objGetUserChoice = null;
@@ -14,14 +15,17 @@ public class SelectServiceCategory implements ISelectServiceCategory {
     private static final String ENTER_USER_INPUT_MESSAGE = "Enter the number of Service You need: ";
 
 
-    public SelectServiceCategory(Map<String, String> customerSession) {
+    public SelectServiceCategory(Map<String, String> customerSession)
+    {
         this.CUSTOMER_SESSION = customerSession;
     }
 
-    public EnumServiceCategory getUserSelectedService() {
+    public EnumServiceCategory getUserSelectedService()
+    {
         int userSelectedServiceCategory = -1;
 
-        try {
+        try
+        {
             objGenerateServiceCategoryData = new GenerateDataToDisplay();
             mapSearchCategories = objGenerateServiceCategoryData.generateServiceCategoryData();
 
@@ -33,7 +37,9 @@ public class SelectServiceCategory implements ISelectServiceCategory {
             enumObjectOfChoice = EnumServiceCategory.values()[userSelectedServiceCategory - 1];
 
             return enumObjectOfChoice;
-        } catch (Exception e) {
+        }
+        catch (Exception e)
+        {
             e.printStackTrace();
         }
         return enumObjectOfChoice;

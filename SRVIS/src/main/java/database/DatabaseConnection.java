@@ -8,45 +8,58 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
-public class DatabaseConnection implements IDatabaseConnection {
+public class DatabaseConnection implements IDatabaseConnection
+{
 
     private final Properties defaultProperties;
     private Connection conn = null;
 
-    public DatabaseConnection() {
+    public DatabaseConnection()
+    {
         defaultProperties = new Properties();
     }
 
-    public static DatabaseConnection databaseInstance() {
+    public static DatabaseConnection databaseInstance()
+    {
         return new DatabaseConnection();
     }
 
-    public Connection makeConnection() {
+    public Connection makeConnection()
+    {
         loadProperties();
-        try {
+        try
+        {
             String dbURL = defaultProperties.getProperty("dbURL");
             String dbUsername = defaultProperties.getProperty("dbUsername");
             String dbPassword = defaultProperties.getProperty("dbPassword");
             Class.forName("com.mysql.cj.jdbc.Driver");
             conn = DriverManager.getConnection(dbURL, dbUsername, dbPassword);
-        } catch (Exception e) {
+        }
+        catch (Exception e)
+        {
             e.printStackTrace();
         }
         return conn;
     }
 
-    private void loadProperties() {
-        try {
+    private void loadProperties()
+    {
+        try
+        {
             InputStream in = new FileInputStream("./src/main/resources/config.properties");
             defaultProperties.load(in);
-        } catch (IOException e) {
+        }
+        catch (IOException e)
+        {
             e.printStackTrace();
         }
     }
 
-    public Map<String, Map<String, String>> selectQuery(String query) {
+    public Map<String, Map<String, String>> selectQuery(String query)
+    {
         Map<String, Map<String, String>> resultMap = null;
-        try {
+        try
+        {
             PreparedStatement ps = conn.prepareStatement(query);
             ResultSet rs = ps.executeQuery();
             ResultSetMetaData rsMetadata = rs.getMetaData();
@@ -56,10 +69,13 @@ public class DatabaseConnection implements IDatabaseConnection {
             String tempKey = null;
             resultMap = new HashMap<>();
 
-            while (rs.next()) {
-                for (int i = 1; i <= columnCount; i++) {
+            while (rs.next())
+            {
+                for (int i = 1; i <= columnCount; i++)
+                {
                     String columnNameValue = rsMetadata.getColumnName(i);
-                    if (i == 1) {
+                    if (i == 1)
+                    {
                         tempKey = rs.getString(columnNameValue);
                     }
                     tableValues.put(columnNameValue, rs.getString(columnNameValue));
@@ -68,39 +84,50 @@ public class DatabaseConnection implements IDatabaseConnection {
             }
             rs.close();
             ps.close();
-        } catch (Exception e) {
+        }
+        catch (Exception e)
+        {
             e.printStackTrace();
         }
         return resultMap;
     }
 
-    public boolean updateQuery(String query) {
-        try {
+    public boolean updateQuery(String query)
+    {
+        try
+        {
             Statement stmt = conn.createStatement();
             int rowCount = stmt.executeUpdate(query);
             stmt.close();
             return rowCount > 0;
-        } catch (Exception e) {
+        }
+        catch (Exception e)
+        {
             e.printStackTrace();
         }
         return false;
     }
 
-    public boolean insertQuery(String query) {
+    public boolean insertQuery(String query)
+    {
         boolean result = false;
-        try {
+        try
+        {
             Statement stmt = conn.createStatement();
-            if (stmt.executeUpdate(query) >= 1) {
+            if (stmt.executeUpdate(query) >= 1)
+            {
                 result = true;
             }
             stmt.close();
-        } catch (Exception e) {
+        } catch (Exception e)
+        {
             e.printStackTrace();
         }
         return result;
     }
 
-    public void closeConnection() {
+    public void closeConnection()
+    {
         try
         {
             conn.close();

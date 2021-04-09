@@ -2,18 +2,20 @@ package payment;
 
 import database.DatabaseConnection;
 import database.IDatabaseConnection;
-
 import java.util.Map;
 
-public class PaymentInfoDAO implements IPaymentInfoDAO {
+public class PaymentInfoDAO implements IPaymentInfoDAO
+{
     private final IDatabaseConnection db;
 
-    public PaymentInfoDAO() {
+    public PaymentInfoDAO()
+    {
         db = DatabaseConnection.databaseInstance();
     }
 
     @Override
-    public IPaymentInfo read(String userID) {
+    public IPaymentInfo read(String userID)
+    {
         IPaymentInfo paymentInfo = null;
         String paymentType;
         String cardNumber;
@@ -24,10 +26,14 @@ public class PaymentInfoDAO implements IPaymentInfoDAO {
         db.makeConnection();
         Map<String, Map<String, String>> resultMap = db.selectQuery(readPaymentQuery);
         Map<String, String> tempValues;
-        if(resultMap==null) {
+        if(resultMap==null)
+        {
             return null;
-        }else{
-            for (String str : resultMap.keySet()) {
+        }
+        else
+        {
+            for (String str : resultMap.keySet())
+            {
                 tempValues = resultMap.get(str);
                 paymentType = tempValues.get("payment_type");
                 cardNumber = tempValues.get("card_number");
@@ -48,7 +54,8 @@ public class PaymentInfoDAO implements IPaymentInfoDAO {
     }
 
     @Override
-    public boolean write(IPaymentInfo paymentInfo) {
+    public boolean write(IPaymentInfo paymentInfo)
+    {
         boolean result;
         String userID = paymentInfo.getUserID();
         String paymentType = paymentInfo.getPaymentType();
@@ -56,10 +63,12 @@ public class PaymentInfoDAO implements IPaymentInfoDAO {
         String fullName = paymentInfo.getFullName();
         String securityCode = paymentInfo.getSecurityCode();
         String expiryDate = paymentInfo.getExpiryDate();
+
         String writePaymentQuery = String.format("INSERT INTO `payment_info`" +
                         "(`user_id`,`payment_type`,`card_number`,`full_name`,`security_code`,`expiry_date`)" +
                         "VALUES('%s','%s','%s','%s','%s','%s');",
                 userID, paymentType, cardNumber, fullName, securityCode, expiryDate);
+
         db.makeConnection();
         result = db.insertQuery(writePaymentQuery);
         db.closeConnection();

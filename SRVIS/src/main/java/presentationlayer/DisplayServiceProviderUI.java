@@ -4,11 +4,11 @@ import customer.AcceptedCustomer;
 import customer.GenerateDataToDisplay;
 import payment.*;
 import serviceprovider.ServiceProviderService;
-
 import java.util.Map;
 import java.util.Scanner;
 
-public class DisplayServiceProviderUI {
+public class DisplayServiceProviderUI
+{
     private Map<String, String> activeLoginServiceProvider;
     private ServiceProviderService serviceProvider;
     private DisplayPaymentUI displayPaymentUI = null;
@@ -18,7 +18,8 @@ public class DisplayServiceProviderUI {
     private DisplayServiceCategoriesUI objDisplay = null;
     private GenerateDataToDisplay objectDataToDisplay = null;
 
-    public DisplayServiceProviderUI(Map<String, String> loginUser, IDisplayToGetUserChoice display) {
+    public DisplayServiceProviderUI(Map<String, String> loginUser, IDisplayToGetUserChoice display)
+    {
         this.activeLoginServiceProvider = loginUser;
         this.serviceProvider = new ServiceProviderService();
         this.displayPaymentUI = new DisplayPaymentUI();
@@ -29,14 +30,16 @@ public class DisplayServiceProviderUI {
         this.paymentProcess=new PaymentService();
     }
 
-    public Map<String, String> getActiveServiceProvider() {
+    public Map<String, String> getActiveServiceProvider()
+    {
         String firstName = activeLoginServiceProvider.get("firstName");
         String lastName = activeLoginServiceProvider.get("lastName");
         display.displayMessage("Hi " + firstName + lastName);
         return activeLoginServiceProvider;
     }
 
-    public void bookingOperation(Map<String, String> serviceProviderDetails) {
+    public void bookingOperation(Map<String, String> serviceProviderDetails)
+    {
         String serviceProviderID = serviceProviderDetails.get("service_provider_id");
         String customerID = null;
         Scanner sc = new Scanner(System.in);
@@ -46,27 +49,34 @@ public class DisplayServiceProviderUI {
         System.out.println("1: Accept");
         System.out.println("2: Reject");
         String input = sc.nextLine();
-        if (input.equals("1")) {
+        if (input.equals("1"))
+        {
             serviceProvider.acceptBooking(customerID, serviceProviderID);
             System.out.println("Booking for " + customerID + " has been assigned");
             System.out.println("==========Customer Details==========");
             AcceptedCustomer customerData = new AcceptedCustomer(customerID);
             customerData.customerDetails();
-        } else if (input.equals("2")) {
+        }
+        else if (input.equals("2"))
+        {
             serviceProvider.rejectBooking(customerID, serviceProviderID);
             System.out.println("Booking has been removed from your queue.!!");
         }
     }
 
-    public boolean showAvailability(String Email) {
+    public boolean showAvailability(String Email)
+    {
         Scanner sc = new Scanner(System.in);
         System.out.println("Are you available for work (yes/no)?");
         String availabilityStatus = sc.nextLine();
         boolean availability = false;
-        if (availabilityStatus.equals("yes")) {
+        if (availabilityStatus.equals("yes"))
+        {
             availability = serviceProvider.updateAvailability(Email);
             System.out.println("Status : ACTIVE");
-        } else {
+        }
+        else
+        {
             System.out.println("Your availability has been marked as NO ");
         }
         return availability;
@@ -89,7 +99,8 @@ public class DisplayServiceProviderUI {
     }
 
 
-    public boolean acceptPayment(IPaymentInfo receiverObject) {
+    public boolean acceptPayment(IPaymentInfo receiverObject)
+    {
         IPaymentInfo senderPayment = new PaymentInfo();
         IPaymentService paymentService=new PaymentService();
         IPayment pay=new Payment();

@@ -7,12 +7,12 @@ import payment.IPaymentService;
 import payment.PaymentInfo;
 import payment.PaymentService;
 import presentationlayer.*;
-
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
-public class BookServiceProvider implements IBookServiceProvider {
+public class BookServiceProvider implements IBookServiceProvider
+{
     private Map<String, String> CUSTOMER_SESSION;
     private IPaymentInfo senderPaymentDetails = null;
     private DisplayPaymentUI displayPaymentUI = null;
@@ -22,7 +22,8 @@ public class BookServiceProvider implements IBookServiceProvider {
     private IFeedback customerReview = null;
     private IReview review = null;
 
-    public BookServiceProvider(Map<String, String> customer_session,IDisplayToGetUserChoice display) {
+    public BookServiceProvider(Map<String, String> customer_session,IDisplayToGetUserChoice display)
+    {
         this.CUSTOMER_SESSION = customer_session;
         this.senderPaymentDetails = new PaymentInfo();
         this.displayPaymentUI = new DisplayPaymentUI();
@@ -33,12 +34,14 @@ public class BookServiceProvider implements IBookServiceProvider {
         this.serviceProvider=new DisplayServiceProviderUI(customer_session,display);
     }
 
-    public boolean finalizeServiceProvider(String serviceProviderID, Map<String, String> selectedServiceProvider) {
+    public boolean finalizeServiceProvider(String serviceProviderID, Map<String, String> selectedServiceProvider)
+    {
         DisplayServiceProviderInfoUI objDisplayServiceProvider;
         DisplayToGetUserChoice objGetUserChoice = null;
         boolean isSelected = false;
 
-        try {
+        try
+        {
             objDisplayServiceProvider = new DisplayServiceProviderInfoUI();
             objGetUserChoice = new DisplayToGetUserChoice();
             objDisplayServiceProvider.displayServiceProviderAllInfo(serviceProviderID, selectedServiceProvider);
@@ -50,14 +53,17 @@ public class BookServiceProvider implements IBookServiceProvider {
                 isSelected = true;
             }
             return isSelected;
-        } catch (Exception e) {
+        } catch (Exception e)
+        {
             e.printStackTrace();
-        } finally {
+        } finally
+        {
             return isSelected;
         }
     }
 
-    public Map<String, String> getAdditionalDetailsToBookServiceProvider(Map<String, String> selectedServiceProvider) {
+    public Map<String, String> getAdditionalDetailsToBookServiceProvider(Map<String, String> selectedServiceProvider)
+    {
 
         DisplayToGetUserChoice objToDisplayData = null;
 
@@ -96,7 +102,8 @@ public class BookServiceProvider implements IBookServiceProvider {
             {
                 displayPaymentUI.getPaymentDetailsInput(senderPaymentDetails);
             }
-            if (insertStatus) {
+            if (insertStatus)
+            {
                 objDisplayMessage.displayMessage("Ticket has been generated.");
                 paymentStatus = serviceProvider.acceptPayment(senderPaymentDetails);
             }
@@ -110,18 +117,26 @@ public class BookServiceProvider implements IBookServiceProvider {
                 feedbackUI.getReviewDetailsInput(review);
                 feedbackUI.setFeedback(customerReview,review);
                 feedbackStatus = feedbackDAO.write(customerReview);
-                if (feedbackStatus) {
+                if (feedbackStatus)
+                {
                     System.out.println("Thanks For feedback!");
                 }
             }
             return insertStatus;
-        } catch (Exception e) {
+        }
+        catch (Exception e)
+        {
             e.printStackTrace();
             return false;
-        } finally {
-            try {
+        }
+        finally
+        {
+            try
+            {
                 db.closeConnection();
-            } catch (Exception e) {
+            }
+            catch (Exception e)
+            {
                 e.printStackTrace();
             }
         }

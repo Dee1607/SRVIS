@@ -1,6 +1,7 @@
 package payment;
 
-public interface IPaymentInfoDAO {
+public interface IPaymentInfoDAO
+{
     IPaymentInfo read(String userID);
 
     boolean write(IPaymentInfo paymentInfo);

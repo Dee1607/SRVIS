@@ -4,7 +4,8 @@ import presentationlayer.IDisplayToGetUserChoice;
 
 import java.util.Map;
 
-public interface ICustomerFactory {
+public interface ICustomerFactory
+{
     public IAcceptedCustomer AcceptCustomer(String customerID);
     public IAcceptedCustomerDAO AcceptedCustomerDAO();
     public IBookServiceProvider BookServiceProvider(Map<String, String> customer_session, IDisplayToGetUserChoice display);

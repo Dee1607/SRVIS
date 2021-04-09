@@ -1,14 +1,16 @@
 package login;
 
-public class LoginFactory implements ILoginFactory {
-
+public class LoginFactory implements ILoginFactory
+{
     @Override
-    public ILoginDAO loginDAO(){
+    public ILoginDAO loginDAO()
+    {
         return new LoginDAO();
     }
 
     @Override
-    public ILoginService loginService(){
+    public ILoginService loginService()
+    {
         return new LoginService();
     }
 }

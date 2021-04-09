@@ -1,6 +1,7 @@
 package payment;
 
-public interface IPaymentInfo {
+public interface IPaymentInfo
+{
     void setUserID(String userID);
 
     void setPaymentType(PaymentType paymentType);
