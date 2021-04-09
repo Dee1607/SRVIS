@@ -8,9 +8,9 @@ public class DisplayServiceProviderInfoUI {
         System.out.format("%1s%20s%20s%20s%20s", "|", "Provider ID " + "|", "Name " + "|", "Contact Number " + "|", "Hourly Rate ($) " + "|\n");
         System.out.format("%1s%20s%20s%20s%20s", "|", "===================" + "|", "===================" + "|", "===================" + "|", "==================" + "|\n");
 
-        for (String key : mapServiceProviderInfo.keySet()) {
-            Map<String, String> mapOtherValues = mapServiceProviderInfo.get(key);
-            System.out.format("%1s%20s%20s%20s%20s", "|", key + " |", mapOtherValues.get("firstName") + " " + mapOtherValues.get("lastName") + " |", mapOtherValues.get("contact") + " |", "$" + mapOtherValues.get("hourlyRate") + " |\n");
+        for (String key : mapServiceProviderInfo.keySet())
+        {
+            System.out.format("%1s%20s%20s%20s%20s", "|", key + " |", mapServiceProviderInfo.get(key).get("firstName") + " " + mapServiceProviderInfo.get(key).get("lastName") + " |", mapServiceProviderInfo.get(key).get("contact") + " |", "$" + mapServiceProviderInfo.get(key).get("hourlyRate") + " |\n");
             System.out.format("%1s%20s%20s%20s%20s", "|", "-------------------" + "|", "-------------------" + "|", "-------------------" + "|", "------------------" + "|\n");
         }
     }

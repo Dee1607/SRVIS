@@ -25,7 +25,7 @@ public class ServiceProviderDAO implements IServiceProviderDAO {
 
     public boolean acceptBookingStatus(String customerID, String serviceProviderID) {
         db.makeConnection();
-        String bookingStatusUpdate = " UPDATE service_request SET request_acceptance_status ='Y' WHERE customer_id='" + customerID + "' AND service_provider_id='" + serviceProviderID + "'";
+        String bookingStatusUpdate = " UPDATE service_request SET request_acceptance_status ='ACCEPT' WHERE customer_id='" + customerID + "' AND service_provider_id='" + serviceProviderID + "'";
         boolean updateStatus = db.updateQuery(bookingStatusUpdate);
         db.closeConnection();
         return updateStatus;
@@ -33,7 +33,7 @@ public class ServiceProviderDAO implements IServiceProviderDAO {
 
     public boolean cancelBooking(String customerID, String serviceProviderID) {
         db.makeConnection();
-        String bookingStatusUpdate = " UPDATE service_request SET request_acceptance_status ='R' WHERE customer_id='" + customerID + "' AND service_provider_id='" + serviceProviderID + "'";
+        String bookingStatusUpdate = " UPDATE service_request SET request_acceptance_status ='REJECT' WHERE customer_id='" + customerID + "' AND service_provider_id='" + serviceProviderID + "'";
         boolean cancelStatus = db.updateQuery(bookingStatusUpdate);
         db.closeConnection();
         return cancelStatus;
