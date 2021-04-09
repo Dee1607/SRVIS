@@ -30,7 +30,6 @@ public class LoginDAO implements ILoginDAO {
         Map<String, Map<String, String>> pendingRequest = null;
         db.makeConnection();
         if (type.equalsIgnoreCase(CUSTOMER)) {
-//            String customerQuery = String.format("SELECT * FROM customer INNER JOIN service_request on customer.customer_id=service_request.customer_id WHERE email = '%s'", email);
             String customerQuery = "select * from service_request as rs where ( select customer_id from customer as c where c.email = '" + email + "' ) AND rs.request_acceptance_status = 'PENDING'";
             pendingRequest = db.selectQuery(customerQuery);
         } else if(type.equalsIgnoreCase(SERVICE_PROVIDER)){

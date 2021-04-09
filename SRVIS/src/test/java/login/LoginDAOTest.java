@@ -36,7 +36,7 @@ class LoginDAOTest {
         for (String str : result.keySet()) {
             tempValues = result.get(str);
             String requestID = tempValues.get("service_request_id");
-            assertEquals("20", requestID);
+            assertEquals("4", requestID);
         }
     }
 
