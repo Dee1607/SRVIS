@@ -1,5 +1,6 @@
 package presentationlayer;
 
+import encryptionservice.EncryptionService;
 import encryptionservice.IEncryptionService;
 import registration.IValidation;
 import registration.Validation;
@@ -15,6 +16,7 @@ public class DisplayRegistrationPageUI {
     public DisplayRegistrationPageUI() {
         validate = new Validation();
         displayData = new DisplayServiceCategoriesUI();
+        encryptSecurity = new EncryptionService();
     }
 
     public ArrayList<String> getUserDetails(String methodName, String pattern) {
